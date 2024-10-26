@@ -11,14 +11,16 @@ import { BASE_URL } from '../../../shared/models/constants/urls';
   styleUrl: './banner.component.css',
 })
 export class ImageSliderComponent {
+
+  baseurl = BASE_URL;
+
   @Input() indicators = true;
   @Input() controls = true;
   @Input() autoSlide = false;
   selectedIndex = 0;
-  baseurl = BASE_URL;
 
   @Input() banneritems: bannerType[] = [];
-  intervalId: any;
+  intervalId:any;
 
   showNext() {
     if (this.selectedIndex === this.banneritems.length - 1) {
