@@ -1,0 +1,143 @@
+<div class="space-top"></div>
+<div class="md:flex">
+    <div class="links flex flex-col">
+        <button (click)="toggleDiv(0)">Banner</button>
+        <button (click)="toggleDiv(1)">Add Products</button>
+        <button (click)="toggleDiv(2)">Delete Products</button>
+        <button (click)="toggleDiv(5)">Update Products</button>
+        <button (click)="toggleDiv(3)">Delete Banner Images</button>
+        <button (click)="toggleDiv(4)">Add Gold Rate</button>
+    </div>
+    <div *ngIf="selectedDiv === 0" class="content">
+        <form #banner="ngForm" (ngSubmit)="addBanner(banner.value)">
+            <input type="text" placeholder="Banner image url with extension" name="image" ngModel />
+            <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
+                ADD BANNER
+            </button>
+        </form>
+        <div class="flex flex-col items-center">
+            <input type="file" (change)="onFileSelected($event)" name="image" />
+            <button (click)="onUpload()"
+                class="imageUpBut bg-red-700 px-5 py-3 rounded w-full bo-ra5 cursor-pointer hover:shadow-xl">
+                Upload Image!
+            </button>
+        </div>
+    </div>
+    <div *ngIf="selectedDiv === 1" class="md:w-2/5 content flex items-center">
+        <form [formGroup]="goldProduct" (ngSubmit)="addProduct()" class="w-full">
+            <input type="text" placeholder="Enter Product Name" formControlName="name" ngModel />
+            <input type="text" placeholder="Enter Display image with extension" value={{displayImageUrl}} formControlName="imageDis" ngModel />
+            <input type="text" placeholder="Enter Hover image with extension" formControlName="imageHov" ngModel />
+            <textarea type="text" placeholder="Product Description" formControlName="description" ngModel></textarea>
+            <input type="text" placeholder="Enter Metal Type" formControlName="metalType" ngModel />
+            <input type="text" placeholder="Category1, Category2, .." formControlName="category" ngModel />
+            <input type="number" placeholder="Enter Product Price" formControlName="price" ngModel />
+            <input type="number" placeholder="Enter Product Weight in grams" formControlName="weight" ngModel />
+            <input type="number" placeholder="Making Cost in Rs" formControlName="mc" ngModel />
+            <input type="number" placeholder="Size of Product" formControlName="size" ngModel />
+            <input type="number" placeholder="Stock Available" formControlName="stock" ngModel />
+            <input type="number" placeholder="Wastage in %" formControlName="wastage" ngModel />
+            <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
+                Add Product
+            </button>
+        </form>
+        <div class="flex flex-col items-center">
+            <input type="file" (change)="onFileSelected($event)" name="image" />
+            <button (click)="onUpload()"
+                class="imageUpBut bg-red-700 px-5 py-3 rounded w-full bo-ra5 cursor-pointer hover:shadow-xl">
+                Upload Image!
+            </button>
+        </div>
+    </div>
+    <div *ngIf="selectedDiv === 2" class="content delete">
+        <ul class="text-xl text-white">
+            <li class="mr-9">
+                <a (click)="toDeleteItem('gold')">Gold</a>
+            </li>
+            <li class="mr-9">
+                <a (click)="toDeleteItem('silver')">Silver</a>
+            </li>
+            <li class="mr-9">
+                <a (click)="toDeleteItem('diamond')">Diamond</a>
+            </li>
+            <li class="mr-9">
+                <a (click)="toDeleteItem('coin')">Coins</a>
+            </li>
+        </ul>
+        <table class="mx-w mx-auto w-3/4">
+            <tbody>
+                <tr class="bg-red-700 text-white">
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th class="hidden md:block">Weight</th>
+                    <th>Action</th>
+                </tr>
+                <tr *ngFor="let data of products" class="text-center border-b-2">
+                    <td class="" *ngIf="data.metalType?.includes(toDelete)">
+                        <img class="mx-auto w-20 h-20 object-cover rounded-full"
+                            src="http://localhost:3000/uploads/{{ data.imageDis }}" [alt]="data.name" />
+                    </td>
+                    <td class="w-2/5" *ngIf="data.metalType?.includes(toDelete)">
+                        <a routerLink="/products/{{ data.id }}">{{ data.name }}</a>
+                    </td>
+                    <td class="hidden md:block" *ngIf="data.metalType?.includes(toDelete)">
+                        {{ data.weight }} gms
+                    </td>
+                    <td class="mt-5" *ngIf="data.metalType?.includes(toDelete)">
+                        <button class="cupo remove-button" (click)="deleteProduct(data.id)">
+                            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="selectedDiv === 3" class="mx-w mx-auto flex flex-col items-center content">
+        <div class="flex my-4 items-center w-11/12 justify-around" *ngFor="let data of bannerImg">
+            <div class="image">
+                <img src="http://localhost:3000/uploads/{{ data.image }}" alt="" />
+            </div>
+            <p>{{ data.image }}</p>
+            <button class="cupo remove-button" (click)="deleteBanner(data.id)">
+                <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="content" *ngIf="selectedDiv === 4">
+        <form [formGroup]="goldSilver" (ngSubmit)="onSubmit()">
+            <input type="number" placeholder="Enter Gold 22K rate in Rs" formControlName="gold22" id="gold22" required>
+            <input type="number" placeholder="Enter Gold 24K rate in Rs" formControlName="gold24" id="gold24" required>
+            <input type="number" placeholder="Enter Gold 18K rate in Rs" formControlName="gold18" id="gold18" required>
+            <input type="number" placeholder="Enter Silver rate in Rs" formControlName="silver" id="silver" required>
+            <input type="number" placeholder="Enter GST in percentage" formControlName="gst" id="gst" required>
+            <button type="submit" class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">Update Gold and Silver Rates</button>
+        </form>
+    </div>
+    <!-- <div *ngIf="selectedDiv === 5" class="md:w-2/5 content flex items-center">
+        <form #addProduct="ngForm" (ngSubmit)="addProductt(addProduct.value)" class="w-full">
+            <input type="text" placeholder="Enter Product Name" name="name" ngModel />
+            <input type="text" placeholder="Enter Display image with extension" value="displayImageUrl" name="imageDis"
+                ngModel />
+            <input type="text" placeholder="Enter Hover image with extension" name="imageHov" ngModel />
+            <textarea type="text" placeholder="Product Description" name="description" ngModel></textarea>
+            <input type="text" placeholder="Enter Metal Type" name="metalType" ngModel />
+            <input type="text" placeholder="Enter Product Category" name="category" ngModel />
+            <input type="number" placeholder="Enter Product Weight in grams" name="weight" ngModel />
+            <input type="number" placeholder="Making Cost in %" name="makingCost" ngModel />
+            <input type="number" placeholder="Stone Carat" name="stoneCarat" ngModel />
+            <input type="number" placeholder="Stock Available" name="stock" ngModel />
+            <input type="number" placeholder="Wastage in %" name="wastage" ngModel />
+            <input type="text" placeholder="Featured Product - Enter true!" name="featured" ngModel />
+            <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
+                Update Product
+            </button>
+        </form>
+        <div class="flex flex-col items-center">
+            <input type="file" (change)="onFileSelected($event)" name="image" />
+            <button (click)="onUpload()"
+                class="imageUpBut bg-red-700 px-5 py-3 rounded w-full bo-ra5 cursor-pointer hover:shadow-xl">
+                Upload Image!
+            </button>
+        </div>
+    </div> -->
+</div>

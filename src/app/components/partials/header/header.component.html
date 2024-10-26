@@ -1,0 +1,236 @@
+<div class="header border-b-2 bg-gray-100 shadow-xl">
+    <div class="header1 flex justify-between px-10 mx-w m-auto items-center">
+        <div class="logo flex items-center">
+            <a class="px-2 py-2 logo flex items-center" [routerLink]="['/']">
+                <img class="logoImg" src="http://localhost:3000/uploads/goldPalaceLogo2.png" />
+            </a>
+        </div>
+        <div class="menu block md:hidden"><i (click)="toggleMenu(true)" class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        </div>
+        <div class="navBar absolute md:hidden flex" [ngClass]="{active: showNav}">
+            <button (click)="toggleMenu(false)">X</button>
+            <a class="" [routerLink]="['/']">HOME</a>
+            <a routerLink="/metalType/gold">GOLD</a>
+            <a routerLink="/metalType/silver">SILVER</a>
+            <a routerLink="/metalType/diamond">DIAMOND</a>
+            <a routerLink="/metalType/coin">COINS</a>
+            <a class="" [routerLink]="['/schemes']">SCHEMES</a>
+            <a class="" [routerLink]="['/contact']">CONTACT US</a>
+        </div>
+        <app-search></app-search>
+        <div class="flex items-center justify-between">
+            <div class="mr-3 items-center border-b-2 hidden md:flex">
+                <a class="contact" [routerLink]="['/contact']">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 48 48">
+                        <path fill="#0f0"
+                            d="M13,42h22c3.866,0,7-3.134,7-7V13c0-3.866-3.134-7-7-7H13c-3.866,0-7,3.134-7,7v22	C6,38.866,9.134,42,13,42z">
+                        </path>
+                        <path fill="#fff"
+                            d="M35.45,31.041l-4.612-3.051c-0.563-0.341-1.267-0.347-1.836-0.017c0,0,0,0-1.978,1.153	c-0.265,0.154-0.52,0.183-0.726,0.145c-0.262-0.048-0.442-0.191-0.454-0.201c-1.087-0.797-2.357-1.852-3.711-3.205	c-1.353-1.353-2.408-2.623-3.205-3.711c-0.009-0.013-0.153-0.193-0.201-0.454c-0.037-0.206-0.009-0.46,0.145-0.726	c1.153-1.978,1.153-1.978,1.153-1.978c0.331-0.569,0.324-1.274-0.017-1.836l-3.051-4.612c-0.378-0.571-1.151-0.722-1.714-0.332	c0,0-1.445,0.989-1.922,1.325c-0.764,0.538-1.01,1.356-1.011,2.496c-0.002,1.604,1.38,6.629,7.201,12.45l0,0l0,0l0,0l0,0	c5.822,5.822,10.846,7.203,12.45,7.201c1.14-0.001,1.958-0.248,2.496-1.011c0.336-0.477,1.325-1.922,1.325-1.922	C36.172,32.192,36.022,31.419,35.45,31.041z">
+                        </path>
+                    </svg>
+                </a>
+                <span>+91 1234567890</span>
+            </div>
+            <ul class="flex gap-3 admin">
+                <li *ngIf="!isAuth"><a class="px-2 py-2" [routerLink]="['/login']">Login</a></li>
+                <li *ngIf="isAuth" class="relative user">
+                    <a class="px-2 py-2">{{user.name}}</a>
+                    <div class="logout absolute hidden shadow-xl">
+                        <a class="px-2 py-2" href="" (click)="logout()">Logout</a>
+                    </div>
+                </li>
+                <li *ngIf="isAdminAuth" class="relative user">
+                    <a [routerLink]="['/admin']" class="px-2 py-2">{{admin.name}}</a>
+                    <div class="logout absolute hidden shadow-xl">
+                        <a class="px-2 py-2" href="" (click)="adminLogout()">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <a class="rates block relative cursor-pointer">
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            <div class="text-xs hidden absolute shadow-xl">
+                <p>GOLD RATE (18K): {{GR18 | currency:'&#8377; '}}</p>
+                <p>GOLD RATE (22K): {{GR22 | currency:'&#8377; '}}</p>
+                <p>GOLD RATE (24K): {{GR24 | currency:'&#8377; '}}</p>
+                <p>SILVER RATE: {{silver | currency:'&#8377; '}}</p>
+                <p>GST: {{ gst*100 }}&#37;</p>
+            </div>
+        </a>
+        <a class="px-2 py-2" routerLink="/cart" class="cart w-9 relative">
+            <i class="fa fa-shopping-bag fa-3x" aria-hidden="true"></i>
+            <div class="absolute top-4 left-5">{{cartQuantity}}</div>
+        </a>
+    </div>
+    <div class="header2 h-10 items-center hidden md:flex">
+        <div class="categories mx-w mx-auto text-white">
+            <ul class="flex justify-start items-center">
+                <li><a class="mr-3 p-2" [routerLink]="['/']">Home</a></li>
+                <li class="relative gold-silver">
+                    <a class="mr-3 p-2" [routerLink]="['/metalType/gold']">GOLD</a>
+                    <div
+                        class="absolute gold border-2 border-red-700 flex-wrap w-9/12 z-10 top-8 left-0 bg-white text-black shadow-xl">
+                        <a routerLink="/category/gold/earing">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/simpleGoldEaring-1-d.jpg" alt="">
+                                <h3 class="text-center">Gold Earing</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/gold/ring">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/romanticHeartRing-d.jpg" alt="">
+                                <h3 class="text-center">Gold Ring</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/gold/bracelet">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/mensGoldBracelet-1-d.jpg" alt="">
+                                <h3 class="text-center">Gold Bracelet</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/gold/bangles">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/goldBangle-1-d.jpg" alt="">
+                                <h3 class="text-center">Gold Bangles</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/gold/chain">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/stunningGoldChain-1-d.jpg" alt="">
+                                <h3 class="text-center">Gold Chain</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/gold/necklace">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/peacockNecklace-1-d.jpg" alt="">
+                                <h3 class="text-center">Gold Necklace</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/gold/pendant">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/motherChiltHeartPendant-d.jpg" alt="">
+                                <h3 class="text-center">Gold Pendant</h3>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="relative gold-silver">
+                    <a class="mr-3 p-2" routerLink="/metalType/silver">SILVER</a>
+                    <div
+                        class="absolute silver border-2 border-red-700 flex-wrap z-10 top-8 left-0 bg-white text-black shadow-xl">
+                        <a routerLink="/category/silver/earing">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/silverEaring-1-d.jpg" alt="">
+                                <h3 class="text-center">Silver Earing</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/silver/ring">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/silverRing-1-d.webp" alt="">
+                                <h3 class="text-center">Silver Ring</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/silver/bangles">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/silverBangle-1-d.jpg" alt="">
+                                <h3 class="text-center">Silver Bangles</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/silver/chain">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/sachinSilverChain-1-d.jpg" alt="">
+                                <h3 class="text-center">Silver Chain</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/silver/pendant">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/silverPendant-1-d.jpg" alt="">
+                                <h3 class="text-center">Silver Pendant</h3>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="relative gold-silver">
+                    <a class="mr-3 p-2" routerLink="/metalType/diamond">DIAMOND</a>
+                    <div class="absolute silver border-2 border-red-700 flex-wrap z-10 top-8 left-0 bg-white text-black shadow-xl">
+                        <a routerLink="/category/diamond/necklace">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/diamondNecklace-1-d.jpg" alt="">
+                                <h3 class="text-center">Diamond Necklace</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/diamond/ring">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/diamondPendant-1-d.jpg" alt="">
+                                <h3 class="text-center">Diamond Ring</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/diamond/bangles">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/diamondBangle-1-d.jpg" alt="">
+                                <h3 class="text-center">Diamond Bangles</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/diamond/bracelet">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/diamondBracelet-1-d.jpg" alt="">
+                                <h3 class="text-center">Diamond Bracelet</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/diamond/pendant">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/diamondPendant-1-d.jpg" alt="">
+                                <h3 class="text-center">Diamond Pendant</h3>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="relative gold-silver">
+                    <a class="mr-3 p-2" routerLink="/metalType/coin">COINS</a>
+                    <div class="absolute silver border-2 border-red-700 flex-wrap z-10 top-8 left-0 bg-white text-black shadow-xl">
+                        <a routerLink="/category/coin/coin">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/goldCoin-1-d.jpg" alt="">
+                                <h3 class="text-center">Coin</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/coin/coin">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/goldCoin-2-d.jpg" alt="">
+                                <h3 class="text-center">Coin</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/coin/coin">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/goldCoin-2-d.jpg" alt="">
+                                <h3 class="text-center">Coin</h3>
+                            </div>
+                        </a>
+                        <a routerLink="/category/coin/coin">
+                            <div class="flex-col">
+                                <img src="http://localhost:3000/uploads/goldCoin-2-d.jpg" alt="">
+                                <h3 class="text-center">Coin</h3>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="gold-items relative">
+                    <a class="mr-3 p-2" [routerLink]="['/category/All']">Categories</a>
+                    <div class="items border-2 border-red-700 absolute z-10 top-8 left-0 flex-col bg-white text-black shadow-xl">
+                        <a routerLink="/category/bangles">BANGLES</a>
+                        <a routerLink="/category/ring">RING</a>
+                        <a routerLink="/category/earing">EARINGS</a>
+                        <a routerLink="/category/bracelet">BRACELET</a>
+                        <a routerLink="/category/necklace">NECKLACE</a>
+                        <a routerLink="/category/chain">CHAIN</a>
+                        <a routerLink="/category/pendant">PENDANT</a>
+                        <a routerLink="/category/coin">COIN</a>
+                    </div>
+                </li>
+                <li><a class="mr-3 p-2" [routerLink]="['/schemes']">Schemes</a></li>
+                <li><a class="mr-3 p-2" [routerLink]="['/contact']">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

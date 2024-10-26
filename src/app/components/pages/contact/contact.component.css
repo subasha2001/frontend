@@ -1,0 +1,42 @@
+input, textarea{
+    border:none;
+    padding: 8px;
+    margin: 10px 0;
+    outline: none;
+    border-radius: 5px;
+}
+.contact{
+    background-image: url("/assets/images/contact-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 150px;
+    backdrop-filter: blur(10px);
+}
+span{
+    color: red;
+}
+.content{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.content form{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 40px;
+    border: 1px solid;
+    padding: 40px;
+}
+.content .address .cont-adds{
+    justify-content: space-around;
+}
+.content .address .mb-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+@media screen and (max-width:768px) and (min-width:300px) {
+
+}

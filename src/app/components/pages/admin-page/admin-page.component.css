@@ -1,0 +1,88 @@
+p {
+  font-size: 25px;
+  text-align: center;
+}
+input,
+textarea {
+  padding: 10px;
+  width: 100%;
+  background-color: #e4dedefd;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  outline: none;
+}
+input::placeholder,
+textarea::placeholder {
+  color: black;
+}
+.imageUpBut {
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+  color: white;
+}
+form{
+  display: flex;flex-direction: column;align-items: center;
+}
+.links {
+  max-width: 350px;
+  margin-left: 12%;
+  background-color: black;
+  color: white;
+}
+.links button {
+  padding: 20px;
+}
+.links button:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+.content {
+  background-color: gray;
+  flex: 0.9;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+.content form,
+.content form + div {
+  max-width: 500px;
+  margin: 20px auto 15px;
+  padding: 0 10px 10px;
+}
+.delete ul {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+}
+.delete ul li a {
+  cursor: pointer;
+  padding: 10px;
+  display: block;
+  border: 1px solid white;
+}
+.delete ul li a:hover {
+  border: 1px solid #ff0f39c7;
+  background-color: #ff0f39c7;
+}
+table {
+  background: white;
+  margin-bottom: 15px;
+}
+table th {
+  padding: 5px;
+}
+.content ul {
+  padding: 15px;
+}
+.image {
+  width: 100px;
+}
+img {
+  object-fit: cover;
+  width: 100%;
+}
+table td:first-child {
+  width: 100px;
+  height: 100px;
+  padding: 10px 0px;
+}
+@media screen and (max-width: 768px) and (min-width: 300px) {
+}

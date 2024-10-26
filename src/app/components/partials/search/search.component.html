@@ -1,0 +1,10 @@
+<div class="max-w-sm mx-auto my-5 md:block hidden w-full">
+    <input 
+    class="w-3/4 outline-0 border-0 rounded-l-full pl-5 py-1" 
+    #s 
+    type="text" 
+    placeholder="Search.." 
+    (keyup.enter)="search(s.value)" 
+    [value]="searchTerm" />
+    <button class="rounded-r-full p-1 text-white" (click)="search(s.value)">Search</button>
+</div>

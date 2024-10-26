@@ -1,0 +1,14 @@
+<div class="slider relative m-auto text-center" *ngIf="banneritems && banneritems.length" (mouseenter)="startAutoSlide()" (mouseleave)="stopAutoSlide()">
+    <div class="flex justify-center">
+        <img *ngFor="let data of banneritems; let i = index" src="http://localhost:3000/uploads/{{data.image}}"
+            class="slides-img fade position:relative left-0 right-0 w-full shadow" alt=""
+            [ngClass]="{'image-active':selectedIndex === i,}" />
+    </div>
+    <div class="absolute right-0 left-0 bottom-0 flex justify-center p-0 my-4" *ngIf="indicators">
+        <span *ngFor="let data of banneritems let i = index"
+            class="dot cursor-pointer w-3 h-3 mx-1.5 bg-gray-500 rounded-full inline-block"
+            [ngClass]="{'active': selectedIndex === i}"
+            (click)="selectImage(i)">
+        </span>
+    </div>
+</div> 

@@ -1,0 +1,157 @@
+a:hover {
+  background-color: #ff0f39c7;
+  color: yellow;
+}
+.contact:hover {
+  background-color: transparent;
+}
+.gold-items div {
+  display: none;
+  width: 150px;
+}
+.gold-items:hover .items {
+  display: flex;
+}
+.items a {
+  padding: 5px 10px;
+}
+.items a:hover {
+  background-color: #ff0f39c7;
+  color: yellow;
+}
+.gold-silver div {
+  display: none;
+  width: 725px;
+}
+.gold-silver:hover a div {
+  width: 150px;
+}
+.gold-silver:hover div {
+  display: flex;
+  left: -400px;
+  padding: 20px;
+}
+.gold-silver div a {
+  padding: 5px 10px;
+}
+.gold-silver div a:hover {
+  background-color: transparent;
+  color: black;
+}
+.gold-silver div img:hover {
+  transform: translateY(-20px);
+  transition: all 0.12s linear;
+}
+.header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  max-width: 1300px;
+  top: 15px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  border-radius: 45px;
+}
+.header1 {
+  height: 80px;
+}
+.header2 {
+  background-color: #ff0f39c7;
+  border-bottom-right-radius: 45px;
+  border-bottom-left-radius: 45px;
+  max-width: 1298px;
+  margin: 0 auto;
+  margin-bottom: -2px;
+}
+.header2 a:hover {
+  background-color: #fae9cb;
+  color: black;
+}
+.logo {
+  width: 100px;
+  height: 80px;
+  opacity: 1;
+  transform: translateY(0px);
+}
+.menu {
+  cursor: pointer;
+}
+.navBar {
+  background-color: #ff0f39c7;
+  color: white;
+  top: 90px;
+  left: 0px;
+  flex-direction: column;
+  transform: translateX(-150px);
+  transition: all 0.5s linear;
+}
+.navBar button {
+  width: 23px;
+  background-color: black;
+  border-radius: 32px;
+  position: absolute;
+  top: -12px;
+  left: 111px;
+}
+.active {
+  transform: translateX(0);
+}
+.navBar a {
+  padding: 15px;
+}
+.navBar a:hover {
+  background-color: black;
+}
+.admin .user:hover .logout {
+  display: block;
+  top: 30px;
+  left: 0px;
+  background-color: white;
+  color: black;
+  padding: 5px 0;
+}
+.rates i {
+  padding: 5px;
+}
+.rates:hover div {
+  display: block;
+  left: -110px;
+  top: 28px;
+  width: 220px;
+  background-color: white;
+  padding: 10px;
+  color: black;
+  font-size: 15px;
+  line-height: 25px;
+  z-index: 2;
+}
+.rates p {
+  padding: 5px;
+}
+.rates p:hover {
+  text-decoration: underline;
+}
+.cart {
+  color: white;
+}
+.cart:hover {
+  background-color: transparent;
+  color: white;
+}
+.cart i {
+  color: #ff0f39c7;
+}
+
+@media screen and (max-width: 550px) {
+  .gold-silver div {
+    width: 400px;
+    left: -60px !important;
+  }
+  .gold-silver .silver {
+    left: -129px !important;
+  }
+  .gold-silver a div {
+    width: 100px !important;
+  }
+}

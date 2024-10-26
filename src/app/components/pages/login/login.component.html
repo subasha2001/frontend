@@ -1,0 +1,19 @@
+<div class="space-top"></div>
+<app-title class="flex justify-center items-center" title="Customer Login" color="#ff0f39c7" fontSize="40px" bg
+    margin="1.5rem 0 1.5rem 2.5rem"></app-title>
+<div class="mx-w flex justify-center items-center mx-auto">
+    <div class="details">
+        <form class="flex flex-col justify-center" [formGroup]="loginForm" (ngSubmit)="submit()">
+            <app-input [control]="fc.email" [showErrorsWhen]="isSubmitted" type="email" label="Email"></app-input>
+            <app-input [control]="fc.password" [showErrorsWhen]="isSubmitted" type="password"
+                label="Password"></app-input>
+            <default-button text="Login"></default-button>
+            <div class="register flex items-center justify-center">
+                New user? &nbsp;
+                <a routerLink="/register" [queryParams]="{returnUrl: returnUrl}">
+                    Register Here
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

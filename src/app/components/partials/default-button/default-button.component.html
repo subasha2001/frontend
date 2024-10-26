@@ -1,0 +1,13 @@
+<div class="flex justify-center w-full">
+    <button 
+    [ngStyle]="{ 
+        color:color,
+        'background-color':bgColor,
+        'font-size.rem':fontSize,
+        'width.%':width
+    }"
+    [type]="type"
+    (click)="onClick.emit()">
+    {{text}}
+    </button>
+</div>

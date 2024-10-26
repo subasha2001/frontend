@@ -1,0 +1,37 @@
+<div class="space-top"></div>
+<app-title class="text-center" title="Cart Page" margin="0 0 0 0" color="#616161"></app-title>
+<app-page-not-found [visible]="!cart || !cart.items.length" notFoundMsg="Cart Is Empty" resetLinkText="Go To HomePage">
+</app-page-not-found>
+<div class="mx-w flex flex-wrap flex-col md:flex-row">
+  <ul class="flex" *ngIf="cart && cart.items.length">
+    <li *ngFor="let data of cart.items" class="flex items-center flex-wrap justify-evenly">
+      <div><img src="http://localhost:3000/uploads/{{data.product.imageDis}}" [alt]="data.product.name" /></div>
+      <div class="hidden md:block">
+        <a routerLink="/product/{{ data.product.id }}">{{ data.product.name }}</a>
+      </div>
+      <div>
+        <select #quantitySelect [value]="data.quantity" (change)="changeQuantity(data, quantitySelect.value)">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+      <div class="w-2">
+        {{ data.price | currency : "&#8377; " }}
+      </div>
+      <div>
+        <button class="cupo remove-button" (click)="removeFromCart(data)">
+          Remove
+        </button>
+      </div>
+    </li>
+  </ul>
+  <div class="checkout flex justify-between items-center">
+    <div class="">
+      <div class="products-count">{{cart!.totalCount || 0}}</div>
+      <div class="total-price">{{ cart!.totalPrice || 0 | currency: "&#8377; "}}</div>
+    </div>
+    <a routerLink="/checkout">Proceed to Checkout</a>
+    <a routerLink="/">Back to Home</a>
+  </div>
+</div>

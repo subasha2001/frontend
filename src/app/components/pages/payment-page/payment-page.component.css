@@ -1,0 +1,36 @@
+.mx-w{
+    margin: 1rem auto 6rem;
+}
+.content{
+    width: 35rem;
+    margin-right: 3rem;
+    display: flex;flex-direction: column;
+}
+.summary{
+    margin-top: 0.7rem;
+}
+.summary h3{
+    margin: 0 1rem 0  0;
+    flex-basis: 5rem;
+}
+.summary span{
+    font-size: 1.2rem;
+}
+.buttons-container{
+    flex-basis: 100%;
+}
+.buttons{
+    margin: 2rem;
+    width: 35rem;
+}
+button{
+    color: white;
+    background-color: #e72929;
+    height: 3rem;
+    opacity: 0.8;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 2px 2px grey;
+}
+button:hover{opacity: 1;}

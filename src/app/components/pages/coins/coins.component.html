@@ -1,0 +1,30 @@
+<div class="space-top"></div>
+<div class="mx-w mx-auto">
+    <app-title class="text-center" title="Gold Palace Jewellery - Gold Coins" margin="0 0 2rem 0" color="#616161"></app-title>
+</div>
+<app-page-not-found [visible]="!products || !products.length" resetLinkText="Search Other Products" resetLinkRoute="/">
+</app-page-not-found>
+<div class="flex mx-w mx-auto">
+    <ul class="flex justify-center items-center mx-w mx-auto">
+        <ul *ngFor="let data of products">
+            <li *ngIf="data.metalType?.includes('coin')" class="mr-5">
+                <a routerLink='/product/{{data.id}}' class="shadow">
+                    <img class="w-8/12 z-10 default_img absolute top-6 left-10"
+                        src="http://localhost:3000/uploads/{{data.imageDis}}" [alt]="data.name" />
+                    <img class="w-8/12 z-10 hover_img absolute top-6 left-10"
+                        src="http://localhost:3000/uploads/{{data.imageHov}}" [alt]="data.name" />
+                    <div class="content absolute top-16">
+                        <div class="text-base font-medium px-5 py-2 h-16 flex items-center">{{data.name}}</div>
+                        <hr>
+                        <div class="font-light px-5 py-2">Weight: {{data.weight}} gms</div>
+                        <hr>
+                        <div class="price">
+                            <span>Price: {{ data.price | currency:"&#8377; "}}</span>
+                        </div>
+                    </div>
+                    <div routerLink="/product/{{data.id}}" class="atc">Add To Cart</div>
+                </a>
+            </li>
+        </ul>
+    </ul>
+</div>

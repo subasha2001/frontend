@@ -1,0 +1,8 @@
+<input-box [label]="label" class="position: relative">
+    <input 
+    class="bg-gray-100 mb-2 p-2 outline-none w-full rounded text-black-300" 
+    [type]="type" 
+    [placeholder]='label' 
+    [formControl]="formControl" />
+    <input-validation class="flex items-center justify-center absolute" [control]="control" [showErrorWhen]="showErrorsWhen"></input-validation>
+</input-box>

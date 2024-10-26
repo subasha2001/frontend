@@ -1,0 +1,53 @@
+<div class="space-top"></div>
+<div *ngIf="product" class="max-w-5xl mt-10 flex flex-col mx-auto justify-between items-center md:flex-row">
+    <div class="md:w-1/2 m-3 flex justify-center shadow-md flex-col items-center relative">
+        <a (click)="close(true)" class="flex justify-center"><img class="w-10/12 p-2"
+                src="http://localhost:3000/uploads/{{ImgDisHov || product.imageDis}}" [alt]="product.name"></a>
+        <div [ngClass]="{'active': closeClass}" class="modal" id="modal">
+            <span class="close" (click)="close(false)">&times;</span>
+            <img class="modal-img" src="http://localhost:3000/uploads/{{ImgDisHov || product.imageDis}}" alt="">
+        </div>
+        <div class="flex border-t-2">
+            <a class="w-1/4 p-2" (click)="showImg(product.imageDis)"><img class=""
+                    src="http://localhost:3000/uploads/{{product.imageDis}}" [alt]="product.name"></a>
+            <a class="w-1/4 p-2" (click)="showImg(product.imageHov)"><img class=""
+                    src="http://localhost:3000/uploads/{{product.imageHov}}" [alt]="product.name"></a>
+        </div>
+    </div>
+
+    <div class="details md:w-1/2 m-3 w-full p-5">
+        <div class="header df jcsb aic">
+            <span class="font-medium text-lg">
+                {{product.name}}
+            </span>
+        </div>
+        <div>
+            <hr class="w-1/6 my-2 mx-1 pt-px bg-gray-400">
+        </div>
+        <div class="price my-2 mx-1">{{ product.price | currency:"&#8377; "}}</div>
+        <div class="price my-2 mx-1" *ngIf="product.stock > 0">Available Stock: <strong>{{product.stock}}</strong></div>
+        <div class="price my-2 mx-1" *ngIf="product.stock == 0">Available Stock: <strong>OUT OF STOCK</strong></div>
+        <div class="description my-2 mx-1">
+            <span class="text-sm">
+                {{product.description}}
+            </span>
+        </div>
+        <hr class="w-full my-2 mt-4">
+        <button (click)="addToCart()" class="button-36 px-2" role="button">Add to Cart</button>
+        <hr class="w-full my-2">
+    </div>
+</div>
+<div class="review md:w-2/5 content mx-w mx-auto" *ngIf="product">
+    <p class="text-center">Review - {{product.name}}</p>
+    <form [formGroup]="reviewProduct" (ngSubmit)="addReview()" class="w-full">
+        <input type="text" placeholder="Enter Product Name" value="{{product.name}}" formControlName="productName" ngModel />
+        <input type="text" placeholder="Enter Display image with extension" value="{{product.imageDis}}" formControlName="imageDis"
+            ngModel />
+        <input type="text" placeholder="Enter Your Name" formControlName="name" ngModel />
+        <input type="number" placeholder="Enter Your Number" formControlName="number" ngModel />
+        <textarea type="text" placeholder="Product Review" formControlName="review" ngModel></textarea>
+        <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
+            Post Review
+        </button>
+    </form>
+</div>

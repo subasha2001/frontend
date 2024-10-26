@@ -1,0 +1,22 @@
+<div class="space-top"></div>
+<app-title class="flex justify-center items-center" title="Register" color="#ff0f39c7" fontSize="40px" bg
+    margin="1.5rem 0 1.5rem 2.5rem"></app-title>
+<div class="mx-w flex justify-center items-center mx-auto flex-col">
+    <div class="details">
+        <form [formGroup]="registerForm" (ngSubmit)="submit()">
+            <app-input [control]="fc.name" [showErrorsWhen]="isSubmitted" label="Name"></app-input>
+            <app-input [control]="fc.email" [showErrorsWhen]="isSubmitted" label="Email" type="email"></app-input>
+            <app-input [control]="fc.password" [showErrorsWhen]="isSubmitted" label="Password"
+                type="password"></app-input>
+            <app-input [control]="fc.confirmPassword" [showErrorsWhen]="isSubmitted" label="Confirm Password"
+                type="password"></app-input>
+            <app-input [control]="fc.address" [showErrorsWhen]="isSubmitted" label="Address"></app-input>
+            <default-button text="Register"></default-button>
+            <div class="login flex justify-center items-center">
+                Already a user? &nbsp;
+                <a routerLink="/login" [queryParams]="{returnUrl: returnUrl}">Login Here</a>
+            </div>
+        </form>
+    </div>
+
+</div>

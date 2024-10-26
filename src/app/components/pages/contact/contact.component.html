@@ -1,0 +1,44 @@
+<div class="w-full contact">
+    <app-title class="text-center" fontSize="40px" title="Contact Us" margin="0 0 1.5rem 0rem"></app-title>
+    <div class="content">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <label for="">Name<span>*</span></label>
+            <input type="text" placeholder="Enter Your Name" formControlName="name" id="name" required>
+            <label for="">Phone No.<span>*</span></label>
+            <input type="number" placeholder="Enter Your Mobile Number" formControlName="number" id="number" required>
+            <label for="">Email<span>*</span></label>
+            <input type="email" placeholder="Enter Your Email" formControlName="email" id="email" required>
+            <label for="">How can we help you?<span>*</span></label>
+            <textarea type="text" placeholder="Write your thoughts" formControlName="message" id="message"
+                required></textarea>
+            <button type="submit" class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">Get Help</button>
+        </form>
+        <div class="address">
+            <app-title class="text-center text-white font-bold" fontSize="40px" title="Contact Detalis"></app-title> <br>
+            <div class="flex cont-adds">
+                <div class="mb-2">
+                    <div class="flex justify-center items-center w-12 h-12 text-white rounded bg-red-700"><i
+                            class="fa fa-map-marker" aria-hidden="true"></i></div>
+                    <div class="ml-2">
+                        <p>Main Road, Avinashi - 641 554</p>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="flex justify-center items-center w-12 h-12 text-white rounded bg-red-700"><i class="fa fa-phone" aria-hidden="true"></i>
+                    </div>
+                    <div class="ml-2">
+                        <p>Phone: 04296 270916</p>
+                        <p>Time: 10AM to 6PM IST</p>
+                    </div>
+                </div>
+                <a href="" class="mb-2">
+                    <div class="flex justify-center items-center w-12 h-12 text-white rounded bg-red-700"><i
+                            class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                    <div class="ml-2">
+                        <p>goldpalace9162&#64;gmail.com</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

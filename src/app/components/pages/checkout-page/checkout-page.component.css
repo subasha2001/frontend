@@ -1,0 +1,25 @@
+.content{
+    width: 35rem;
+    margin-right: 3rem;
+}
+.content,form{
+    display: flex;flex-direction: column;
+}
+.buttons-container{
+    flex-basis: 100%;
+}
+.buttons{
+    margin: 2rem;
+    width: 35rem;
+}
+button{
+    color: white;
+    background-color: #e72929;
+    height: 3rem;
+    opacity: 0.8;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 2px 2px grey;
+}
+button:hover{opacity: 1;}

@@ -1,0 +1,17 @@
+<table>
+    <tr>
+        <td colspan="4">
+            <h3>Order Items:</h3>
+        </td>
+    </tr>
+    <tr *ngFor="let data of order.items">
+        <td><a routerLink="/product/{{data.product.id}}"><img src='http://localhost:3000/uploads/{{data.product.imageDis}}' /></a></td>
+        <td>{{data.product.name}}</td>
+        <td>{{data.quantity}}</td>
+        <td class="flex items-center justify-center">{{data.product.price | currency:"&#8377; "}}</td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td class="flex items-center justify-center"><strong><strong>Total: </strong>{{order.totalPrice | currency: "&#8377; "}}</strong></td>
+    </tr>
+</table>

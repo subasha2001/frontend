@@ -1,0 +1,49 @@
+.footer .logo{
+    width: 170px;
+}
+ul li a , ul li{
+    padding: 5px 0;
+}
+ul li div{
+    display: flex;
+    flex-direction: column;
+}
+ul li a{opacity: 0.7;}
+ul li a:hover{text-decoration: underline;opacity: 1;}
+p{
+    font-size: 20px;
+    font-weight: bold;
+}
+h2{
+    font-size: 25px;
+    text-align: center;
+    color: white;
+    margin: 10px auto;
+}
+.social{
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+i{
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transform: scale(1);
+    transition: all 0.2s linear;
+}
+i:hover{transform: scale(1.1);}
+.social a:hover .fa-facebook{background-color: #3b5998;color: white;}
+.social a:hover .fa-instagram{background-color: #cd486b;color: white;}
+/* .social a:hover .fa-twitter{background-color: #3cf;color: white;} */
+.social a:hover .fa-youtube{background-color: #dc4a38;color: white;}
+.fa-facebook{color: #3b5998;}
+.fa-instagram{color: #cd486b;}
+/* .fa-twitter{color: #3cf;} */

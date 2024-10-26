@@ -1,0 +1,21 @@
+<div class="space-top"></div>
+<div class="mx-w flex flex-wrap justify-center">
+    <div class="content flex flex-col">
+        <app-title title="Order Summary" fontSize="1.6rem"></app-title>
+        <div class="summary">
+            <div class="flex">
+                <h3>Name:</h3>
+                <span>{{order.name}}</span>
+            </div>
+            <div class="flex">
+                <h3>Address:</h3>
+                <span>{{order.address}}</span>
+            </div>
+        </div>
+        <order-items-list [order]="order"></order-items-list>
+    </div>
+    <div class="buttons-container flex justify-center">
+        <div class="buttons flex justify-center">
+        </div>
+    </div>
+</div>

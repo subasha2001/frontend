@@ -1,0 +1,16 @@
+<div class="space-top"></div>
+<div class="mx-w flex flex-wrap justify-center mx-auto">
+    <div class="content mx-5">
+        <app-title class="text-center" title="Order Form" fontSize="1.6rem" margin="0 0 0 0"></app-title>
+        <form [formGroup]="checkoutForn" class="w-full">
+            <app-input [control]="fc.name" label="Name"></app-input>
+            <app-input [control]="fc.address" label="Address"></app-input>
+        </form>
+        <order-items-list [order]="order"></order-items-list>
+    </div>
+    <div class="buttons-container flex justify-center">
+        <div class="buttons flex justify-center">
+            <button class="w-full" (click)="createOrder()">Go to Payment</button>
+        </div>
+    </div>
+</div>
