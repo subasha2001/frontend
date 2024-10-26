@@ -56,10 +56,11 @@ li a:hover img.default_img {
 
 .slider-container {
   display: flex;
+  margin: 0 -3%;
   overflow: hidden;
   width: 100%;
   max-width: 1280px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .slider-container porto-slider {

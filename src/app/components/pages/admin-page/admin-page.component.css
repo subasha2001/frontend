@@ -6,6 +6,7 @@ input,
 textarea {
   padding: 10px;
   width: 100%;
+  margin-top: 10px;
   background-color: #e4dedefd;
   margin-bottom: 5px;
   border-radius: 5px;
@@ -85,4 +86,10 @@ table td:first-child {
   padding: 10px 0px;
 }
 @media screen and (max-width: 768px) and (min-width: 300px) {
+  .mr-9{
+    font-size: 14px;
+  }
+  .delete ul li a{
+    padding: 5px 10px;
+  }
 }

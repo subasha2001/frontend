@@ -154,4 +154,10 @@ a:hover {
   .gold-silver a div {
     width: 100px !important;
   }
+  .logo{
+    width: 80px;
+  }
+  .user a{
+    font-size: 12px;
+  }
 }
