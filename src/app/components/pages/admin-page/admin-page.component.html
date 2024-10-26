@@ -75,7 +75,7 @@
                 <tr *ngFor="let data of products" class="text-center border-b-2">
                     <td class="" *ngIf="data.metalType?.includes(toDelete)">
                         <img class="mx-auto w-20 h-20 object-cover rounded-full"
-                            src="http://localhost:3000/uploads/{{ data.imageDis }}" [alt]="data.name" />
+                            src="{{baseurl}}/uploads/{{ data.imageDis }}" [alt]="data.name" />
                     </td>
                     <td class="w-2/5" *ngIf="data.metalType?.includes(toDelete)">
                         <a routerLink="/products/{{ data.id }}">{{ data.name }}</a>
@@ -95,7 +95,7 @@
     <div *ngIf="selectedDiv === 3" class="mx-w mx-auto flex flex-col items-center content">
         <div class="flex my-4 items-center w-11/12 justify-around" *ngFor="let data of bannerImg">
             <div class="image">
-                <img src="http://localhost:3000/uploads/{{ data.image }}" alt="" />
+                <img src="{{baseurl}}/uploads/{{ data.image }}" alt="" />
             </div>
             <p>{{ data.image }}</p>
             <button class="cupo remove-button" (click)="deleteBanner(data.id)">

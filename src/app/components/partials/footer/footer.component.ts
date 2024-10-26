@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +10,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   styleUrl: './footer.component.css',
 })
 export class FooterComponent {
+  baseurl = BASE_URL;
 
   constructor(private route: ActivatedRoute) {}
 

@@ -1,6 +1,6 @@
 <div class="slider relative m-auto text-center" *ngIf="banneritems && banneritems.length" (mouseenter)="startAutoSlide()" (mouseleave)="stopAutoSlide()">
     <div class="flex justify-center">
-        <img *ngFor="let data of banneritems; let i = index" src="http://localhost:3000/uploads/{{data.image}}"
+        <img *ngFor="let data of banneritems; let i = index" src="{{baseurl}}/uploads/{{data.image}}"
             class="slides-img fade position:relative left-0 right-0 w-full shadow" alt=""
             [ngClass]="{'image-active':selectedIndex === i,}" />
     </div>

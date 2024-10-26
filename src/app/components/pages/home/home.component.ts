@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from '../../partials/page-not-found/page-not-fo
 import { TitleComponent } from '../../partials/title/title.component';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { rates } from '../../../shared/models/rates';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +33,7 @@ export class HomeComponent {
   SR!: number;
   gst!: number;
   products: jewelleryType[] = [];
+  baseurl = BASE_URL;
 
   constructor(
     private service: ProductsService,
@@ -120,7 +122,8 @@ export class HomeComponent {
                   pdt.category?.includes('500mgcoin') &&
                   pdt.metalType?.includes('coin')
                 ) {
-                  pdt.price = (pdt.weight! + 0.15) * this.GR22 * (this.gst+pdt.weight!);
+                  pdt.price =
+                    (pdt.weight! + 0.15) * this.GR22 * (this.gst + pdt.weight!);
                 }
                 return pdt;
               });
@@ -190,13 +193,14 @@ export class HomeComponent {
                   pdt.category?.includes('500mgcoin') &&
                   pdt.metalType?.includes('coin')
                 ) {
-                  pdt.price = (pdt.weight! + 0.150) * this.GR22 * (this.gst*pdt.weight!);
+                  pdt.price =
+                    (pdt.weight! + 0.15) * this.GR22 * (this.gst * pdt.weight!);
                 }
                 return pdt;
               });
             })
           );
-      }else if(params.searchTerm){
+      } else if (params.searchTerm) {
         productsObservable = this.service
           .getProductsBySearchTerm(params.searchTerm)
           .pipe(

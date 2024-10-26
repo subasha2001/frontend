@@ -10,9 +10,9 @@
             <li *ngIf="data.metalType?.includes('gold')" class="mr-5">
                 <a routerLink='/product/{{data.id}}' class="shadow">
                     <img class="w-8/12 z-10 default_img absolute top-6 left-10"
-                        src="http://localhost:3000/uploads/{{data.imageDis}}" [alt]="data.name" />
+                        src="{{baseurl}}/uploads/{{data.imageDis}}" [alt]="data.name" />
                     <img class="w-8/12 z-10 hover_img absolute top-6 left-10"
-                        src="http://localhost:3000/uploads/{{data.imageHov}}" [alt]="data.name" />
+                        src="{{baseurl}}/uploads/{{data.imageHov}}" [alt]="data.name" />
                     <div class="content absolute top-16">
                         <div class="text-base font-medium px-5 py-2 h-16 flex items-center">{{data.name}}</div>
                         <hr>

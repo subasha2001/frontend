@@ -5,7 +5,7 @@
 <div class="mx-w flex flex-wrap flex-col md:flex-row">
   <ul class="flex" *ngIf="cart && cart.items.length">
     <li *ngFor="let data of cart.items" class="flex items-center flex-wrap justify-evenly">
-      <div><img src="http://localhost:3000/uploads/{{data.product.imageDis}}" [alt]="data.product.name" /></div>
+      <div><img src="{{baseurl}}/uploads/{{data.product.imageDis}}" [alt]="data.product.name" /></div>
       <div class="hidden md:block">
         <a routerLink="/product/{{ data.product.id }}">{{ data.product.name }}</a>
       </div>

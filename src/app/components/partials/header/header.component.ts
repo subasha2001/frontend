@@ -12,6 +12,7 @@ import { CartService } from '../../../services/cart.service';
 import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { Observable } from 'rxjs';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +34,7 @@ export class HeaderComponent {
   gst!: number;
   cartQuantity!: number;
   rates!: any;
+  baseurl = BASE_URL;
 
   constructor(
     service: ProductsService,

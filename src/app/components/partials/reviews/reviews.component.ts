@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { CommonModule } from '@angular/common';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'reviews',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './reviews.component.css',
 })
 export class ReviewsComponent implements OnInit {
+  baseurl = BASE_URL;
   constructor(
     actRoute: ActivatedRoute,
     private GS: GoldSilverService,

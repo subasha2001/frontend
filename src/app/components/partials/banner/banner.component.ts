@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { bannerType } from '../../../shared/models/bannerType';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-banner',
@@ -10,14 +11,14 @@ import { bannerType } from '../../../shared/models/bannerType';
   styleUrl: './banner.component.css',
 })
 export class ImageSliderComponent {
-
   @Input() indicators = true;
   @Input() controls = true;
   @Input() autoSlide = false;
   selectedIndex = 0;
+  baseurl = BASE_URL;
 
   @Input() banneritems: bannerType[] = [];
-  intervalId:any;
+  intervalId: any;
 
   showNext() {
     if (this.selectedIndex === this.banneritems.length - 1) {

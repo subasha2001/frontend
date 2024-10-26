@@ -5,7 +5,7 @@
         </td>
     </tr>
     <tr *ngFor="let data of order.items">
-        <td><a routerLink="/product/{{data.product.id}}"><img src='http://localhost:3000/uploads/{{data.product.imageDis}}' /></a></td>
+        <td><a routerLink="/product/{{data.product.id}}"><img src='{{baseurl}}/uploads/{{data.product.imageDis}}' /></a></td>
         <td>{{data.product.name}}</td>
         <td>{{data.quantity}}</td>
         <td class="flex items-center justify-center">{{data.product.price | currency:"&#8377; "}}</td>

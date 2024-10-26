@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-fo
 import { TitleComponent } from '../../partials/title/title.component';
 import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-gold-jewels',
@@ -22,6 +23,7 @@ export class GoldJewelsComponent {
   GR22!: number;
   GR24!: number;
   gst!: number;
+  baseurl = BASE_URL;
 
   constructor(
     private service: ProductsService,

@@ -6,28 +6,35 @@ import { ProductsService } from '../../../services/products.service';
 import { Observable } from 'rxjs';
 import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-found.component";
 import { TitleComponent } from '../../partials/title/title.component';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 @Component({
   selector: 'app-diamond-jewels',
   standalone: true,
   imports: [PageNotFoundComponent, CommonModule, RouterLink, TitleComponent],
   templateUrl: './diamond-jewels.component.html',
-  styleUrl: './diamond-jewels.component.css'
+  styleUrl: './diamond-jewels.component.css',
 })
 export class DiamondJewelsComponent {
   products: jewelleryType[] = [];
+  baseurl = BASE_URL;
 
-  constructor(private service: ProductsService, private actRoute: ActivatedRoute) {
+  constructor(
+    private service: ProductsService,
+    private actRoute: ActivatedRoute
+  ) {
     actRoute.params.subscribe((params) => {
       let productsObservable: Observable<jewelleryType[]>;
-      if(params.categoryName){
-        productsObservable = this.service.getProductsByCategory(params.categoryName);
+      if (params.categoryName) {
+        productsObservable = this.service.getProductsByCategory(
+          params.categoryName
+        );
       } else {
         productsObservable = this.service.getAllProducts();
       }
 
       productsObservable.subscribe((Products) => {
         this.products = Products;
-      })
-    })
+      });
+    });
   }
 }

@@ -19,9 +19,9 @@
         <li *ngFor="let data of products">
             <a routerLink='/product/{{data.id}}' class="shadow" *ngIf="data.category?.includes('featured')">
                 <img class="w-8/12 z-10 default_img absolute top-6 left-10"
-                    src="https://backend-gpj.onrender.com/uploads/{{data.imageDis}}" [alt]="data.name" />
+                    src="{{baseurl}}/uploads/{{data.imageDis}}" [alt]="data.name" />
                 <img class="w-8/12 z-10 hover_img absolute top-6 left-10"
-                    src="https://backend-gpj.onrender.com/uploads/{{data.imageHov}}" [alt]="data.name" />
+                    src="{{baseurl}}/uploads/{{data.imageHov}}" [alt]="data.name" />
                 <div class="content absolute top-16">
                     <div class="text-sm font-medium py-2 px-5 h-16 flex items-center">{{data.name}}</div>
                     <hr>

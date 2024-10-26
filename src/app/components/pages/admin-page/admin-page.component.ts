@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { bannerType } from '../../../shared/models/bannerType';
 import { ToastrService } from 'ngx-toastr';
 import { GoldSilverService } from '../../../services/gold-silver.service';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-admin-page',
@@ -34,6 +35,7 @@ export class AdminPageComponent implements OnInit {
   isAdded: boolean = false;
   returnUrl = '';
   bannerImg: bannerType[] = [];
+  baseurl = BASE_URL;
 
   constructor(
     private actRoute: ActivatedRoute,

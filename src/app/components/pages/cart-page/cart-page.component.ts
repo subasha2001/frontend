@@ -10,6 +10,7 @@ import { GoldSilverService } from '../../../services/gold-silver.service';
 import { map, Observable } from 'rxjs';
 import { rates } from '../../../shared/models/rates';
 import { jewelleryType } from '../../../shared/models/productType';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-cart-page',
@@ -26,30 +27,11 @@ import { jewelleryType } from '../../../shared/models/productType';
 })
 export class CartPageComponent implements OnInit {
   cart!: Cart;
-  GR22!: number;
-  GR24!: number;
-  GR18!: number;
-  SR!: number;
-  gst!: number;
+  baseurl = BASE_URL;
 
   constructor(
-    private cartservice: CartService,
-    private GS: GoldSilverService,
-    actRoute: ActivatedRoute
+    private cartservice: CartService
   ) {
-    actRoute.params.subscribe((params) => {
-      let ratesObservable: Observable<rates[]> = this.GS.getRatesFromDB();
-      ratesObservable.subscribe((Items) => {
-        Items.forEach((val) => {
-          this.GR18 = val.gold18;
-          this.GR22 = val.gold22;
-          this.GR24 = val.gold24;
-          this.SR = val.silver;
-          this.gst = val.gst;
-        });
-      });
-    });
-
     cartservice.getCartObservable().subscribe((Cart) => {
       this.cart = Cart;
     });

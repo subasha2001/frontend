@@ -2,7 +2,7 @@
     <div class="flex justify-center" *ngFor="let data of reviews; let i = index"
         class="fade relative left-0 right-0 w-full shadow" [ngClass]="{'image-active':selectedIndex === i,}">
         <div class="img">
-            <img src="http://localhost:3000/uploads/{{data.imageDis}}" alt="" />
+            <img src="{{baseurl}}/uploads/{{data.imageDis}}" alt="" />
         </div>
         <div class="content">
             <h2 class="text-left font-bold">{{data.productName}}</h2>

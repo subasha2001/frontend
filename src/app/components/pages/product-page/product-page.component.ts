@@ -13,6 +13,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-product-page',
@@ -29,6 +30,7 @@ export class ProductPageComponent implements OnInit {
   gst!: number;
   product!: jewelleryType;
   returnUrl!: string;
+  baseurl = BASE_URL;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -69,10 +71,10 @@ export class ProductPageComponent implements OnInit {
     this.returnUrl = this.actRoute.snapshot.queryParams['returnUrl'];
     this.calculatePrice();
   }
-  
+
   //price calculation
-  calculatePrice(){
-    let pdt = this.product
+  calculatePrice() {
+    let pdt = this.product;
     if (pdt.metalType?.includes('gold')) {
       pdt.price =
         (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 +
@@ -80,7 +82,6 @@ export class ProductPageComponent implements OnInit {
     }
   }
   //price calculation
-
 
   addToCart() {
     this.cartService.addToCart(this.product);
@@ -114,7 +115,5 @@ export class ProductPageComponent implements OnInit {
   }
   //review product
 
-  fetchPrice(){
-
-  }
+  fetchPrice() {}
 }

@@ -14,6 +14,7 @@ import { TitleComponent } from '../../partials/title/title.component';
 import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { ReviewsComponent } from '../../partials/reviews/reviews.component';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-home-page',
@@ -32,7 +33,7 @@ import { ReviewsComponent } from '../../partials/reviews/reviews.component';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent implements OnInit{
+export class HomePageComponent implements OnInit {
   GR18!: number;
   GR22!: number;
   GR24!: number;
@@ -40,6 +41,7 @@ export class HomePageComponent implements OnInit{
   gst!: number;
   products: jewelleryType[] = [];
   bannerImages: bannerType[] = [];
+  baseurl = BASE_URL;
 
   constructor(
     private service: ProductsService,
@@ -63,7 +65,7 @@ export class HomePageComponent implements OnInit{
         productsObservable = this.service.getProductsBySearchTerm(
           params.searchTerm
         );
-      }else {
+      } else {
         productsObservable = this.service.getAllProducts().pipe(
           map((products) => {
             return products.map((pdt) => {
@@ -125,13 +127,14 @@ export class HomePageComponent implements OnInit{
                 pdt.category?.includes('coin') &&
                 pdt.metalType?.includes('coin')
               ) {
-                pdt.price = (this.GR22+200)*pdt.weight! + this.gst*pdt.weight!;
+                pdt.price =
+                  (this.GR22 + 200) * pdt.weight! + this.gst * pdt.weight!;
                 console.log(this.GR22, this.gst, pdt.weight);
               } else if (
                 pdt.category?.includes('500mgcoin') &&
                 pdt.metalType?.includes('coin')
               ) {
-                pdt.price = ((pdt.weight! + 0.150)*this.GR22) * this.gst
+                pdt.price = (pdt.weight! + 0.15) * this.GR22 * this.gst;
               }
               return pdt;
             });
@@ -151,7 +154,7 @@ export class HomePageComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-      // console.log(this.gst);      
+    // console.log(this.gst);
   }
   //porto slider contents//
   porto: any[] = [

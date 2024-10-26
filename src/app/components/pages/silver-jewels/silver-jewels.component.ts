@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-fo
 import { TitleComponent } from '../../partials/title/title.component';
 import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-silver-jewels',
@@ -23,11 +24,11 @@ import { GoldSilverService } from '../../../services/gold-silver.service';
   templateUrl: './silver-jewels.component.html',
   styleUrl: './silver-jewels.component.css',
 })
-export class SilverJewelsComponent implements OnInit{
+export class SilverJewelsComponent implements OnInit {
   products: jewelleryType[] = [];
   SR!: number;
   gst!: number;
-  
+  baseurl = BASE_URL;
 
   constructor(
     private service: ProductsService,
@@ -102,11 +103,11 @@ export class SilverJewelsComponent implements OnInit{
                 } else if (
                   pdt.category?.includes('bangles') &&
                   pdt.metalType?.includes('silver')
-                ){
+                ) {
                   pdt.price = pdt.weight! * 150;
                 }
-                console.log(pdt);                
-                  return pdt;
+                console.log(pdt);
+                return pdt;
               });
             })
           );
@@ -119,7 +120,5 @@ export class SilverJewelsComponent implements OnInit{
       });
     });
   }
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 }
