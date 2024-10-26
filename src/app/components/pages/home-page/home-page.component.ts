@@ -129,7 +129,6 @@ export class HomePageComponent implements OnInit {
               ) {
                 pdt.price =
                   (this.GR22 + 200) * pdt.weight! + this.gst * pdt.weight!;
-                console.log(this.GR22, this.gst, pdt.weight);
               } else if (
                 pdt.category?.includes('500mgcoin') &&
                 pdt.metalType?.includes('coin')
@@ -160,23 +159,14 @@ export class HomePageComponent implements OnInit {
   porto: any[] = [
     { img: 'assets/images/porto/bestPrice.png', name: 'Best Price' },
     { img: 'assets/images/porto/bestQuality.png', name: 'Best Quality' },
-    {
-      img: 'assets/images/porto/securedShipping.png',
-      name: 'Secured Shipping',
-    },
+    { img: 'assets/images/porto/securedShipping.png', name: 'Secured Shipping', },
     { img: 'assets/images/porto/100-refund.png', name: '100% Refund' },
     { img: 'assets/images/porto/15DaysReturn.png', name: '15 Days Return' },
-    {
-      img: 'assets/images/porto/lifeTimeExchange.png',
-      name: 'Life TIme Exchange',
-    },
+    { img: 'assets/images/porto/lifeTimeExchange.png', name: 'Life TIme Exchange', },
     { img: 'assets/images/porto/listedCompany.png', name: 'Listed Company' },
     { img: 'assets/images/porto/50Stores.png', name: '50+ Stores' },
     { img: 'assets/images/porto/2000Employees.png', name: '2000+ Employees' },
-    {
-      img: 'assets/images/porto/certifiedJewellery.png',
-      name: 'Certified Jewellery',
-    },
+    { img: 'assets/images/porto/certifiedJewellery.png', name: 'Certified Jewellery', },
     { img: 'assets/images/porto/securedRetail.png', name: 'Secured Retail' },
   ];
 
