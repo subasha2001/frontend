@@ -64,9 +64,8 @@ export class ProductsService {
     );
   }
   getBannerItems(): Observable<bannerType[]> {
-    return this.http.get<bannerType[]>(
-      'https://backend-gpj.onrender.com/api/banner'
-    );
+    return this.http.get<bannerType[]>('https://backend-gpj.onrender.com/api/banner');
+    // return this.http.get<bannerType[]>('http://localhost:3000/api/banner');
   }
 
   getAllProducts(): Observable<jewelleryType[]> {
