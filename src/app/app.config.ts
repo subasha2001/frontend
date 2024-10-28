@@ -6,6 +6,7 @@ import { provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi 
 import { provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { authInterceptor } from './auth/auth.interceptor';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
       positionClass: 'toast-top-center',
       newestOnTop: false,
     }),
+    {provide:LocationStrategy, useClass:HashLocationStrategy},
     NoopAnimationsModule,
     BrowserAnimationsModule
   ],

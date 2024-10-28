@@ -6,7 +6,7 @@ input, textarea{
     border-radius: 5px;
 }
 .contact{
-    background-image: url("/assets/images/contact-bg.jpg");
+    background-image: url("http://localhost:3000/uploads/contact-bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 150px;
