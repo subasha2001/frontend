@@ -4,6 +4,7 @@ import { jewelleryType } from '../shared/models/productType';
 import { HttpClient } from '@angular/common/http';
 import {
   BANNER_URL,
+  BASE_URL,
   DELETE_BANNER_BY_ID_URL,
   DELETE_PRODUCT_BY_ID_URL,
   IMG_UPLOAD,
@@ -64,8 +65,8 @@ export class ProductsService {
     );
   }
   getBannerItems(): Observable<bannerType[]> {
-    return this.http.get<bannerType[]>('https://backend-gpj.onrender.com/api/banner');
-    // return this.http.get<bannerType[]>('http://localhost:3000/api/banner');
+    // return this.http.get<bannerType[]>('https://backend-gpj.onrender.com/api/banner');
+    return this.http.get<bannerType[]>(`${BASE_URL}/api/banner`);
   }
 
   getAllProducts(): Observable<jewelleryType[]> {
