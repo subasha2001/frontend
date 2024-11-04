@@ -5,6 +5,7 @@
         <form [formGroup]="checkoutForn" class="w-full">
             <app-input [control]="fc.name" label="Name"></app-input>
             <app-input [control]="fc.address" label="Address"></app-input>
+            <app-input [control]="fc.pincode" label="Pincode"></app-input>
         </form>
         <order-items-list [order]="order"></order-items-list>
     </div>

@@ -18,6 +18,7 @@ import { TermsConditionsComponent } from './components/pages/terms-conditions/te
 import { AdminLoginComponent } from './components/pages/admin-login/admin-login.component';
 import { adminauthGuard } from './auth/guards/adminauth.guard';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
+import { UpdateProductComponent } from './components/pages/update-product/update-product.component';
 
 export const routes: Routes = [
     {path:'', component:HomePageComponent},
@@ -31,6 +32,7 @@ export const routes: Routes = [
     {path:'category/silver/:categoryName', component:SilverJewelsComponent},
     {path:'category/diamond/:categoryName', component:DiamondJewelsComponent},
     {path:'delete/:id', component:HomePageComponent},
+    {path:'update/:id', component:UpdateProductComponent},
     {path:'contact', component:ContactComponent},
     {path:'login', component:LoginComponent},
     {path:'register', component:RegisterPageComponent},

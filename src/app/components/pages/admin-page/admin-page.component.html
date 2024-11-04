@@ -4,7 +4,6 @@
         <button (click)="toggleDiv(0)">Banner</button>
         <button (click)="toggleDiv(1)">Add Products</button>
         <button (click)="toggleDiv(2)">Delete Products</button>
-        <button (click)="toggleDiv(5)">Update Products</button>
         <button (click)="toggleDiv(3)">Delete Banner Images</button>
         <button (click)="toggleDiv(4)">Add Gold Rate</button>
     </div>
@@ -87,6 +86,10 @@
                         <button class="cupo remove-button" (click)="deleteProduct(data.id)">
                             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                         </button>
+                        <br>
+                        <button class="cupo remove-button" routerLink="/update/{{data.id}}">
+                            <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -113,31 +116,4 @@
             <button type="submit" class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">Update Gold and Silver Rates</button>
         </form>
     </div>
-    <!-- <div *ngIf="selectedDiv === 5" class="md:w-2/5 content flex items-center">
-        <form #addProduct="ngForm" (ngSubmit)="addProductt(addProduct.value)" class="w-full">
-            <input type="text" placeholder="Enter Product Name" name="name" ngModel />
-            <input type="text" placeholder="Enter Display image with extension" value="displayImageUrl" name="imageDis"
-                ngModel />
-            <input type="text" placeholder="Enter Hover image with extension" name="imageHov" ngModel />
-            <textarea type="text" placeholder="Product Description" name="description" ngModel></textarea>
-            <input type="text" placeholder="Enter Metal Type" name="metalType" ngModel />
-            <input type="text" placeholder="Enter Product Category" name="category" ngModel />
-            <input type="number" placeholder="Enter Product Weight in grams" name="weight" ngModel />
-            <input type="number" placeholder="Making Cost in %" name="makingCost" ngModel />
-            <input type="number" placeholder="Stone Carat" name="stoneCarat" ngModel />
-            <input type="number" placeholder="Stock Available" name="stock" ngModel />
-            <input type="number" placeholder="Wastage in %" name="wastage" ngModel />
-            <input type="text" placeholder="Featured Product - Enter true!" name="featured" ngModel />
-            <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
-                Update Product
-            </button>
-        </form>
-        <div class="flex flex-col items-center">
-            <input type="file" (change)="onFileSelected($event)" name="image" />
-            <button (click)="onUpload()"
-                class="imageUpBut bg-red-700 px-5 py-3 rounded w-full bo-ra5 cursor-pointer hover:shadow-xl">
-                Upload Image!
-            </button>
-        </div>
-    </div> -->
 </div>

@@ -1,5 +1,4 @@
 export class jewelleryType {
-  [x: string]: any;
   id!: string;
   name!: string;
   imageDis!: string;
@@ -11,6 +10,7 @@ export class jewelleryType {
   makingCost?: number;
   stock!: number;
   stoneCarte?: number;
+  size?:any;
   wastage?: number;
   featured?: string;
   price!: number;

@@ -45,21 +45,20 @@ export class AdminPageComponent implements OnInit {
     private fb: FormBuilder,
     private GS: GoldSilverService
   ) {
-    this.actRoute.params.subscribe((params) => {
-      let productsObservable: Observable<jewelleryType[]>;
-      productsObservable = this.service.getAllProducts();
+    let productsObservable: Observable<jewelleryType[]>;
+    productsObservable = this.service.getAllProducts();
 
-      productsObservable.subscribe((Products) => {
-        this.products = Products;
-      });
+    productsObservable.subscribe((Products) => {
+      this.products = Products;
     });
 
-    actRoute.params.subscribe((params) => {
-      let bannerObservable: Observable<bannerType[]> =
-        this.service.getBannerItems();
-      bannerObservable.subscribe((Items) => {
-        this.bannerImg = Items;
-      });
+    let bannerObservable: Observable<bannerType[]>;
+    bannerObservable = this.service.getBannerItems();
+
+    bannerObservable.subscribe((Items) => {
+      this.bannerImg = Items;
+      console.log(this.bannerImg);
+      
     });
 
     this.goldSilver = this.fb.group({
@@ -175,4 +174,6 @@ export class AdminPageComponent implements OnInit {
       });
     }
   }
+
+  updateProduct() {}
 }

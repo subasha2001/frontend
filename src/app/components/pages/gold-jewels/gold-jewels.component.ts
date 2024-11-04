@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { jewelleryType } from '../../../shared/models/productType';
 import { ProductsService } from '../../../services/products.service';
 import { map, Observable } from 'rxjs';
-import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-found.component";
+import { PageNotFoundComponent } from '../../partials/page-not-found/page-not-found.component';
 import { TitleComponent } from '../../partials/title/title.component';
 import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
@@ -17,13 +17,16 @@ import { BASE_URL } from '../../../shared/models/constants/urls';
   templateUrl: './gold-jewels.component.html',
   styleUrl: './gold-jewels.component.css',
 })
-export class GoldJewelsComponent {
+export class GoldJewelsComponent implements OnInit {
   products: jewelleryType[] = [];
   GR18!: number;
   GR22!: number;
   GR24!: number;
   gst!: number;
   baseurl = BASE_URL;
+  filteredProducts: jewelleryType[] = [];
+  availableSizes: any = 0;
+  selectedSizes: string[] = [];
 
   constructor(
     private service: ProductsService,
@@ -43,9 +46,7 @@ export class GoldJewelsComponent {
 
       let productsObservable: Observable<jewelleryType[]>;
       if (params.metalTypeName) {
-        productsObservable = this.service.getProductsByMetalType(
-          params.metalTypeName
-        );
+        productsObservable = this.service.getProductsByMetalType(params.metalTypeName);
       } else if (params.categoryName) {
         productsObservable = this.service
           .getProductsByCategory(params.categoryName)
@@ -53,12 +54,8 @@ export class GoldJewelsComponent {
             map((products) => {
               return products.map((pdt) => {
                 if (pdt.metalType?.includes('gold')) {
-                  pdt.price =
-                    (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) *
-                      this.GR22 +
-                    500;
+                  pdt.price = (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 + 500;
                 }
-                console.log(pdt);
                 return pdt;
               });
             })
@@ -71,5 +68,29 @@ export class GoldJewelsComponent {
         this.products = Products;
       });
     });
+
+    this.availableSizes = [
+      ...new Set(this.products.map((product) => product.size)),
+    ];
+  }
+  ngOnInit(): void {
+    this.applyFilters();
+  }
+  onChange(size: string, event: any): void {
+    if (event.target.checked) {
+      this.selectedSizes.push(size);
+    } else {
+      this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
+    }
+
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    if (this.selectedSizes.length > 0) {
+      this.filteredProducts = this.products.filter((product) => this.selectedSizes.includes(product.size));
+    } else {
+      this.filteredProducts = [...this.products];
+    }
   }
 }

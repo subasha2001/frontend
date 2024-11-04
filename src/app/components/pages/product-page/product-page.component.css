@@ -17,7 +17,9 @@
 .modal.active {
   display: block !important;
 }
-
+.active {
+  display: block;
+}
 .modal-img {
   margin: auto;
   display: block;
@@ -75,6 +77,16 @@ textarea::placeholder {
 .review form input:nth-child(2),
 .review form input:nth-child(1) {
   display: none;
+}
+.product-details .flex{
+  margin:10px 5px;
+  text-transform: uppercase;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.product-details .heading{
+  font-weight: bold;
+  width: 25%;
 }
 @media only screen and (max-width: 550px) {
   .modal-content {

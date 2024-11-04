@@ -1,5 +1,5 @@
-// export const BASE_URL = 'http://localhost:3000';
-export const BASE_URL = 'https://backend-gpj.onrender.com';
+export const BASE_URL = 'http://localhost:3000';
+// export const BASE_URL = 'https://backend-gpj.onrender.com';
 
 export const PRODUCTS_URL = BASE_URL + '/api/products';
 export const PRODUCTS_METALTYPES_URL = PRODUCTS_URL + '/metalType';
@@ -9,6 +9,7 @@ export const PRODUCTS_BY_METALTYPE_URL = PRODUCTS_URL + '/metalType/';
 export const PRODUCTS_BY_CATEGORY_URL = PRODUCTS_URL + '/category/';
 export const PRODUCTS_BY_ID_URL = PRODUCTS_URL + '/';
 export const DELETE_PRODUCT_BY_ID_URL = PRODUCTS_URL + '/deleteProduct/';
+export const UPDATE_PRODUCT_BY_ID_URL = PRODUCTS_URL + '/getProductValue/';
 
 export const IMG_UPLOAD = PRODUCTS_URL + '/upload'
 export const GET_IMAGE = BASE_URL + '/uploads/'

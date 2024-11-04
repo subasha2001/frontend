@@ -37,7 +37,12 @@
         <hr class="w-full my-2">
     </div>
 </div>
-<div class="review md:w-2/5 content mx-w mx-auto" *ngIf="product">
+<div class="toggle m-5 flex justify-around">
+    <a (click)="details()">Product Details</a>
+    <a (click)="reviews()">Review Product</a>
+</div>
+<div class="review md:w-2/5 content mx-w mx-auto hidden" *ngIf="product" [ngClass]="{active: review}">
+        <app-title class="text-center" title="Review Product" margin="0 0 0 0" color="#616161"></app-title>
     <p class="text-center">Review - {{product.name}}</p>
     <form [formGroup]="reviewProduct" (ngSubmit)="addReview()" class="w-full">
         <input type="text" placeholder="Enter Product Name" value="{{product.name}}" formControlName="productName" ngModel />
@@ -50,4 +55,39 @@
             Post Review
         </button>
     </form>
+</div>
+<div class="product-details mx-w mx-auto hidden" *ngIf="product" [ngClass]="{active: detail}">
+    <app-title class="text-center" title="Product Details" margin="0 0 0 0" color="#616161" fontSize="30px"></app-title>
+    <div class="flex">
+        <div class="heading">Product Name</div>
+        <div class="content">: {{product.name}}</div>
+    </div>
+    <div class="flex">
+        <div class="heading">Product Weight</div>
+        <div class="content">: {{product.weight}} g</div>
+    </div>
+    <div class="flex">
+        <div class="heading">Product Type</div>
+        <div class="content">: {{product.metalType}}</div>
+    </div>
+    <div class="flex" *ngIf="product.stock >= 1">
+        <div class="heading">Stock available</div>
+        <div class="content">: {{product.stock}}</div>
+    </div>
+    <div class="flex" *ngIf="product.stock == 0">
+        <div class="heading">Stock available</div>
+        <div class="content">: OUT of stock</div>
+    </div>
+    <div class="flex" *ngIf="product.category?.includes('24KT')">
+        <div class="heading">Gold type</div>
+        <div class="content">: 24KT</div>
+    </div>
+    <div class="flex" *ngIf="product.category?.includes('22KT')">
+        <div class="heading">Gold type</div>
+        <div class="content">: 22KT</div>
+    </div>
+    <div class="flex" *ngIf="product.category?.includes('18KT')">
+        <div class="heading">Gold type</div>
+        <div class="content">: 18KT</div>
+    </div>
 </div>

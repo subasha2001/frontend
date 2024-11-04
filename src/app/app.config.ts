@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
       positionClass: 'toast-top-center',
       newestOnTop: false,
     }),
-    {provide:LocationStrategy, useClass:HashLocationStrategy},
+    // {provide:LocationStrategy, useClass:HashLocationStrategy},
     NoopAnimationsModule,
     BrowserAnimationsModule
   ],

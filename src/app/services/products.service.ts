@@ -15,6 +15,7 @@ import {
   PRODUCTS_CATEGORIES_URL,
   PRODUCTS_METALTYPES_URL,
   PRODUCTS_URL,
+  UPDATE_PRODUCT_BY_ID_URL,
 } from '../shared/models/constants/urls';
 import { Category } from '../shared/models/categories';
 import { bannerType } from '../shared/models/bannerType';
@@ -25,10 +26,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor(
-    private http: HttpClient,
-    private toastr: ToastrService
-  ) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   addProduct(product: jewelleryType): Observable<jewelleryType> {
     return this.http
@@ -70,7 +68,7 @@ export class ProductsService {
   }
 
   getAllProducts(): Observable<jewelleryType[]> {
-    return this.http.get<jewelleryType[]>(PRODUCTS_URL)
+    return this.http.get<jewelleryType[]>(PRODUCTS_URL);
   }
 
   getProductsBySearchTerm(searchTerm: string) {
@@ -105,6 +103,10 @@ export class ProductsService {
 
   deleteProductById(productId: string) {
     return this.http.delete(DELETE_PRODUCT_BY_ID_URL + productId);
+  }
+
+  updateProductById(product:jewelleryType) {
+    return this.http.put(UPDATE_PRODUCT_BY_ID_URL + product.id, product);
   }
 
   deleteBannerById(productId: string) {

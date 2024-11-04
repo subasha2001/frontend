@@ -1,10 +1,21 @@
 <div class="space-top"></div>
 <div class="mx-w mx-auto">
-    <app-title class="text-center" title="Gold Palace Jewellery - Gold Jewels" margin="0 0 2rem 0" color="#616161"></app-title>
+    <app-title class="text-center" title="Gold Palace Jewellery - Gold Jewels" margin="0 0 2rem 0"
+        color="#616161"></app-title>
 </div>
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Search Other Products" resetLinkRoute="/">
 </app-page-not-found>
 <div class="flex mx-w mx-auto">
+    <div class="filters">
+        <h3>Size Filter only for Bangles, Bracelets, chains and rings</h3>
+        <h4>Filter by Size :</h4>
+        <div *ngFor="let size of availableSizes">
+            <label>
+                <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
+                {{ size }}
+            </label>
+        </div>
+    </div>
     <ul class="flex justify-center items-center mx-w mx-auto">
         <ul *ngFor="let data of products">
             <li *ngIf="data.metalType?.includes('gold')" class="mr-5">

@@ -39,11 +39,12 @@ export class CheckoutPageComponent implements OnInit{
     this.order.totalPrice = parseFloat(cart.totalPrice.toFixed(2));
   }
   ngOnInit(): void {
-    let {name, address} = this.userservice.currentUser;
+    let {name, address, pincode} = this.userservice.currentUser;
     this.checkoutForn = this.formBuilder.group({
       name: [name, Validators.required],
-      address: [address, Validators.required]
-    })
+      address: [address, Validators.required],
+      pincode:[pincode, Validators.required]
+    }) 
   }
   get fc(){
     return this.checkoutForn.controls;
@@ -57,6 +58,7 @@ export class CheckoutPageComponent implements OnInit{
 
     this.order.name = this.fc.name.value;
     this.order.address = this.fc.address.value;
+    this.order.pincode = this.fc.pincode.value;
 
     this.orderservice.create(this.order).subscribe({
       next:()=>{

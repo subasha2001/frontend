@@ -69,3 +69,12 @@ li a:hover .atc {
   z-index: 10;
   opacity: 1;
 }
+.filters{
+  width: 30%;
+}
+.filters h3{
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}

@@ -5,13 +5,23 @@
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Reset Search">
 </app-page-not-found>
 <div class="flex mx-w mx-auto">
+  <div class="filters">
+    <h3>Size Filter only for Bangles, Bracelets, chains and rings</h3>
+    <h4>Filter by Size :</h4>
+    <div *ngFor="let size of availableSizes">
+      <label>
+        <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
+        {{ size }}
+      </label>
+    </div>
+  </div>
   <ul class="mx-w mx-auto">
-    <li *ngFor="let data of products" class="mr-5">
+    <li *ngFor="let data of filteredProducts" class="mr-5">
       <a routerLink="/product/{{ data.id }}" class="shadow">
-        <img class="w-8/12 z-10 default_img absolute top-6 left-10"
-          src="{{baseurl}}/uploads/{{ data.imageDis }}" [alt]="data.name" />
-        <img class="w-8/12 z-10 hover_img absolute top-6 left-10"
-          src="{{baseurl}}/uploads/{{ data.imageHov }}" [alt]="data.name" />
+        <img class="w-8/12 z-10 default_img absolute top-6 left-10" src="{{baseurl}}/uploads/{{ data.imageDis }}"
+          [alt]="data.name" />
+        <img class="w-8/12 z-10 hover_img absolute top-6 left-10" src="{{baseurl}}/uploads/{{ data.imageHov }}"
+          [alt]="data.name" />
         <div class="content absolute top-16">
           <div class="text-sm px-5 font-medium py-2 h-16 flex items-center">
             {{ data.name }}

@@ -11,6 +11,7 @@ import { TitleComponent } from '../../partials/title/title.component';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { rates } from '../../../shared/models/rates';
 import { BASE_URL } from '../../../shared/models/constants/urls';
+import { Category } from '../../../shared/models/categories';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +35,10 @@ export class HomeComponent {
   gst!: number;
   products: jewelleryType[] = [];
   baseurl = BASE_URL;
+  filteredProducts: any[] = [];
+  availableSizes: any = 0;
+  selectedSizes: string[] = [];
+  // categories?: Category[];
 
   constructor(
     private service: ProductsService,
@@ -115,15 +120,38 @@ export class HomeComponent {
                   pdt.price = pdt.weight! * 200;
                 } else if (
                   pdt.category?.includes('bangles') &&
+                  pdt.category?.includes('silver92')
+                ) {
+                  pdt.price = pdt.weight! * 280;
+                } else if (
+                  pdt.category?.includes('bangles') &&
                   pdt.metalType?.includes('silver')
                 ) {
-                  pdt.price = pdt.weight! * 150;
+                  pdt.price = pdt.weight! * 180;
+                } else if (
+                  pdt.category?.includes('bracelet') &&
+                  pdt.category?.includes('silver')
+                ) {
+                  pdt.price = pdt.weight! * 180;
+                } else if (
+                  pdt.category?.includes('bracelet') &&
+                  pdt.category?.includes('silver92')
+                ) {
+                  pdt.price = pdt.weight! * 280;
                 } else if (
                   pdt.category?.includes('500mgcoin') &&
                   pdt.metalType?.includes('coin')
                 ) {
                   pdt.price =
-                    (pdt.weight! + 0.15) * this.GR22 * (this.gst + pdt.weight!);
+                    (pdt.weight! + 0.15) * this.GR22 + this.gst * this.GR22!;
+                  console.log(pdt.price);
+                } else if (
+                  pdt.category?.includes('coin') &&
+                  pdt.metalType?.includes('coin')
+                ) {
+                  pdt.price =
+                    (this.GR22 + 200) * pdt.weight! +
+                    this.gst * pdt.weight! * this.GR22;
                 }
                 return pdt;
               });
@@ -190,11 +218,39 @@ export class HomeComponent {
                 ) {
                   pdt.price = pdt.weight! * 200;
                 } else if (
+                  pdt.category?.includes('bangles') &&
+                  pdt.category?.includes('silver92')
+                ) {
+                  pdt.price = pdt.weight! * 280;
+                } else if (
+                  pdt.category?.includes('bangles') &&
+                  pdt.metalType?.includes('silver')
+                ) {
+                  pdt.price = pdt.weight! * 180;
+                } else if (
+                  pdt.category?.includes('bracelet') &&
+                  pdt.category?.includes('silver')
+                ) {
+                  pdt.price = pdt.weight! * 180;
+                } else if (
+                  pdt.category?.includes('bracelet') &&
+                  pdt.category?.includes('silver92')
+                ) {
+                  pdt.price = pdt.weight! * 280;
+                } else if (
                   pdt.category?.includes('500mgcoin') &&
                   pdt.metalType?.includes('coin')
                 ) {
                   pdt.price =
-                    (pdt.weight! + 0.15) * this.GR22 * (this.gst * pdt.weight!);
+                    (pdt.weight! + 0.15) * this.GR22 + this.gst * this.GR22!;
+                  console.log(pdt.price);
+                } else if (
+                  pdt.category?.includes('coin') &&
+                  pdt.metalType?.includes('coin')
+                ) {
+                  pdt.price =
+                    (this.GR22 + 200) * pdt.weight! +
+                    this.gst * pdt.weight! * this.GR22;
                 }
                 return pdt;
               });
@@ -261,11 +317,39 @@ export class HomeComponent {
                 ) {
                   pdt.price = pdt.weight! * 200;
                 } else if (
+                  pdt.category?.includes('bangles') &&
+                  pdt.category?.includes('silver92')
+                ) {
+                  pdt.price = pdt.weight! * 280;
+                } else if (
+                  pdt.category?.includes('bangles') &&
+                  pdt.metalType?.includes('silver')
+                ) {
+                  pdt.price = pdt.weight! * 180;
+                } else if (
+                  pdt.category?.includes('bracelet') &&
+                  pdt.category?.includes('silver')
+                ) {
+                  pdt.price = pdt.weight! * 180;
+                } else if (
+                  pdt.category?.includes('bracelet') &&
+                  pdt.category?.includes('silver92')
+                ) {
+                  pdt.price = pdt.weight! * 280;
+                } else if (
                   pdt.category?.includes('500mgcoin') &&
                   pdt.metalType?.includes('coin')
                 ) {
                   pdt.price =
-                    (pdt.weight! + 0.15) * this.GR22 * (this.gst * pdt.weight!);
+                    (pdt.weight! + 0.15) * this.GR22 + this.gst * this.GR22!;
+                  console.log(pdt.price);
+                } else if (
+                  pdt.category?.includes('coin') &&
+                  pdt.metalType?.includes('coin')
+                ) {
+                  pdt.price =
+                    (this.GR22 + 200) * pdt.weight! +
+                    this.gst * pdt.weight! * this.GR22;
                 }
                 return pdt;
               });
@@ -279,5 +363,33 @@ export class HomeComponent {
         this.products = Products;
       });
     });
+    this.availableSizes = [
+      ...new Set(this.products.map((product) => product.size)),
+    ];
+    // service.getAllCategory().subscribe((serveCategories) => {
+    //   this.categories = serveCategories;
+    // });
+  }
+  ngOnInit(): void {
+    this.applyFilters();
+  }
+  onChange(size: string, event: any): void {
+    if (event.target.checked) {
+      this.selectedSizes.push(size);
+    } else {
+      this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
+    }
+
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    if (this.selectedSizes.length > 0) {
+      this.filteredProducts = this.products.filter((product) =>
+        this.selectedSizes.includes(product.size)
+      );
+    } else {
+      this.filteredProducts = [...this.products];
+    }
   }
 }

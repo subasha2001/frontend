@@ -6,6 +6,7 @@ export class Order{
     totalPrice!:number;
     name!: string;
     address!: string;
+    pincode!:number;
     paymentId?: string;
     createdAt!: string;
     status!: string;

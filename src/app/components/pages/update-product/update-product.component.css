@@ -1,0 +1,10 @@
+input,
+textarea {
+  padding: 10px;
+  width: 100%;
+  margin-top: 10px;
+  background-color: #e4dedefd;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  outline: none;
+}

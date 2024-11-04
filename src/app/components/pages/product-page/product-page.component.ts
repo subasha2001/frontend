@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { jewelleryType } from '../../../shared/models/productType';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
 import { map, Observable } from 'rxjs';
 import { rates } from '../../../shared/models/rates';
@@ -14,11 +14,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { BASE_URL } from '../../../shared/models/constants/urls';
+import { TitleComponent } from '../../partials/title/title.component';
 
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgClass, TitleComponent],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.css',
 })
@@ -54,7 +55,78 @@ export class ProductPageComponent implements OnInit {
 
       if (params.id) {
         service.getProductById(params.id).subscribe((Product) => {
-          this.product = Product;
+          let pdt = Product;
+          if (pdt.metalType?.includes('gold')) {
+            pdt.price =
+              (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) *
+                this.GR22 +
+              500;
+          } else if (pdt.category?.includes('kolusu')) {
+            pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
+          } else if (pdt.category?.includes('kokkikolusu')) {
+            pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
+          } else if (pdt.category?.includes('thandai')) {
+            pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
+          } else if (
+            pdt.category?.includes('vessel') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 180;
+          } else if (
+            pdt.category?.includes('ring') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 180;
+          } else if (
+            pdt.category?.includes('earing') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 180;
+          } else if (
+            pdt.category?.includes('chain') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 180;
+          } else if (
+            pdt.category?.includes('92silver') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 350;
+          } else if (
+            pdt.category?.includes('stud') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 350;
+          } else if (
+            pdt.category?.includes('goldplated') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 400;
+          } else if (
+            pdt.category?.includes('metti') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 200;
+          } else if (
+            pdt.category?.includes('bangles') &&
+            pdt.metalType?.includes('silver')
+          ) {
+            pdt.price = pdt.weight! * 150;
+          } else if (
+            pdt.category?.includes('500mgcoin') &&
+            pdt.metalType?.includes('coin')
+          ) {
+            pdt.price =
+              (pdt.weight! + 0.15) * this.GR22 + this.gst * this.GR22!;
+          } else if (
+            pdt.category?.includes('coin') &&
+            pdt.metalType?.includes('coin')
+          ) {
+            pdt.price =
+              (this.GR22 + 200) * pdt.weight! +
+              this.gst * pdt.weight! * this.GR22;
+          }
+          this.product = pdt;
         });
       }
     });
@@ -69,19 +141,7 @@ export class ProductPageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.returnUrl = this.actRoute.snapshot.queryParams['returnUrl'];
-    this.calculatePrice();
   }
-
-  //price calculation
-  calculatePrice() {
-    let pdt = this.product;
-    if (pdt.metalType?.includes('gold')) {
-      pdt.price =
-        (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 +
-        500;
-    }
-  }
-  //price calculation
 
   addToCart() {
     this.cartService.addToCart(this.product);
@@ -115,5 +175,15 @@ export class ProductPageComponent implements OnInit {
   }
   //review product
 
-  fetchPrice() {}
+  //prduct details//
+  detail: boolean = true;
+  review: boolean = false;
+  details() {
+    this.detail = true;
+    this.review = false;
+  }
+  reviews() {
+    this.review = true;
+    this.detail = false;
+  }
 }
