@@ -1,36 +1,51 @@
-.mx-w{
-    margin: 1rem auto 6rem;
+.mx-w {
+  margin: 1rem auto 6rem;
 }
-.content{
-    width: 35rem;
-    margin-right: 3rem;
-    display: flex;flex-direction: column;
+.content {
+  width: 35rem;
+  display: flex;
+  flex-direction: column;
 }
-.summary{
-    margin-top: 0.7rem;
+.summary {
+  margin-top: 0.7rem;
 }
-.summary h3{
-    margin: 0 1rem 0  0;
-    flex-basis: 5rem;
+.summary {
+  margin: 0 1rem 0 0px;
+  flex-basis: 5rem;
+  font-size: 20px;
 }
-.summary span{
-    font-size: 1.2rem;
+.summary span {
+  margin: 0 0 15px 15px;
+  font-size: 20px;
+  color: #505050;
 }
-.buttons-container{
-    flex-basis: 100%;
+.buttons-container {
+  flex-basis: 100%;
 }
-.buttons{
-    margin: 2rem;
-    width: 35rem;
+.buttons {
+  margin: 2rem;
+  width: 35rem;
 }
-button{
-    color: white;
-    background-color: #e72929;
-    height: 3rem;
-    opacity: 0.8;
-    font-size: 1.3rem;
-    border: none;
-    border-radius: 0.5rem;
-    box-shadow: 2px 2px 2px 2px grey;
+button {
+  color: white;
+  background-color: #e72929;
+  height: 3rem;
+  opacity: 0.8;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 2px 2px grey;
 }
-button:hover{opacity: 1;}
+button:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 550px) {
+  .buttons-container {
+    max-width: 375px;
+  }
+
+  .order-summary {
+    margin: 0 5%;
+  }
+}

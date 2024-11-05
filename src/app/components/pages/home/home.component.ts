@@ -72,7 +72,7 @@ export class HomeComponent {
                     500;
                 } else if (pdt.category?.includes('kolusu')) {
                   pdt.price =
-                    (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
+                    (this.SR + (pdt.wastage! + this.gst) * 100) * pdt.weight!;
                 } else if (pdt.category?.includes('kokkikolusu')) {
                   pdt.price =
                     (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
@@ -171,7 +171,7 @@ export class HomeComponent {
                     500;
                 } else if (pdt.category?.includes('kolusu')) {
                   pdt.price =
-                    (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
+                    (this.SR + (pdt.wastage! + this.gst) * 100) * pdt.weight!;
                 } else if (pdt.category?.includes('kokkikolusu')) {
                   pdt.price =
                     (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
@@ -371,7 +371,7 @@ export class HomeComponent {
     }, {});
 
     this.availableSizes = [
-      ...new Set(this.products.map((product) => product.size)),
+      ...new Set(this.products.map((product) => product.size).filter(size => size))
     ].sort((a, b) => {
       return parseFloat(a) - parseFloat(b); // Sort sizes as numbers
     });
@@ -414,5 +414,5 @@ export class HomeComponent {
     }
   }
 }
-// 4934
+// 500mg - 4934
 // 1g - 7900

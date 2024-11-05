@@ -93,3 +93,8 @@ li a:hover .atc {
 .filters p span {
   font-weight: 500;
 }
+.filters .size , .filters .priceFilter{
+  font-size: 18px;
+  padding: 5px;
+  color: gray;
+}

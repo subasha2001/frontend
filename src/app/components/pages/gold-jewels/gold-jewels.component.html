@@ -6,13 +6,30 @@
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Search Other Products" resetLinkRoute="/">
 </app-page-not-found>
 <div class="flex mx-w mx-auto">
-    <div class="filters">
-        <h3>Size Filter only for Bangles, Bracelets, chains and rings</h3>
-        <h4>Filter by Size :</h4>
-        <div *ngFor="let size of availableSizes">
+    <div class="filters hidden md:block">
+        <h4 class="underline">Filter by Size :</h4>
+        <p>
+            <span>Bangles size from :</span> 2.0 to 2.10 <br>
+            <span>Ring size from :</span> 7 to 27 <br>
+            <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
+            <span>Chain sizes :</span> 16, 18, 20, 24, 27 and 30(inches)
+        </p>
+        <h4>Sort by Size</h4>
+        <div *ngFor="let size of availableSizes" class="size">
             <label>
                 <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
-                {{ size }}
+                {{ size }} ({{ sizeCounts[size] }})
+            </label>
+        </div>
+        <h4>Sort by Price</h4>
+        <div class="priceFilter">
+            <label>
+                <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+                Low to High
+            </label> <br>
+            <label>
+                <input type="checkbox" (change)="sortProducts('descending', $event)" />
+                High to Low
             </label>
         </div>
     </div>

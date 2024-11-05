@@ -1,5 +1,5 @@
 table{
-    width: 100%;border: 1px solid #eeeeee;
+    width: 100%;border: 1px solid #c5c5c5;
     margin-top: 1rem;
     border-radius: 5px;
     padding: 0.5rem 1rem;
@@ -14,10 +14,15 @@ a:hover{
 }
 td{
     height: 3rem;
+    padding: 5px;
 }
 td img{
     width: 3rem;
     height: 3rem;
     object-fit: cover;
     border-radius: 100rem;
+}
+tr:nth-child(2), tr:last-child td:last-child{
+    background-color: #fc4262;
+    color: white;
 }

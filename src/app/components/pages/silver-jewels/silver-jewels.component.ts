@@ -29,6 +29,10 @@ export class SilverJewelsComponent implements OnInit {
   SR!: number;
   gst!: number;
   baseurl = BASE_URL;
+  filteredProducts: any[] = [];
+  availableSizes: any = 0;
+  selectedSizes: string[] = [];
+  sizeCounts: { [size: string]: number } = {};
 
   constructor(
     private service: ProductsService,
@@ -119,6 +123,50 @@ export class SilverJewelsComponent implements OnInit {
         this.products = Products;
       });
     });
+    this.sizeCounts = this.products.reduce((counts: any, product) => {
+      counts[product.size] = (counts[product.size] || 0) + 1;
+      return counts;
+    }, {});
+
+    this.availableSizes = [
+      ...new Set(
+        this.products.map((product) => product.size).filter((size) => size)
+      )].sort((a, b) => {
+      return parseFloat(a) - parseFloat(b);
+    });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.applyFilters();
+  }
+  onChange(size: string, event: any): void {
+    if (event.target.checked) {
+      this.selectedSizes.push(size);
+    } else {
+      this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
+    }
+
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    if (this.selectedSizes.length > 0) {
+      this.filteredProducts = this.products.filter((product) =>
+        this.selectedSizes.includes(product.size)
+      );
+    } else {
+      this.filteredProducts = [...this.products];
+    }
+  }
+
+  sortProducts(order: string, event: any): void {
+    if (event.target.checked) {
+      const otherOrder = order === 'ascending' ? 'descending' : 'ascending';
+
+      this.filteredProducts.sort((a, b) => {
+        return order === 'ascending' ? a.price - b.price : b.price - a.price;
+      });
+    } else {
+      this.filteredProducts = [...this.products];
+    }
+  }
 }

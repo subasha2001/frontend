@@ -4,6 +4,12 @@
             <h3>Order Items:</h3>
         </td>
     </tr>
+    <tr>
+        <td>Image</td>
+        <td>Name</td>
+        <td>Quantity</td>
+        <td class="flex items-center justify-center">Price</td>
+    </tr>
     <tr *ngFor="let data of order.items">
         <td><a routerLink="/product/{{data.product.id}}"><img src='{{baseurl}}/uploads/{{data.product.imageDis}}' /></a></td>
         <td>{{data.product.name}}</td>

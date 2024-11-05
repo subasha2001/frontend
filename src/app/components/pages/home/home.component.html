@@ -8,23 +8,24 @@
   <div class="filters hidden md:block">
     <h4 class="underline">Filter by Size :</h4>
     <p>
-      <span>Bangles size from      :</span> 2.0 to 2.10 <br>
-      <span>Ring size from         :</span> 7 to 27 <br>
+      <span>Bangles size from :</span> 2.0 to 2.10 <br>
+      <span>Ring size from :</span> 7 to 27 <br>
       <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
-      <span>Chain sizes            :</span> 16, 18, 20, 24, 27 and 30(inches)
+      <span>Chain sizes :</span> 16, 18, 20, 24, 27 and 30(inches)
     </p>
-    <div *ngFor="let size of availableSizes">
+    <h4>Sort by Size</h4>
+    <div *ngFor="let size of availableSizes" class="size">
       <label>
         <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
         {{ size }} ({{ sizeCounts[size] }})
       </label>
     </div>
-    <div class="">
-      <h4>Sort by Price</h4>
+    <h4>Sort by Price</h4>
+    <div class="priceFilter">
       <label>
         <input type="checkbox" (change)="sortProducts('ascending', $event)" />
         Low to High
-      </label>
+      </label> <br>
       <label>
         <input type="checkbox" (change)="sortProducts('descending', $event)" />
         High to Low
@@ -43,7 +44,7 @@
             {{ data.name }}
           </div>
           <hr />
-          <div *ngIf="data.weight" class="font-light px-5 py-2">Weight: {{ data.weight }} gms</div>
+          <div class="font-light px-5 py-2">Weight: {{ data.weight }} gms</div>
           <hr />
           <div class="price">
             <span>Price: {{ data.price | currency : "&#8377; " }}</span>

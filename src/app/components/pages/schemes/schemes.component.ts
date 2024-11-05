@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-schemes',
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './schemes.component.css'
 })
 export class SchemesComponent implements OnInit{
+  base = BASE_URL;
   ngOnInit(): void {
 
   }

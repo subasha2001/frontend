@@ -1,24 +1,21 @@
 <div class="space-top"></div>
-<div class="mx-w flex flex-wrap justify-center">
+<div class="mx-w flex flex-wrap justify-center order-summary">
     <div class="content flex flex-col">
-        <app-title title="Order Summary" fontSize="1.6rem"></app-title>
+        <app-title class="text-center" title="Order Summary" fontSize="1.6rem"></app-title>
         <div class="summary">
             <div class="flex">
-                <h3>Name:</h3>
-                <span>{{order.name}}</span>
+                Name: <span>{{order.name}}</span>
             </div>
             <div class="flex">
-                <h3>Address:</h3>
-                <span>{{order.address}}</span>
+                Address: <span>{{order.address}}</span>
             </div>
             <div class="flex">
-                <h3>Pincode:</h3>
-                <span>{{order.pincode}}</span>
+                Pincode:<span>{{order.pincode}}</span>
             </div>
         </div>
         <order-items-list [order]="order"></order-items-list>
     </div>
-    <div class="buttons-container flex justify-center">
+    <div class="buttons-container flex justify-center mx-w mx-auto">
         <div class="buttons flex justify-center">
         </div>
     </div>

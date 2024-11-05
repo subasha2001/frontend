@@ -79,10 +79,10 @@ textarea::placeholder {
   display: none;
 }
 .product-details .flex{
-  margin:10px 5px;
   text-transform: uppercase;
   max-width: 700px;
   margin: 0 auto;
+  padding: 10px 0;
 }
 .product-details .heading{
   font-weight: bold;

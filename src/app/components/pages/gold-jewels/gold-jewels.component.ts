@@ -27,6 +27,7 @@ export class GoldJewelsComponent implements OnInit {
   filteredProducts: jewelleryType[] = [];
   availableSizes: any = 0;
   selectedSizes: string[] = [];
+  sizeCounts: { [size: string]: number } = {};
 
   constructor(
     private service: ProductsService,
@@ -46,7 +47,9 @@ export class GoldJewelsComponent implements OnInit {
 
       let productsObservable: Observable<jewelleryType[]>;
       if (params.metalTypeName) {
-        productsObservable = this.service.getProductsByMetalType(params.metalTypeName);
+        productsObservable = this.service.getProductsByMetalType(
+          params.metalTypeName
+        );
       } else if (params.categoryName) {
         productsObservable = this.service
           .getProductsByCategory(params.categoryName)
@@ -54,7 +57,10 @@ export class GoldJewelsComponent implements OnInit {
             map((products) => {
               return products.map((pdt) => {
                 if (pdt.metalType?.includes('gold')) {
-                  pdt.price = (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 + 500;
+                  pdt.price =
+                    (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) *
+                      this.GR22 +
+                    500;
                 }
                 return pdt;
               });
@@ -68,13 +74,11 @@ export class GoldJewelsComponent implements OnInit {
         this.products = Products;
       });
     });
+    this.sizeCounts = this.products.reduce((counts: any, product) => {
+      counts[product.size] = (counts[product.size] || 0) + 1;
+      return counts;
+    }, {});
 
-    this.availableSizes = [
-      ...new Set(this.products.map((product) => product.size)),
-    ];
-  }
-  ngOnInit(): void {
-    this.applyFilters();
   }
   onChange(size: string, event: any): void {
     if (event.target.checked) {
@@ -82,15 +86,36 @@ export class GoldJewelsComponent implements OnInit {
     } else {
       this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
     }
-
     this.applyFilters();
   }
 
   applyFilters(): void {
     if (this.selectedSizes.length > 0) {
-      this.filteredProducts = this.products.filter((product) => this.selectedSizes.includes(product.size));
+      this.filteredProducts = this.products.filter((product) =>
+        this.selectedSizes.includes(product.size)
+      );
     } else {
       this.filteredProducts = [...this.products];
     }
+  }
+
+  sortProducts(order: string, event: any): void {
+    if (event.target.checked) {
+      const otherOrder = order === 'ascending' ? 'descending' : 'ascending';
+
+      this.filteredProducts.sort((a, b) => {
+        return order === 'ascending' ? a.price - b.price : b.price - a.price;
+      });
+    } else {
+      this.filteredProducts = [...this.products];
+    }
+  }
+  ngOnInit(): void {
+    this.availableSizes = [
+      ...new Set(this.products.map((product) => product.size)),
+    ].sort((a, b) => {
+      return parseFloat(a) - parseFloat(b);
+    });
+    this.applyFilters();
   }
 }
