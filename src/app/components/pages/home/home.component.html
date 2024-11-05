@@ -5,17 +5,33 @@
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Reset Search">
 </app-page-not-found>
 <div class="flex mx-w mx-auto">
-  <div class="filters">
-    <h3>Size Filter only for Bangles, Bracelets, chains and rings</h3>
-    <h4>Filter by Size :</h4>
+  <div class="filters hidden md:block">
+    <h4 class="underline">Filter by Size :</h4>
+    <p>
+      <span>Bangles size from      :</span> 2.0 to 2.10 <br>
+      <span>Ring size from         :</span> 7 to 27 <br>
+      <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
+      <span>Chain sizes            :</span> 16, 18, 20, 24, 27 and 30(inches)
+    </p>
     <div *ngFor="let size of availableSizes">
       <label>
         <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
-        {{ size }}
+        {{ size }} ({{ sizeCounts[size] }})
+      </label>
+    </div>
+    <div class="">
+      <h4>Sort by Price</h4>
+      <label>
+        <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+        Low to High
+      </label>
+      <label>
+        <input type="checkbox" (change)="sortProducts('descending', $event)" />
+        High to Low
       </label>
     </div>
   </div>
-  <ul class="mx-w mx-auto">
+  <ul>
     <li *ngFor="let data of filteredProducts" class="mr-5">
       <a routerLink="/product/{{ data.id }}" class="shadow">
         <img class="w-8/12 z-10 default_img absolute top-6 left-10" src="{{baseurl}}/uploads/{{ data.imageDis }}"

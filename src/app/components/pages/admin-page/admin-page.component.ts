@@ -69,7 +69,7 @@ export class AdminPageComponent implements OnInit {
       gst: [''],
     });
 
-    this.goldProduct = this.fb.group({
+    this.Product = this.fb.group({
       name: [''],
       imageDis: [''],
       imageHov: [''],
@@ -159,10 +159,10 @@ export class AdminPageComponent implements OnInit {
     });
   }
 
-  goldProduct!: FormGroup;
+  Product!: FormGroup;
   addProduct(): void {
-    if (this.goldProduct.valid) {
-      const formData = this.goldProduct.value;
+    if (this.Product.valid) {
+      const formData = this.Product.value;
 
       const productData = {
         ...formData,
@@ -174,6 +174,4 @@ export class AdminPageComponent implements OnInit {
       });
     }
   }
-
-  updateProduct() {}
 }

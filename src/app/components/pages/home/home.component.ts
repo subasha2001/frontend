@@ -38,6 +38,7 @@ export class HomeComponent {
   filteredProducts: any[] = [];
   availableSizes: any = 0;
   selectedSizes: string[] = [];
+  sizeCounts: { [size: string]: number } = {};
   // categories?: Category[];
 
   constructor(
@@ -363,9 +364,17 @@ export class HomeComponent {
         this.products = Products;
       });
     });
+
+    this.sizeCounts = this.products.reduce((counts:any, product) => {
+      counts[product.size] = (counts[product.size] || 0) + 1;
+      return counts;
+    }, {});
+
     this.availableSizes = [
       ...new Set(this.products.map((product) => product.size)),
-    ];
+    ].sort((a, b) => {
+      return parseFloat(a) - parseFloat(b); // Sort sizes as numbers
+    });
     // service.getAllCategory().subscribe((serveCategories) => {
     //   this.categories = serveCategories;
     // });
@@ -392,4 +401,18 @@ export class HomeComponent {
       this.filteredProducts = [...this.products];
     }
   }
+
+  sortProducts(order: string, event: any): void {
+    if (event.target.checked) {
+      const otherOrder = order === 'ascending' ? 'descending' : 'ascending';
+
+      this.filteredProducts.sort((a, b) => {
+        return order === 'ascending' ? a.price - b.price : b.price - a.price;
+      });
+    } else {
+      this.filteredProducts = [...this.products];
+    }
+  }
 }
+// 4934
+// 1g - 7900

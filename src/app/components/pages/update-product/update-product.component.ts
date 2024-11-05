@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { jewelleryType } from '../../../shared/models/productType';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-product',
@@ -16,7 +17,8 @@ export class UpdateProductComponent {
   updateMsg!:string | undefined;
   constructor(
     actRoute: ActivatedRoute,
-    private productservice: ProductsService
+    private productservice: ProductsService,
+    private toastr:ToastrService
   ) {
     let productId = actRoute.snapshot.paramMap.get('id');
     productId &&
@@ -29,14 +31,11 @@ export class UpdateProductComponent {
     if (this.product) {
       data.id = this.product.id;
       this.productservice.updateProductById(data).subscribe((val) => {
-        if (val) {
-          this.updateMsg = 'Product has been updated';
-        }
+        this.toastr.success(
+          'Successful!',
+          'Product Update'
+        )
       })
-      setTimeout(() => {
-        this.updateMsg = undefined;
-      }, 3000);
-      console.log(data);
     }
   }
 }

@@ -23,7 +23,7 @@
         </div>
     </div>
     <div *ngIf="selectedDiv === 1" class="md:w-2/5 content flex items-center">
-        <form [formGroup]="goldProduct" (ngSubmit)="addProduct()" class="w-full">
+        <form [formGroup]="Product" (ngSubmit)="addProduct()" class="w-full">
             <input type="text" placeholder="Enter Product Name" formControlName="name" ngModel />
             <input type="text" placeholder="Enter Display image with extension" value={{displayImageUrl}} formControlName="imageDis" ngModel />
             <input type="text" placeholder="Enter Hover image with extension" formControlName="imageHov" ngModel />

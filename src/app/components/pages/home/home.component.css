@@ -3,6 +3,8 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 90%;
+  margin: 0 5%;
 }
 li a {
   position: relative;
@@ -69,12 +71,25 @@ li a:hover .atc {
   z-index: 10;
   opacity: 1;
 }
-.filters{
+.filters {
   width: 30%;
+  border: 1px solid #8080806b;
+  padding: 30px;
 }
-.filters h3{
+.filters h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.filters p {
+  font-size: 13px;
+  margin: 10px auto;
+}
+.filters h4 {
   font-size: 18px;
   margin-bottom: 10px;
+}
+.filters p span {
   font-weight: 500;
-  text-transform: uppercase;
 }
