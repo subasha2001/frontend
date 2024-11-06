@@ -33,6 +33,7 @@ export class SilverJewelsComponent implements OnInit {
   availableSizes: any = 0;
   selectedSizes: string[] = [];
   sizeCounts: { [size: string]: number } = {};
+  sortOrder: 'ascending' | 'descending' | null = null;
 
   constructor(
     private service: ProductsService,
@@ -121,22 +122,27 @@ export class SilverJewelsComponent implements OnInit {
 
       productsObservable.subscribe((Products) => {
         this.products = Products;
+
+        this.sizeCounts = this.products.reduce((counts: any, product) => {
+          if (product.metalType?.includes('silver')) {
+            counts[product.size] = (counts[product.size] || 0) + 1;
+          }
+          return counts;
+        }, {});
+
+        this.availableSizes = [
+          ...new Set(
+            this.products
+              .filter((product) => product.metalType?.includes('silver'))
+              .map((product) => product.size)
+          ),
+        ].sort((a, b) => parseFloat(a) - parseFloat(b));
+
+        this.filteredProducts = this.products.filter((product) =>
+          product.metalType?.includes('silver')
+        );
       });
     });
-    this.sizeCounts = this.products.reduce((counts: any, product) => {
-      counts[product.size] = (counts[product.size] || 0) + 1;
-      return counts;
-    }, {});
-
-    this.availableSizes = [
-      ...new Set(
-        this.products.map((product) => product.size).filter((size) => size)
-      )].sort((a, b) => {
-      return parseFloat(a) - parseFloat(b);
-    });
-  }
-  ngOnInit(): void {
-    this.applyFilters();
   }
   onChange(size: string, event: any): void {
     if (event.target.checked) {
@@ -148,25 +154,56 @@ export class SilverJewelsComponent implements OnInit {
     this.applyFilters();
   }
 
+  genderOptions = ['men', 'women', 'kids'];
+  selectedGenders: string[] = [];
+  onGenderChange(gender: string, event: any): void {
+    if (event.target.checked) {
+      this.selectedGenders.push(gender);
+    } else {
+      this.selectedGenders = this.selectedGenders.filter((g) => g !== gender);
+    }
+    this.applyFilters();
+  }
+
   applyFilters(): void {
+    let filtered = this.products;
+
     if (this.selectedSizes.length > 0) {
-      this.filteredProducts = this.products.filter((product) =>
+      filtered = filtered.filter((product) =>
         this.selectedSizes.includes(product.size)
       );
-    } else {
-      this.filteredProducts = [...this.products];
+    }
+
+    if (this.selectedGenders.length > 0) {
+      filtered = filtered.filter((product) =>
+        this.selectedGenders.some((gender) =>
+          product.category?.includes(gender)
+        )
+      );
+    }
+
+    this.filteredProducts = filtered;
+  }
+
+  applySorting(): void {
+    if (this.sortOrder) {
+      this.filteredProducts.sort((a, b) =>
+        this.sortOrder === 'ascending' ? a.price - b.price : b.price - a.price
+      );
     }
   }
 
   sortProducts(order: string, event: any): void {
     if (event.target.checked) {
-      const otherOrder = order === 'ascending' ? 'descending' : 'ascending';
-
-      this.filteredProducts.sort((a, b) => {
-        return order === 'ascending' ? a.price - b.price : b.price - a.price;
-      });
+      this.sortOrder = order as 'ascending' | 'descending';
     } else {
-      this.filteredProducts = [...this.products];
+      this.sortOrder = null;
     }
+
+    this.applySorting();
+  }
+  ngOnInit(): void {
+    this.applyFilters();
+    this.applySorting();
   }
 }

@@ -87,8 +87,9 @@ li a:hover .atc {
 .filters p span {
   font-weight: 500;
 }
-.filters .size , .filters .priceFilter{
+.filters .size , .filters .priceFilter, .filters .genderFilter{
   font-size: 18px;
   padding: 5px;
   color: gray;
+  text-transform: uppercase;
 }

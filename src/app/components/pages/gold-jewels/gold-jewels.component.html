@@ -1,12 +1,12 @@
 <div class="space-top"></div>
-<div class="mx-w mx-auto">
-    <app-title class="text-center" title="Gold Palace Jewellery - Gold Jewels" margin="0 0 2rem 0"
-        color="#616161"></app-title>
+<div class="mx-w mx-auto button">
+    <app-title class="text-center" title="Gold Palace Jewellery - Gold Jewels" margin="0 0 2rem 0" color="#616161"></app-title>
+    <button class="toggle-filters-btn" (click)="toggleFilters()">Show Filters</button>
 </div>
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Search Other Products" resetLinkRoute="/">
 </app-page-not-found>
 <div class="flex mx-w mx-auto">
-    <div class="filters hidden md:block">
+    <div class="filters" [ngClass]="{'visible': isFiltersVisible, 'hidden': !isFiltersVisible}">
         <h4 class="underline">Filter by Size :</h4>
         <p>
             <span>Bangles size from :</span> 2.0 to 2.10 <br>
@@ -32,9 +32,15 @@
                 High to Low
             </label>
         </div>
+        <h4>Sort by Gender</h4>
+        <div *ngFor="let gender of genderOptions" class="genderFilter">
+            <input type="checkbox" (change)="onGenderChange(gender, $event)"
+                [checked]="selectedGenders.includes(gender)" />
+            {{ gender }}
+        </div>
     </div>
     <ul class="flex justify-center items-center mx-w mx-auto">
-        <ul *ngFor="let data of products">
+        <ul *ngFor="let data of filteredProducts">
             <li *ngIf="data.metalType?.includes('gold')" class="mr-5">
                 <a routerLink='/product/{{data.id}}' class="shadow">
                     <img class="w-8/12 z-10 default_img absolute top-6 left-10"

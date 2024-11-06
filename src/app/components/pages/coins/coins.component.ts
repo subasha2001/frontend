@@ -47,13 +47,9 @@ export class CoinsComponent {
           .pipe(
             map((products) => {
               return products.map((pdt) => {
-                if (pdt.metalType?.includes('gold')) {
-                  pdt.price =
-                    (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) *
-                      this.GR22 +
-                    500;
+                if (pdt.metalType?.includes('coin')) {
+                  pdt.price = (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 + 500;
                 }
-                console.log(pdt);
                 return pdt;
               });
             })

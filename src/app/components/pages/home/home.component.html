@@ -31,6 +31,11 @@
         High to Low
       </label>
     </div>
+    <h4>Sort by Gender</h4>
+    <div *ngFor="let gender of genderOptions" class="genderFilter">
+      <input type="checkbox" (change)="onGenderChange(gender, $event)" [checked]="selectedGenders.includes(gender)" />
+      {{ gender }}
+    </div>
   </div>
   <ul>
     <li *ngFor="let data of filteredProducts" class="mr-5">

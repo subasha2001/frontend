@@ -1,39 +1,47 @@
 <div class="space-top"></div>
 <div class="mx-w mx-auto">
-    <app-title class="text-center" title="Gold Palace Jewellery - Silver Jewels" margin="0 0 2rem 0" color="#616161"></app-title>
+    <app-title class="text-center" title="Gold Palace Jewellery - Silver Jewels" margin="0 0 2rem 0"
+        color="#616161"></app-title>
 </div>
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Reset Search">
 </app-page-not-found>
-<div class="flex mx-w mx-auto"><div class="filters hidden md:block">
-    <h4 class="underline">Filter by Size :</h4>
-    <p>
-        <span>Bangles size from :</span> 2.0 to 2.10 <br>
-        <span>Ring size from :</span> 7 to 27 <br>
-        <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
-        <span>Chain sizes :</span> 16, 18, 20, 24, 27 and 30(inches)
-    </p>
-    <h4>Sort by Size</h4>
-    <div *ngFor="let size of availableSizes" class="size">
-        <label>
-            <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
-            {{ size }} ({{ sizeCounts[size] }})
-        </label>
+<div class="flex mx-w mx-auto">
+    <div class="filters hidden md:block">
+        <h4 class="underline">Filter by Size :</h4>
+        <p>
+            <span>Bangles size from :</span> 2.0 to 2.10 <br>
+            <span>Ring size from :</span> 7 to 27 <br>
+            <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
+            <span>Chain sizes :</span> 16, 18, 20, 24, 27 and 30(inches)
+        </p>
+        <h4>Sort by Size</h4>
+        <div *ngFor="let size of availableSizes" class="size">
+            <label>
+                <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
+                {{ size }} ({{ sizeCounts[size] }})
+            </label>
+        </div>
+        <h4>Sort by Price</h4>
+        <div class="priceFilter">
+            <label>
+                <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+                Low to High
+            </label> <br>
+            <label>
+                <input type="checkbox" (change)="sortProducts('descending', $event)" />
+                High to Low
+            </label>
+        </div>
+        <h4>Sort by Gender</h4>
+        <div *ngFor="let gender of genderOptions" class="genderFilter">
+            <input type="checkbox" (change)="onGenderChange(gender, $event)"
+                [checked]="selectedGenders.includes(gender)" />
+            {{ gender }}
+        </div>
     </div>
-    <h4>Sort by Price</h4>
-    <div class="priceFilter">
-        <label>
-            <input type="checkbox" (change)="sortProducts('ascending', $event)" />
-            Low to High
-        </label> <br>
-        <label>
-            <input type="checkbox" (change)="sortProducts('descending', $event)" />
-            High to Low
-        </label>
-    </div>
-</div>
     <ul class="flex justify-center items-center mx-w mx-auto">
-        <ul *ngFor="let data of products">
-            <li *ngIf="data.metalType?.includes('silver')" class="mr-5">
+        <ul *ngFor="let data of filteredProducts">
+            <li class="mr-5">
                 <a routerLink='/product/{{data.id}}' class="shadow">
                     <img class="w-8/12 z-10 default_img absolute top-6 left-10"
                         src="{{baseurl}}/uploads/{{data.imageDis}}" [alt]="data.name" />

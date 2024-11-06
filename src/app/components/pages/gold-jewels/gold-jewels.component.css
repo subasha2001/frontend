@@ -66,6 +66,7 @@ li a:hover .atc {
   opacity: 1;
 }
 .filters {
+  display: none;
   width: 30%;
   border: 1px solid #8080806b;
   padding: 30px;
@@ -87,8 +88,36 @@ li a:hover .atc {
 .filters p span {
   font-weight: 500;
 }
-.filters .size , .filters .priceFilter{
+.filters .size,
+.filters .priceFilter,
+.filters .genderFilter {
   font-size: 18px;
   padding: 5px;
   color: gray;
+  text-transform: uppercase;
+}
+.filters.hidden {
+  display: none;
+}
+
+.filters.visible {
+  display: block;
+}
+button {
+  padding: 5px;
+  background-color: pink;
+  border-radius: 5px;
+  color: white;
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+@media (min-width: 768px) {
+  .filters {
+    display: block;
+  }
 }
