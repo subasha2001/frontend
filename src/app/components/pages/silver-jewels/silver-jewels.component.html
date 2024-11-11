@@ -38,6 +38,37 @@
                 [checked]="selectedGenders.includes(gender)" />
             {{ gender }}
         </div>
+    </div><div class="filters-md hidden md:block">
+        <h4 class="underline">Filter by Size :</h4>
+        <p>
+            <span>Bangles size from :</span> 2.0 to 2.10 <br>
+            <span>Ring size from :</span> 7 to 27 <br>
+            <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
+            <span>Chain sizes :</span> 16, 18, 20, 24, 27 and 30(inches)
+        </p>
+        <h4>Sort by Size</h4>
+        <div *ngFor="let size of availableSizes" class="size">
+            <label>
+                <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
+                {{ size }} ({{ sizeCounts[size] }})
+            </label>
+        </div>
+        <h4>Sort by Price</h4>
+        <div class="priceFilter">
+            <label>
+                <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+                Low to High
+            </label> <br>
+            <label>
+                <input type="checkbox" (change)="sortProducts('descending', $event)" />
+                High to Low
+            </label>
+        </div>
+        <h4>Sort by Gender</h4>
+        <div *ngFor="let gender of genderOptions" class="genderFilter">
+            <input type="checkbox" (change)="onGenderChange(gender, $event)" [checked]="selectedGenders.includes(gender)" />
+            {{ gender }}
+        </div>
     </div>
     <ul class="flex justify-center items-center mx-w mx-auto">
         <ul *ngFor="let data of filteredProducts">

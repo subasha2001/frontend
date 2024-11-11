@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { jewelleryType } from '../../../shared/models/productType';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -94,89 +94,60 @@ export class HomeComponent implements OnInit {
   }
 
   private calculateProductPrice(pdt: jewelleryType): jewelleryType {
+    const weight = pdt.weight!;
+    const gst = this.gst;
+    const gr22 = this.GR22;
+    const sr = this.SR;
+
     if (pdt.metalType?.includes('gold')) {
-      pdt.price =
-        (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 +
-        500;
+      pdt.price = (pdt.weight! * (pdt.wastage! + gst) + weight) * gr22 + 500;
     } else if (pdt.category?.includes('kolusu')) {
-      pdt.price = (this.SR + (pdt.wastage! + this.gst) * 100) * pdt.weight!;
-    } else if (pdt.category?.includes('kokkikolusu')) {
-      pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-    } else if (pdt.category?.includes('thandai')) {
-      pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
+      pdt.price = (sr + (pdt.wastage! + gst) * 100) * weight;
     } else if (
-      pdt.category?.includes('vessel') &&
-      pdt.metalType?.includes('silver')
+      pdt.category?.includes('kokkikolusu') ||
+      pdt.category?.includes('thandai')
     ) {
-      pdt.price = pdt.weight! * 180;
+      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+    } else if (pdt.metalType?.includes('silver')) {
+      if (
+        pdt.category?.includes('92silver') ||
+        pdt.category?.includes('stud')
+      ) {
+        pdt.price = weight * 350;
+      } else if (pdt.category?.includes('goldplated')) {
+        pdt.price = weight * 400;
+      } else if (
+        pdt.category?.includes('metti') ||
+        pdt.category?.includes('sidemetti')
+      ) {
+        pdt.price = weight * 200;
+      } else if (
+        pdt.category?.includes('vessel') ||
+        pdt.category?.includes('ring') ||
+        pdt.category?.includes('earing') ||
+        pdt.category?.includes('chain') ||
+        pdt.category?.includes('bangles') ||
+        pdt.category?.includes('bracelet')
+      ) {
+        pdt.price = weight * 180;
+      }
     } else if (
-      pdt.category?.includes('ring') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 180;
-    } else if (
-      pdt.category?.includes('earing') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 180;
-    } else if (
-      pdt.category?.includes('chain') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 180;
-    } else if (
-      pdt.category?.includes('92silver') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 350;
-    } else if (
-      pdt.category?.includes('stud') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 350;
-    } else if (
-      pdt.category?.includes('goldplated') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 400;
-    } else if (
-      pdt.category?.includes('metti') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 200;
-    } else if (
-      pdt.category?.includes('bangles') &&
+      (pdt.category?.includes('bangles') ||
+        pdt.category?.includes('bracelet')) &&
       pdt.category?.includes('silver92')
     ) {
-      pdt.price = pdt.weight! * 280;
-    } else if (
-      pdt.category?.includes('bangles') &&
-      pdt.metalType?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 180;
-    } else if (
-      pdt.category?.includes('bracelet') &&
-      pdt.category?.includes('silver')
-    ) {
-      pdt.price = pdt.weight! * 180;
-    } else if (
-      pdt.category?.includes('bracelet') &&
-      pdt.category?.includes('silver92')
-    ) {
-      pdt.price = pdt.weight! * 280;
-    } else if (
-      pdt.category?.includes('coin') &&
-      pdt.metalType?.includes('coin')
-    ) {
-      pdt.price =
-        (this.GR22 + 200) * pdt.weight! + this.gst * pdt.weight! * this.GR22;
-    } else if (
-      pdt.category?.includes('500mgcoin') &&
-      pdt.metalType?.includes('coin')
-    ) {
-      pdt.price = (pdt.weight! + 0.15) * this.GR22 + this.gst * this.GR22!;
-      console.log(pdt.price);
+      pdt.price = weight * 280;
+    } else if (pdt.metalType?.includes('coin')) {
+      if (pdt.category?.includes('500mgcoin')) {
+        pdt.price = (weight + 0.15) * gr22 + gst * gr22 * weight;
+      } else if (
+        !pdt.category?.includes('500mgcoin') &&
+        pdt.category?.includes('coin')
+      ) {
+        pdt.price = (gr22 + 300) * weight + gst * weight * gr22;
+      }
     }
+
     return pdt;
   }
 
@@ -239,6 +210,13 @@ export class HomeComponent implements OnInit {
     const sortOrder = order === 'ascending' ? 1 : -1;
     this.filteredProducts.sort((a, b) => (a.price - b.price) * sortOrder);
   }
+
+  //to show the filters section//
+  isFiltersVisible = false;
+  toggleFilters() {
+    this.isFiltersVisible = !this.isFiltersVisible;
+  }
+  //to show the filters section//
 }
 // 500mg - 4934
 // 1g - 7900

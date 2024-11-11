@@ -5,8 +5,35 @@
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Search Other Products" resetLinkRoute="/">
 </app-page-not-found>
 <div class="flex mx-w mx-auto">
+    <div class="filters" [ngClass]="{'visiblee': isFiltersVisible, 'hidden': !isFiltersVisible}">
+        <button class="close absolute" (click)="toggleFilters()">X</button>
+        <h4>Sort by Price</h4>
+        <div class="priceFilter">
+            <label>
+                <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+                Low to High
+            </label> <br>
+            <label>
+                <input type="checkbox" (change)="sortProducts('descending', $event)" />
+                High to Low
+            </label>
+        </div>
+    </div>
+    <div class="filters-md hidden md:block">
+    <h4>Sort by Price</h4>
+    <div class="priceFilter">
+        <label>
+            <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+            Low to High
+        </label> <br>
+        <label>
+            <input type="checkbox" (change)="sortProducts('descending', $event)" />
+            High to Low
+        </label>
+    </div>
+</div>
     <ul class="flex justify-center items-center mx-w mx-auto">
-        <ul *ngFor="let data of products">
+        <ul *ngFor="let data of filteredProducts">
             <li *ngIf="data.metalType?.includes('coin')" class="mr-5">
                 <a routerLink='/product/{{data.id}}' class="shadow">
                     <img class="w-8/12 z-10 default_img absolute top-6 left-10"

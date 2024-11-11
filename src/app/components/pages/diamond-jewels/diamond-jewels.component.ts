@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { jewelleryType } from '../../../shared/models/productType';
 import { ProductsService } from '../../../services/products.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-found.component";
 import { TitleComponent } from '../../partials/title/title.component';
 import { BASE_URL } from '../../../shared/models/constants/urls';
@@ -26,48 +26,58 @@ export class DiamondJewelsComponent {
   constructor(
     private service: ProductsService,
     private actRoute: ActivatedRoute
-  ) {
-    actRoute.params.subscribe((params) => {
-      let productsObservable: Observable<jewelleryType[]>;
-      if (params.categoryName) {
-        productsObservable = this.service.getProductsByCategory(
-          params.categoryName
-        );
-      } else {
-        productsObservable = this.service.getAllProducts();
-      }
+  ) { }
 
-      productsObservable.subscribe((Products) => {
-        this.products = Products;
+  private loadProducts(): void {
+    const category = this.actRoute.snapshot.paramMap.get('categoryName');
+    const metalType = this.actRoute.snapshot.paramMap.get('metalTypeName');
 
-        this.sizeCounts = this.products.reduce((counts: any, product) => {
-          if (product.metalType?.includes('diamond')) {
-            counts[product.size] = (counts[product.size] || 0) + 1;
-          }
-          return counts;
-        }, {});
+    let productsObservable: Observable<jewelleryType[]>;
+    if (metalType) {
+      productsObservable = this.service.getProductsByMetalType(metalType);
+    } else if (category) {
+      productsObservable = this.service.getProductsByCategory(category);
+    } else {
+      productsObservable = this.service.getAllProducts();
+    }
 
-        this.availableSizes = [
-          ...new Set(
-            this.products
-              .filter((product) => product.metalType?.includes('diamond'))
-              .map((product) => product.size)
-          ),
-        ].sort((a, b) => parseFloat(a) - parseFloat(b));
-
-        this.filteredProducts = this.products.filter((product) =>
-          product.metalType?.includes('diamond')
-        );
+    productsObservable
+      .pipe(
+        map((products) => {
+          return products
+            .filter((product) => product.metalType?.includes('diamond'));
+        })
+      )
+      .subscribe((products) => {
+        this.products = products;
+        this.filteredProducts = products;
+        this.updateSizeCounts();
+        this.populateAvailableSizes();
+        this.applyFilters();
       });
-    });
   }
+
+  private updateSizeCounts(): void {
+    this.sizeCounts = this.products.reduce((counts: any, product) => {
+      counts[product.size] = (counts[product.size] || 0) + 1;
+      return counts;
+    }, {});
+  }
+
+  private populateAvailableSizes(): void {
+    this.availableSizes = [
+      ...new Set(this.products.map((product) => product.size)),
+    ]
+      .filter((size) => size)
+      .sort((a, b) => parseFloat(a) - parseFloat(b));
+  }
+
   onChange(size: string, event: any): void {
     if (event.target.checked) {
       this.selectedSizes.push(size);
     } else {
       this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
     }
-
     this.applyFilters();
   }
 
@@ -102,25 +112,13 @@ export class DiamondJewelsComponent {
     this.filteredProducts = filtered;
   }
 
-  applySorting(): void {
-    if (this.sortOrder) {
-      this.filteredProducts.sort((a, b) =>
-        this.sortOrder === 'ascending' ? a.price - b.price : b.price - a.price
-      );
-    }
-  }
-
   sortProducts(order: string, event: any): void {
-    if (event.target.checked) {
-      this.sortOrder = order as 'ascending' | 'descending';
-    } else {
-      this.sortOrder = null;
-    }
-
-    this.applySorting();
+    const sortOrder = order === 'ascending' ? 1 : -1;
+    this.filteredProducts.sort((a, b) => (a.price - b.price) * sortOrder);
   }
   ngOnInit(): void {
-    this.applyFilters();
-    this.applySorting();
+    this.actRoute.paramMap.subscribe((params) => {
+      this.loadProducts();
+    });
   }
 }

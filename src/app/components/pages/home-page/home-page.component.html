@@ -17,7 +17,7 @@
     <app-title title="Featured Products" margin="0 0 1.4rem 2rem" class="text-xl" color="#616161"></app-title>
     <ul class="flex md:justify-between items-center mx-w justify-center">
         <li *ngFor="let data of products">
-            <a routerLink='/product/{{data.id}}' class="shadow" *ngIf="data.category?.includes('featured')">
+            <a routerLink='/product/{{data.id}}' class="shadow">
                 <img class="w-8/12 z-10 default_img absolute top-6 left-10"
                     src="{{baseurl}}/uploads/{{data.imageDis}}" [alt]="data.name" />
                 <img class="w-8/12 z-10 hover_img absolute top-6 left-10"
@@ -41,3 +41,11 @@
     <app-title title="Customer Reviews" margin="0 0 1.4rem 2rem" class="text-xl" color="#616161"></app-title>
     <reviews></reviews>
 </div>
+<hr class="m-5 mx-w mx-auto">
+<!-- <div class="mx-w mx-auto display_reviews">
+    <app-title title="Our Schemes" margin="0 0 1.4rem 2rem" class="text-xl" color="#616161"></app-title>
+    <div class="schemes">
+        <h2>Gold Palace Gold Scheme</h2>
+        <h2>Flexible Plan Investment</h2>
+    </div>
+</div> -->

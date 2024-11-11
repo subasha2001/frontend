@@ -37,34 +37,15 @@
         <hr class="w-full my-2">
     </div>
 </div>
-<div class="toggle m-5 flex justify-around">
-    <a (click)="details()">Product Details</a>
-    <a (click)="reviews()">Review Product</a>
-</div>
-<div class="review md:w-2/5 content mx-w mx-auto hidden" *ngIf="product" [ngClass]="{active: review}">
-        <app-title class="text-center" title="Review Product" margin="0 0 0 0" color="#616161"></app-title>
-    <p class="text-center">Review - {{product.name}}</p>
-    <form [formGroup]="reviewProduct" (ngSubmit)="addReview()" class="w-full">
-        <input type="text" placeholder="Enter Product Name" value="{{product.name}}" formControlName="productName" ngModel />
-        <input type="text" placeholder="Enter Display image with extension" value="{{product.imageDis}}" formControlName="imageDis"
-            ngModel />
-        <input type="text" placeholder="Enter Your Name" formControlName="name" ngModel />
-        <input type="number" placeholder="Enter Your Number" formControlName="number" ngModel />
-        <textarea type="text" placeholder="Product Review" formControlName="review" ngModel></textarea>
-        <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
-            Post Review
-        </button>
-    </form>
-</div>
-<div class="product-details mx-w mx-auto hidden" *ngIf="product" [ngClass]="{active: detail}">
-    <app-title class="text-center" title="Product Details" margin="0 0 0 0" color="#616161" fontSize="30px"></app-title>
+<div class="product-details mx-w mx-auto" *ngIf="product">
+    <app-title class="text-center" title="Product Details" margin="10px 0 10px 0" color="#616161" fontSize="40px"></app-title>
     <div class="flex">
         <div class="heading">Product Name</div>
         <div class="content">: {{product.name}}</div>
     </div>
     <div class="flex">
         <div class="heading">Product Weight</div>
-        <div class="content">: {{product.weight}} g</div>
+        <div class="content lowercase">: {{product.weight}} g</div>
     </div>
     <div class="flex">
         <div class="heading">Product Type</div>
@@ -72,22 +53,46 @@
     </div>
     <div class="flex" *ngIf="product.stock >= 1">
         <div class="heading">Stock available</div>
-        <div class="content">: {{product.stock}}</div>
+        <div class="content">: stock available</div>
     </div>
     <div class="flex" *ngIf="product.stock == 0">
         <div class="heading">Stock available</div>
         <div class="content">: OUT of stock</div>
     </div>
     <div class="flex" *ngIf="product.category?.includes('24KT')">
-        <div class="heading">Gold type</div>
+        <div class="heading">Gold purity</div>
         <div class="content">: 24KT</div>
     </div>
     <div class="flex" *ngIf="product.category?.includes('22KT')">
-        <div class="heading">Gold type</div>
+        <div class="heading">Gold purity</div>
         <div class="content">: 22KT</div>
     </div>
     <div class="flex" *ngIf="product.category?.includes('18KT')">
-        <div class="heading">Gold type</div>
+        <div class="heading">Gold purity</div>
         <div class="content">: 18KT</div>
     </div>
+    <div class="flex" *ngIf="product.wastage">
+        <div class="heading"> Wastage Type</div>
+        <div class="content">: percentage</div>
+    </div>
+    <div class="flex" *ngIf="product.wastage">
+        <div class="heading"> Wastage</div>
+        <div class="content">: {{product.wastage*100}}</div>
+    </div>
+</div><div class="review md:w-2/5 content mx-w mx-auto" *ngIf="product">
+    <app-title class="text-center" title="Review Product" margin="10px 0 10px 0" color="#616161"
+        fontSize="40px"></app-title>
+    <p class="text-center">Review - {{product.name}}</p>
+    <form [formGroup]="reviewProduct" (ngSubmit)="addReview()" class="w-full">
+        <input type="text" placeholder="Enter Product Name" value="{{product.name}}" formControlName="productName"
+            ngModel />
+        <input type="text" placeholder="Enter Display image with extension" value="{{product.imageDis}}"
+            formControlName="imageDis" ngModel />
+        <input type="text" placeholder="Enter Your Name" formControlName="name" ngModel />
+        <input type="number" placeholder="Enter Your Number" formControlName="number" ngModel />
+        <textarea type="text" placeholder="Product Review" formControlName="review" ngModel></textarea>
+        <button class="bg-rose-600 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
+            Post Review
+        </button>
+    </form>
 </div>

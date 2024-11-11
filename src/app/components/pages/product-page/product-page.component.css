@@ -64,27 +64,39 @@ textarea {
   width: 100%;
   margin-bottom: 15px;
   outline: none;
-  border: 1px solid #c44343;
+  border: 1px solid #fc4262;
 }
 input::placeholder,
 textarea::placeholder {
   color: black;
   opacity: 0.6;
 }
+.toggle a {
+  background-color: #fc4262;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
 .review p {
   font-size: 30px;
+  margin: 20px 0;
 }
 .review form input:nth-child(2),
 .review form input:nth-child(1) {
   display: none;
 }
-.product-details .flex{
+.product-details {
+  background-color: #e5e7eb;
+  padding: 40px 0 60px;
+}
+.product-details .flex {
   text-transform: uppercase;
   max-width: 700px;
   margin: 0 auto;
   padding: 10px 0;
 }
-.product-details .heading{
+.product-details .heading {
   font-weight: bold;
   width: 25%;
 }

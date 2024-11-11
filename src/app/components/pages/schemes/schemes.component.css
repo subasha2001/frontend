@@ -1,4 +1,4 @@
-.cont-1 .secondPart .flex {
+/* .cont-1 .secondPart .flex {
   width: 726px;
 }
 .cont-1 .secondPart .flex h4 {
@@ -16,16 +16,16 @@
 .cont-1 .secondPart .flex .icons i {
   padding: 20px;
 }
-.cont-1 .secondPart .bg {
-  background-image: url("/assets/images/schemes/cont-1-bg.png");
-  background-size: cover;
-}
 .cont-1 .discover {
   width: 100px !important;
 }
 .cont-1 .font-thin {
   width: 452px !important;
   padding-left: 20px;
+} */
+.cont-1 .secondPart .bg {
+  background-image: url("/assets/images/schemes/cont-1-bg.png");
+  background-size: cover;
 }
 .cont-2 h3,
 .cont-3 h3 {
@@ -140,9 +140,9 @@ li span {
   .cont-3 h2 {
     font-size: 24px;
   }
-  .cont-1 .secondPart .flex {
+  /* .cont-1 .secondPart .flex {
     width: 500px;
-  }
+  } */
   .cont-2 .line,
   .cont-3 .line {
     display: none;

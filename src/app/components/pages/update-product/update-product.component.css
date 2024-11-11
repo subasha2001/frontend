@@ -8,3 +8,6 @@ textarea {
   border-radius: 5px;
   outline: none;
 }
+form label{
+  font-weight:500;
+}

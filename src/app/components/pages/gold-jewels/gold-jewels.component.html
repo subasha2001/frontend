@@ -1,12 +1,46 @@
 <div class="space-top"></div>
 <div class="mx-w mx-auto button">
     <app-title class="text-center" title="Gold Palace Jewellery - Gold Jewels" margin="0 0 2rem 0" color="#616161"></app-title>
-    <button class="toggle-filters-btn" (click)="toggleFilters()">Show Filters</button>
+    <button class="toggle-filters-btn visible md:hidden" (click)="toggleFilters()">Show Filters</button>
 </div>
 <app-page-not-found [visible]="!products || !products.length" resetLinkText="Search Other Products" resetLinkRoute="/">
 </app-page-not-found>
-<div class="flex mx-w mx-auto">
-    <div class="filters" [ngClass]="{'visible': isFiltersVisible, 'hidden': !isFiltersVisible}">
+<div class="flex mx-w mx-auto relative">
+    <div class="filters" [ngClass]="{'visiblee': isFiltersVisible, 'hidden': !isFiltersVisible}">
+        <button class="close absolute" (click)="toggleFilters()">X</button>
+        <h4 class="underline">Filter by Size :</h4>
+        <p>
+            <span>Bangles size from :</span> 2.0 to 2.10 <br>
+            <span>Ring size from :</span> 7 to 27 <br>
+            <span>Bracelet size from :</span> 6.5 to 9(inches)<br>
+            <span>Chain sizes :</span> 16, 18, 20, 24, 27 and 30(inches)
+        </p>
+        <h4>Sort by Size</h4>
+        <div *ngFor="let size of availableSizes" class="size">
+            <label>
+                <input type="checkbox" [value]="size" (change)="onChange(size, $event)" />
+                {{ size }} ({{ sizeCounts[size] }})
+            </label>
+        </div>
+        <h4>Sort by Price</h4>
+        <div class="priceFilter">
+            <label>
+                <input type="checkbox" (change)="sortProducts('ascending', $event)" />
+                Low to High
+            </label> <br>
+            <label>
+                <input type="checkbox" (change)="sortProducts('descending', $event)" />
+                High to Low
+            </label>
+        </div>
+        <h4>Sort by Gender</h4>
+        <div *ngFor="let gender of genderOptions" class="genderFilter">
+            <input type="checkbox" (change)="onGenderChange(gender, $event)"
+                [checked]="selectedGenders.includes(gender)" />
+            {{ gender }}
+        </div>
+    </div>
+    <div class="filters-md hidden md:block">
         <h4 class="underline">Filter by Size :</h4>
         <p>
             <span>Bangles size from :</span> 2.0 to 2.10 <br>

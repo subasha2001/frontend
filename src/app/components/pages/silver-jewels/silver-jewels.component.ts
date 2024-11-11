@@ -37,120 +37,114 @@ export class SilverJewelsComponent implements OnInit {
 
   constructor(
     private service: ProductsService,
-    actRoute: ActivatedRoute,
+    private actRoute: ActivatedRoute,
     private GR: GoldSilverService
-  ) {
-    actRoute.params.subscribe((params) => {
-      let ratesObservable: Observable<rates[]> = this.GR.getRatesFromDB();
-      ratesObservable.subscribe((Items) => {
-        Items.forEach((val) => {
-          this.SR = val.silver;
-          this.gst = val.gst;
-        });
-      });
+  ) { }
 
-      let productsObservable: Observable<jewelleryType[]>;
-      if (params.categoryName) {
-        productsObservable = this.service
-          .getProductsByCategory(params.categoryName)
-          .pipe(
-            map((products) => {
-              return products.map((pdt) => {
-                if (pdt.category?.includes('kolusu')) {
-                  pdt.price =
-                    (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-                } else if (pdt.category?.includes('kokkikolusu')) {
-                  pdt.price =
-                    (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-                } else if (pdt.category?.includes('thandai')) {
-                  pdt.price =
-                    (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-                } else if (
-                  pdt.category?.includes('vessel') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 180;
-                } else if (
-                  pdt.category?.includes('ring') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 180;
-                } else if (
-                  pdt.category?.includes('earing') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 180;
-                } else if (
-                  pdt.category?.includes('chain') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 180;
-                } else if (
-                  pdt.category?.includes('92silver') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 350;
-                } else if (
-                  pdt.category?.includes('stud') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 350;
-                } else if (
-                  pdt.category?.includes('goldplated') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 400;
-                } else if (
-                  pdt.category?.includes('metti') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 200;
-                } else if (
-                  pdt.category?.includes('bangles') &&
-                  pdt.metalType?.includes('silver')
-                ) {
-                  pdt.price = pdt.weight! * 150;
-                }
-                console.log(pdt);
-                return pdt;
-              });
-            })
-          );
-      } else {
-        productsObservable = this.service.getAllProducts();
-      }
-
-      productsObservable.subscribe((Products) => {
-        this.products = Products;
-
-        this.sizeCounts = this.products.reduce((counts: any, product) => {
-          if (product.metalType?.includes('silver')) {
-            counts[product.size] = (counts[product.size] || 0) + 1;
-          }
-          return counts;
-        }, {});
-
-        this.availableSizes = [
-          ...new Set(
-            this.products
-              .filter((product) => product.metalType?.includes('silver'))
-              .map((product) => product.size)
-          ),
-        ].sort((a, b) => parseFloat(a) - parseFloat(b));
-
-        this.filteredProducts = this.products.filter((product) =>
-          product.metalType?.includes('silver')
-        );
+  private loadRates(): void {
+    this.GR.getRatesFromDB().subscribe((Items) => {
+      Items.forEach((val) => {
+        this.SR = val.silver;
+        this.gst = val.gst;
       });
     });
   }
+
+  private loadProducts(): void {
+    const category = this.actRoute.snapshot.paramMap.get('categoryName');
+    const metalType = this.actRoute.snapshot.paramMap.get('metalTypeName');
+
+    let productsObservable: Observable<jewelleryType[]>;
+    if (metalType) {
+      productsObservable = this.service.getProductsByMetalType(metalType);
+    } else if (category) {
+      productsObservable = this.service.getProductsByCategory(category);
+    } else {
+      productsObservable = this.service.getAllProducts();
+    }
+
+    productsObservable
+      .pipe(
+        map((products) => {
+          return products
+            .map((pdt) => this.calculateProductPrice(pdt))
+            .filter((product) => product.metalType?.includes('silver'));
+        })
+      )
+      .subscribe((products) => {
+        this.products = products;
+        this.filteredProducts = products;
+        this.updateSizeCounts();
+        this.populateAvailableSizes();
+        this.applyFilters();
+      });
+  }
+
+  private calculateProductPrice(pdt: jewelleryType): jewelleryType {
+    const weight = pdt.weight!;
+    const gst = this.gst;
+    const sr = this.SR;
+
+    if (
+      pdt.category?.includes('kolusu') ||
+      pdt.category?.includes('kokkikolusu') ||
+      pdt.category?.includes('thandai')
+    ) {
+      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+    } else if (pdt.metalType?.includes('silver')) {
+      if (
+        pdt.category?.includes('92silver') ||
+        pdt.category?.includes('stud')
+      ) {
+        pdt.price = weight * 350;
+      } else if (pdt.category?.includes('goldplated')) {
+        pdt.price = weight * 400;
+      } else if (
+        pdt.category?.includes('metti') ||
+        pdt.category?.includes('sidemetti')
+      ) {
+        pdt.price = weight * 200;
+      } else if (
+        pdt.category?.includes('vessel') ||
+        pdt.category?.includes('ring') ||
+        pdt.category?.includes('earing') ||
+        pdt.category?.includes('chain') ||
+        pdt.category?.includes('bangles') ||
+        pdt.category?.includes('bracelet')
+      ) {
+        pdt.price = weight * 180;
+      }
+    } else if (
+      (pdt.category?.includes('bangles') ||
+        pdt.category?.includes('bracelet')) &&
+      pdt.category?.includes('silver92')
+    ) {
+      pdt.price = weight * 280;
+    }
+    return pdt;
+  }
+
+  private updateSizeCounts(): void {
+    this.sizeCounts = this.products.reduce((counts: any, product) => {
+      counts[product.size] = (counts[product.size] || 0) + 1;
+      return counts;
+    }, {});
+  }
+
+  private populateAvailableSizes(): void {
+    this.availableSizes = [
+      ...new Set(this.products.map((product) => product.size)),
+    ]
+      .filter((size) => size)
+      .sort((a, b) => parseFloat(a) - parseFloat(b));
+  }
+
   onChange(size: string, event: any): void {
     if (event.target.checked) {
       this.selectedSizes.push(size);
     } else {
       this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
     }
-
     this.applyFilters();
   }
 
@@ -185,25 +179,14 @@ export class SilverJewelsComponent implements OnInit {
     this.filteredProducts = filtered;
   }
 
-  applySorting(): void {
-    if (this.sortOrder) {
-      this.filteredProducts.sort((a, b) =>
-        this.sortOrder === 'ascending' ? a.price - b.price : b.price - a.price
-      );
-    }
-  }
-
   sortProducts(order: string, event: any): void {
-    if (event.target.checked) {
-      this.sortOrder = order as 'ascending' | 'descending';
-    } else {
-      this.sortOrder = null;
-    }
-
-    this.applySorting();
+    const sortOrder = order === 'ascending' ? 1 : -1;
+    this.filteredProducts.sort((a, b) => (a.price - b.price) * sortOrder);
   }
   ngOnInit(): void {
-    this.applyFilters();
-    this.applySorting();
+    this.actRoute.paramMap.subscribe((params) => {
+      this.loadProducts();
+      this.loadRates();
+    });
   }
 }

@@ -1,6 +1,8 @@
 ul {
   flex-wrap: wrap;
   border-top: 1px solid #e5e7eb;
+  gap: 10px;
+  padding-top: 40px;
 }
 li a {
   position: relative;
@@ -11,6 +13,7 @@ li a {
   justify-content: center;
   flex-direction: column;
   margin-bottom: 30px;
+  border: 1px solid #ff0f39c7;
 }
 li a:hover {
   opacity: 0.9;
@@ -56,11 +59,9 @@ li a:hover img.default_img {
 
 .slider-container {
   display: flex;
-  margin: 0 -3%;
   overflow: hidden;
   width: 100%;
   max-width: 1280px;
-  /* margin: 0 auto; */
 }
 
 .slider-container porto-slider {
@@ -85,4 +86,16 @@ li a:hover .atc {
   bottom: 65px;
   z-index: 10;
   opacity: 1;
+}
+@media (max-width: 550px) {
+  li a,
+  .price {
+    width: 12rem;
+  }
+  li a img {
+    width: 60%;
+  }
+  .slider-container {
+    margin: 0 -3% 0 4%;
+  }
 }

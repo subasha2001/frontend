@@ -6,7 +6,6 @@ import { ProductsService } from '../../../services/products.service';
 import { map, Observable } from 'rxjs';
 import { PageNotFoundComponent } from '../../partials/page-not-found/page-not-found.component';
 import { TitleComponent } from '../../partials/title/title.component';
-import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { BASE_URL } from '../../../shared/models/constants/urls';
 
@@ -153,9 +152,10 @@ export class GoldJewelsComponent implements OnInit {
     this.applySorting();
   }
 
+  //to show the filters section//
   isFiltersVisible = false;
-
   toggleFilters() {
     this.isFiltersVisible = !this.isFiltersVisible;
   }
+  //to show the filters section//
 }

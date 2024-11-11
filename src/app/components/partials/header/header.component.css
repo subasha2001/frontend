@@ -89,7 +89,7 @@ a:hover {
   left: 0px;
   flex-direction: column;
   transform: translateX(-150px);
-  transition: all 0.5s linear;
+  transition: all 0.3s linear;
 }
 .navBar button {
   width: 23px;
@@ -133,6 +133,7 @@ a:hover {
 }
 .rates p {
   padding: 5px;
+  font-size: 15px;
 }
 .rates p:hover {
   text-decoration: underline;

@@ -2,17 +2,29 @@
 <div class="md:w-2/5 content flex items-center mx-w mx-auto">
     <p>{{updateMsg}}</p>
     <form #updateproduct="ngForm" (ngSubmit)="updateProduct(updateproduct.value)" class="w-full flex flex-col">
+        <label>Enter Product Name :</label>
         <input type="text" placeholder="Enter Product Name" name="name" ngModel="{{product.name}}" />
+        <label>Enter Display image url :</label>
         <input type="text" placeholder="Enter Display image with extension" name="imageDis" ngModel="{{product.imageDis}}" />
+        <label>Enter Hover image url :</label>
         <input type="text" placeholder="Enter Hover image with extension" name="imageHov" ngModel="{{product.imageHov}}" />
+        <label>Enter Product Description :</label>
         <textarea type="text" placeholder="Product Description" name="description" ngModel="{{product.description}}"></textarea>
+        <label>Enter Product Metal Type :</label>
         <input type="text" placeholder="Enter Metal Type" name="metalType" ngModel="{{product.metalType}}" />
+        <label>Enter Product Category :</label>
         <!-- <input type="text" placeholder="Category1, Category2, .." name="category" ngModel="{{product.category}}" /> -->
+        <label>Enter Product Price :</label>
         <input type="number" placeholder="Enter Product Price" name="price" ngModel="{{product.price}}" />
+        <label>Enter Product Weight :</label>
         <input type="number" placeholder="Enter Product Weight in grams" name="weight" ngModel="{{product.weight}}" />
+        <label>Enter Product Macking charges in Rs :</label>
         <input type="number" placeholder="Making Cost in Rs" name="mc" ngModel="{{product.mc}}" />
+        <label>Enter Product Size :</label>
         <input type="number" placeholder="Size of Product" name="size" ngModel="{{product.size}}" />
+        <label>Enter Product available stock :</label>
         <input type="number" placeholder="Stock Available" name="stock" ngModel="{{product.stock}}" />
+        <label>Enter Product Wastage in percentage :</label>
         <input type="number" placeholder="Wastage in %" name="wastage" ngModel="{{product.wastage}}" />
         <button class="bg-red-700 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
             Update Product

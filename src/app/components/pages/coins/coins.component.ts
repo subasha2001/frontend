@@ -1,15 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { jewelleryType } from '../../../shared/models/productType';
 import { ProductsService } from '../../../services/products.service';
 import { map, Observable } from 'rxjs';
-import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-found.component";
+import { PageNotFoundComponent } from '../../partials/page-not-found/page-not-found.component';
 import { TitleComponent } from '../../partials/title/title.component';
-import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { BASE_URL } from '../../../shared/models/constants/urls';
-
 
 @Component({
   selector: 'app-coins',
@@ -18,12 +16,15 @@ import { BASE_URL } from '../../../shared/models/constants/urls';
   templateUrl: './coins.component.html',
   styleUrl: './coins.component.css',
 })
-export class CoinsComponent {
+export class CoinsComponent implements OnInit {
   products: jewelleryType[] = [];
+  GR18!: number;
   GR22!: number;
   GR24!: number;
   gst!: number;
   baseurl = BASE_URL;
+  filteredProducts: jewelleryType[] = [];
+  sortOrder: 'ascending' | 'descending' | null = null;
 
   constructor(
     private service: ProductsService,
@@ -31,9 +32,9 @@ export class CoinsComponent {
     private GS: GoldSilverService
   ) {
     actRoute.params.subscribe((params) => {
-      let ratesObservable: Observable<rates[]> = this.GS.getRatesFromDB();
-      ratesObservable.subscribe((Items) => {
+      this.GS.getRatesFromDB().subscribe((Items) => {
         Items.forEach((val) => {
+          this.GR18 = val.gold18;
           this.GR22 = val.gold22;
           this.GR24 = val.gold24;
           this.gst = val.gst;
@@ -48,7 +49,18 @@ export class CoinsComponent {
             map((products) => {
               return products.map((pdt) => {
                 if (pdt.metalType?.includes('coin')) {
-                  pdt.price = (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) * this.GR22 + 500;
+                  if (pdt.category?.includes('500mgcoin')) {
+                    pdt.price =
+                      (pdt.weight! + 0.15) * this.GR22 +
+                      this.gst * this.GR22 * pdt.weight!;
+                  } else if (
+                    !pdt.category?.includes('500mgcoin') &&
+                    pdt.category?.includes('coin')
+                  ) {
+                    pdt.price =
+                      (this.GR22 + 300) * pdt.weight! +
+                      this.gst * pdt.weight! * this.GR22;
+                  }
                 }
                 return pdt;
               });
@@ -60,7 +72,40 @@ export class CoinsComponent {
 
       productsObservable.subscribe((Products) => {
         this.products = Products;
+        this.filteredProducts = this.products.filter((product) =>
+          product.metalType?.includes('coin')
+        );
       });
     });
   }
+
+  applySorting(): void {
+    if (this.sortOrder) {
+      this.filteredProducts.sort((a, b) =>
+        this.sortOrder === 'ascending' ? a.price - b.price : b.price - a.price
+      );
+    }
+  }
+
+  sortProducts(order: string, event: any): void {
+    if (event.target.checked) {
+      this.sortOrder = order as 'ascending' | 'descending';
+    } else {
+      this.sortOrder = null;
+    }
+
+    this.applySorting();
+  }
+  ngOnInit(): void {
+    this.applySorting();
+  }
+
+  //to show the filters section//
+  isFiltersVisible = false;
+  toggleFilters() {
+    this.isFiltersVisible = !this.isFiltersVisible;
+  }
+  //to show the filters section//
 }
+// 500mg - 4934
+// 1g - 7900

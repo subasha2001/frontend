@@ -21,7 +21,3 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-function expect(component: HeaderComponent) {
-  throw new Error('Function not implemented.');
-}

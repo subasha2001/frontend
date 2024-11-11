@@ -5,10 +5,10 @@
                 <img class="logoImg" src="{{baseurl}}/uploads/goldPalaceLogo2.png" />
             </a>
         </div>
-        <div class="menu block md:hidden"><i (click)="toggleMenu(true)" class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        <div class="menu block md:hidden"><i (click)="toggleMenu()" class="fa fa-bars fa-2x" aria-hidden="true"></i>
         </div>
         <div class="navBar absolute md:hidden flex" [ngClass]="{active: showNav}">
-            <button (click)="toggleMenu(false)">X</button>
+            <button (click)="toggleMenu()">X</button>
             <a class="" [routerLink]="['/']">HOME</a>
             <a routerLink="/metalType/gold">GOLD</a>
             <a routerLink="/metalType/silver">SILVER</a>
@@ -48,8 +48,9 @@
                 </li>
             </ul>
         </div>
-        <a class="rates block relative cursor-pointer">
+        <a class="rates block relative cursor-pointer flex items-center">
             <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            <p class="hidden md:visible">GOLD RATE (22K): {{GR22 | currency:'&#8377; '}}</p>
             <div class="text-xs hidden absolute shadow-xl">
                 <p>GOLD RATE (18K): {{GR18 | currency:'&#8377; '}}</p>
                 <p>GOLD RATE (22K): {{GR22 | currency:'&#8377; '}}</p>

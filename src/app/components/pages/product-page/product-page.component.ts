@@ -19,7 +19,13 @@ import { TitleComponent } from '../../partials/title/title.component';
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgClass, TitleComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgClass,
+    TitleComponent,
+  ],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.css',
 })
@@ -32,105 +38,16 @@ export class ProductPageComponent implements OnInit {
   product!: jewelleryType;
   returnUrl!: string;
   baseurl = BASE_URL;
+  filteredProducts: any[] = [];
 
   constructor(
     private actRoute: ActivatedRoute,
-    service: ProductsService,
+    private service: ProductsService,
     private cartService: CartService,
     private router: Router,
-    private GS: GoldSilverService,
+    private GR: GoldSilverService,
     private fb: FormBuilder
   ) {
-    actRoute.params.subscribe((params) => {
-      let ratesObservable: Observable<rates[]> = this.GS.getRatesFromDB();
-      ratesObservable.subscribe((Items) => {
-        Items.forEach((val) => {
-          this.GR18 = val.gold18;
-          this.GR22 = val.gold22;
-          this.GR24 = val.gold24;
-          this.SR = val.silver;
-          this.gst = val.gst;
-        });
-      });
-
-      if (params.id) {
-        service.getProductById(params.id).subscribe((Product) => {
-          let pdt = Product;
-          if (pdt.metalType?.includes('gold')) {
-            pdt.price =
-              (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) *
-                this.GR22 +
-              500;
-          } else if (pdt.category?.includes('kolusu')) {
-            pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-          } else if (pdt.category?.includes('kokkikolusu')) {
-            pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-          } else if (pdt.category?.includes('thandai')) {
-            pdt.price = (this.SR + pdt.wastage! * 100) * pdt.weight! * this.gst;
-          } else if (
-            pdt.category?.includes('vessel') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 180;
-          } else if (
-            pdt.category?.includes('ring') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 180;
-          } else if (
-            pdt.category?.includes('earing') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 180;
-          } else if (
-            pdt.category?.includes('chain') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 180;
-          } else if (
-            pdt.category?.includes('92silver') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 350;
-          } else if (
-            pdt.category?.includes('stud') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 350;
-          } else if (
-            pdt.category?.includes('goldplated') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 400;
-          } else if (
-            pdt.category?.includes('metti') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 200;
-          } else if (
-            pdt.category?.includes('bangles') &&
-            pdt.metalType?.includes('silver')
-          ) {
-            pdt.price = pdt.weight! * 150;
-          } else if (
-            pdt.category?.includes('500mgcoin') &&
-            pdt.metalType?.includes('coin')
-          ) {
-            pdt.price =
-              (pdt.weight! + 0.15) * this.GR22 + this.gst * this.GR22!;
-          } else if (
-            pdt.category?.includes('coin') &&
-            pdt.metalType?.includes('coin')
-          ) {
-            pdt.price =
-              (this.GR22 + 200) * pdt.weight! +
-              this.gst * pdt.weight! * this.GR22;
-          }
-          this.product = pdt;
-        });
-      }
-    });
-
     this.reviewProduct = this.fb.group({
       productName: [''],
       imageDis: [''],
@@ -141,6 +58,85 @@ export class ProductPageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.returnUrl = this.actRoute.snapshot.queryParams['returnUrl'];
+    this.loadRates();
+    this.getProductById();
+  }
+  private loadRates(): void {
+    this.GR.getRatesFromDB().subscribe((Items) => {
+      Items.forEach((val) => {
+        this.GR18 = val.gold18;
+        this.GR22 = val.gold22;
+        this.GR24 = val.gold24;
+        this.SR = val.silver;
+        this.gst = val.gst;
+      });
+    });
+  }
+  private getProductById(): void {
+    this.actRoute.params.subscribe((params) => {
+      if (params.id) {
+        this.service.getProductById(params.id).subscribe((pdt) => {
+          this.product = pdt;
+          this.calculatePrice(pdt);
+        });
+      }
+    });
+  }
+
+  private calculatePrice(pdt: jewelleryType): void {
+    const weight = pdt.weight!;
+    const gst = this.gst;
+    const gr22 = this.GR22;
+    const sr = this.SR;
+
+    if (pdt.metalType?.includes('gold')) {
+      pdt.price = (pdt.weight! * (pdt.wastage! + gst) + weight) * gr22 + 500;
+    } else if (pdt.category?.includes('kolusu')) {
+      pdt.price = (sr + (pdt.wastage! + gst) * 100) * weight;
+    } else if (
+      pdt.category?.includes('kokkikolusu') ||
+      pdt.category?.includes('thandai')
+    ) {
+      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+    } else if (pdt.metalType?.includes('silver')) {
+      if (
+        pdt.category?.includes('92silver') ||
+        pdt.category?.includes('stud')
+      ) {
+        pdt.price = weight * 350;
+      } else if (pdt.category?.includes('goldplated')) {
+        pdt.price = weight * 400;
+      } else if (
+        pdt.category?.includes('metti') ||
+        pdt.category?.includes('sidemetti')
+      ) {
+        pdt.price = weight * 200;
+      } else if (
+        pdt.category?.includes('vessel') ||
+        pdt.category?.includes('ring') ||
+        pdt.category?.includes('earing') ||
+        pdt.category?.includes('chain') ||
+        pdt.category?.includes('bangles') ||
+        pdt.category?.includes('bracelet')
+      ) {
+        pdt.price = weight * 180;
+      }
+    } else if (
+      (pdt.category?.includes('bangles') ||
+        pdt.category?.includes('bracelet')) &&
+      pdt.category?.includes('silver92')
+    ) {
+      pdt.price = weight * 280;
+    } else if (pdt.metalType?.includes('coin')) {
+      if (pdt.category?.includes('500mgcoin')) {
+        pdt.price = (weight + 0.15) * gr22 + gst * gr22 * weight;
+      } else if (
+        !pdt.category?.includes('500mgcoin') &&
+        pdt.category?.includes('coin')
+      ) {
+        pdt.price = (gr22 + 300) * weight + gst * weight * gr22;
+      }
+    }
   }
 
   addToCart() {
@@ -163,7 +159,7 @@ export class ProductPageComponent implements OnInit {
   addReview(): void {
     if (this.reviewProduct.invalid) console.log('invalid form');
 
-    this.GS.addReviews({
+    this.GR.addReviews({
       productName: this.product.name,
       imageDis: this.product.imageDis,
       name: this.reviewProduct.controls.name.value,
@@ -174,16 +170,4 @@ export class ProductPageComponent implements OnInit {
     });
   }
   //review product
-
-  //prduct details//
-  detail: boolean = true;
-  review: boolean = false;
-  details() {
-    this.detail = true;
-    this.review = false;
-  }
-  reviews() {
-    this.review = true;
-    this.detail = false;
-  }
 }
