@@ -32,7 +32,7 @@ a:hover {
   padding: 20px;
 }
 .gold-silver div a {
-  padding: 5px 10px;
+  padding: 5px 10px 15px;
 }
 .gold-silver div a:hover {
   background-color: transparent;
@@ -165,5 +165,8 @@ a:hover {
   }
   .user a{
     font-size: 12px;
+  }
+  .rates .g22kt{
+    display: none;
   }
 }

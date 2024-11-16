@@ -15,4 +15,5 @@ export class jewelleryType {
   featured?: string;
   price!: number;
   updatedAt!: any;
+  createdAt!: any;
 }

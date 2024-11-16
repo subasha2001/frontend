@@ -14,14 +14,32 @@ export class SchemesComponent implements OnInit{
   ngOnInit(): void {
 
   }
-  scheme1: boolean = true;
+  scheme1: boolean = false;
   scheme2: boolean = false;
+  scheme3: boolean = false;
+  scheme4: boolean = true;
   scheme11() {
     this.scheme1 = true;
     this.scheme2 = false;
+    this.scheme3 = false;
+    this.scheme4 = false;
   }
   scheme12() {
     this.scheme2 = true;
     this.scheme1 = false;
+    this.scheme3 = false;
+    this.scheme4 = false;
+  }
+  scheme13() {
+    this.scheme3 = true;
+    this.scheme1 = false;
+    this.scheme2 = false;
+    this.scheme4 = false;
+  }
+  scheme14() {
+    this.scheme4 = true;
+    this.scheme1 = false;
+    this.scheme2 = false;
+    this.scheme3 = false;
   }
 }

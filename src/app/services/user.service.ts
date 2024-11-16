@@ -5,6 +5,8 @@ import {
   ADMIN_REGISTER_URL,
   USERS_LOGIN_URL,
   USERS_REGISTER_URL,
+  USERS_SEND_OTP,
+  USERS_VERIFY_OTP,
 } from '../shared/models/constants/urls';
 import { User } from '../shared/models/user';
 import { IUserLogin } from '../shared/models/interfaces/iUserLogin';
@@ -37,7 +39,7 @@ export class UserService {
           );
         },
         error: (errorResponse) => {
-          this.toastr.error(errorResponse.error, 'Login Failed');
+          this.toastr.error(errorResponse.message, 'Login Failed');
         },
       })
     );
@@ -114,7 +116,7 @@ export class UserService {
       })
     );
   }
-
+  
   logout() {
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);

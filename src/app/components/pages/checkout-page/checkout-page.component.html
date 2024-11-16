@@ -1,17 +1,30 @@
 <div class="space-top"></div>
 <div class="mx-w flex flex-wrap justify-center mx-auto">
-    <div class="content mx-5">
-        <app-title class="text-center" title="Order Form" fontSize="1.6rem" margin="0 0 0 0"></app-title>
-        <form [formGroup]="checkoutForn" class="w-full">
-            <app-input [control]="fc.name" label="Name"></app-input>
-            <app-input [control]="fc.address" label="Address"></app-input>
-            <app-input [control]="fc.pincode" label="Pincode"></app-input>
-        </form>
-        <order-items-list [order]="order"></order-items-list>
-    </div>
-    <div class="buttons-container flex justify-center">
-        <div class="buttons flex justify-center">
-            <button class="w-full" (click)="createOrder()">Go to Payment</button>
+    <div>
+        <div class="content">
+            <app-title class="text-center" title="Order Form" fontSize="1.6rem" margin="0 0 0 0"></app-title>
+            <form [formGroup]="checkoutForn" class="w-full">
+                <app-input [control]="fc.name" label="Name"></app-input>
+                <app-input [control]="fc.address" label="Address"></app-input>
+                <app-input [control]="fc.pincode" label="Pincode"></app-input>
+            </form>
+            <order-items-list [order]="order"></order-items-list>
         </div>
+    </div>
+    <div class="quieries">
+        <h3>For further quieries about payment contact :</h3>
+        <div class="flex items-center">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <a href="">+91 1234567890</a>
+        </div>
+        <div class="flex items-center">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <a>gpjavinashi916gmail.com</a>
+        </div>
+    </div>
+</div>
+<div class="buttons-container flex justify-center">
+    <div class="buttons flex justify-center">
+        <button class="w-full" (click)="createOrder()">Pay with Razorpay</button>
     </div>
 </div>

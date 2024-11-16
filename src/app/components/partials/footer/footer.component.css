@@ -39,6 +39,18 @@ i{
     transform: scale(1);
     transition: all 0.2s linear;
 }
+i.fa-whatsapp, i.fa-envelope-o{
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transform: scale(01);
+    transition: all 0.2s linear;
+}
 i:hover{transform: scale(1.1);}
 .social a:hover .fa-facebook{background-color: #3b5998;color: white;}
 .social a:hover .fa-instagram{background-color: #cd486b;color: white;}
@@ -47,3 +59,7 @@ i:hover{transform: scale(1.1);}
 .fa-facebook{color: #3b5998;}
 .fa-instagram{color: #cd486b;}
 /* .fa-twitter{color: #3cf;} */
+
+.contactus{
+    
+}

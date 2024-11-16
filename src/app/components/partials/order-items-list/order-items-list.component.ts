@@ -17,6 +17,8 @@ export class OrderItemsListComponent implements OnInit {
 
   constructor() {}
   ngOnInit(): void {
-    
+    if (this.order.pincode >= 626100 && this.order.pincode < 626125) {
+      this.order.totalPrice = this.order.totalPrice + 100;
+    }
   }
 }

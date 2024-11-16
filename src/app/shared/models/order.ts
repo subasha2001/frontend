@@ -1,13 +1,17 @@
 import { CartItem } from "./cartItems";
 
-export class Order{
-    id!:number;
-    items!:CartItem[];
-    totalPrice!:number;
-    name!: string;
-    address!: string;
-    pincode!:number;
-    paymentId?: string;
-    createdAt!: string;
-    status!: string;
+export class Order {
+  id!: string;
+  items!: CartItem[];
+  totalPrice!: number;
+  name!: string;
+  number!: number;
+  address!: string;
+  pincode!: number;
+  deliveryCharge!: number;
+  createdAt!: string;
+  user!: string;
+  razorpayOrderId!: string;
+  razorpayPaymentId?: string;
+  status!: string;
 }

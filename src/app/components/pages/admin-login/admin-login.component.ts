@@ -34,6 +34,7 @@ export class AdminLoginComponent {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      number: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
 
@@ -51,6 +52,7 @@ export class AdminLoginComponent {
     this.service
       .adminLogin({
         email: this.fc.email.value,
+        number: this.fc.number.value,
         password: this.fc.password.value,
       })
       .subscribe(() => {

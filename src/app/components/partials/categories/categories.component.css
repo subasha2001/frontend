@@ -6,7 +6,10 @@ h2 {
   text-align: center;
 }
 a {
-  background-color: #ff0f39c729;
+  background-color: #fc4262;
+}
+a div{
+  color: white;
 }
 h3 {
   padding: 10px;

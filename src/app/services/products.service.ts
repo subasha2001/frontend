@@ -105,11 +105,18 @@ export class ProductsService {
     return this.http.delete(DELETE_PRODUCT_BY_ID_URL + productId);
   }
 
-  updateProductById(product:jewelleryType) {
+  updateProductById(product: jewelleryType) {
     return this.http.put(UPDATE_PRODUCT_BY_ID_URL + product.id, product);
   }
 
   deleteBannerById(productId: string) {
     return this.http.delete(DELETE_BANNER_BY_ID_URL + productId);
+  }
+
+  updateDeliveryCharge(pincode: string, charge: number): Observable<any> {
+    return this.http.put(
+      `${BASE_URL}/api/goldSilver/delivery-charge/${pincode}`,
+      charge
+    );
   }
 }

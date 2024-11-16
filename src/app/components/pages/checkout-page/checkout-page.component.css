@@ -23,3 +23,37 @@ button{
     box-shadow: 2px 2px 2px 2px grey;
 }
 button:hover{opacity: 1;}
+.quieries{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.quieries h3{
+    font-size: 20px;
+}
+.quieries .fa-phone{
+    padding: 10px 10px 10px 12px;
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    width: 35px;
+    margin: 10px 10px 10px -50px;
+}
+.quieries .fa-envelope-o{
+    padding: 10px;
+    background-color: rgb(128, 15, 0);
+    color: white;
+    border-radius: 20px;
+    width: 35px;
+    margin: -5px 10px;
+}
+@media screen and (max-width: 768px) and (min-width: 300px) {
+    .content{
+        margin: 0 1%;
+        max-width: 440px;
+    }
+    .quieries{
+        margin-top: 20px;
+    }
+}

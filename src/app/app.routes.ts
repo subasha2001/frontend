@@ -41,5 +41,5 @@ export const routes: Routes = [
     {path:'schemes', component:SchemesComponent},
     {path:'terms-conditions', component:TermsConditionsComponent},
     {path:'admin-login', component:AdminLoginComponent},
-    {path:'payment', component:PaymentPageComponent}
+    // {path:'payment', component:PaymentPageComponent}
 ];

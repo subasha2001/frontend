@@ -25,7 +25,7 @@
             <hr class="w-1/6 my-2 mx-1 pt-px bg-gray-400">
         </div>
         <div class="price my-2 mx-1">{{ product.price | currency:"&#8377; "}}</div>
-        <div class="price my-2 mx-1" *ngIf="product.stock > 0">Available Stock: <strong>{{product.stock}}</strong></div>
+        <div class="price my-2 mx-1" *ngIf="product.stock > 0">Available Stock: <strong>IN STOCK</strong></div>
         <div class="price my-2 mx-1" *ngIf="product.stock == 0">Available Stock: <strong>OUT OF STOCK</strong></div>
         <div class="description my-2 mx-1">
             <span class="text-sm">

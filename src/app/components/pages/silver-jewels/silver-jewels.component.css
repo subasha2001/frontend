@@ -19,6 +19,15 @@ li a:hover {
 li a img {
   object-fit: cover;
 }
+/* li a img {
+  object-fit: cover;
+  width: 209px;
+  margin: -24px 0 0 -40px;
+  height: 179px;
+  z-index: -4;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+} */
 .content {
   position: relative;
   margin-top: 0.3rem;
@@ -66,7 +75,7 @@ li a:hover .atc {
   z-index: 10;
   opacity: 1;
 }
-.filters{
+.filters {
   border: 1px solid #8080806b;
   padding: 30px;
   position: absolute;
@@ -85,26 +94,33 @@ li a:hover .atc {
   z-index: 11;
   width: 250px;
 }
-.filters h3, .filters-md h3{
+.filters h3,
+.filters-md h3 {
   font-size: 15px;
   margin-bottom: 10px;
   font-weight: 300;
   text-transform: uppercase;
 }
-.filters p, .filters-md p {
+.filters p,
+.filters-md p {
   font-size: 13px;
   margin: 10px auto;
 }
-.filters h4, .filters-md h4 {
+.filters h4,
+.filters-md h4 {
   font-size: 18px;
   margin-bottom: 10px;
 }
-.filters p span, .filters-md p span{
+.filters p span,
+.filters-md p span {
   font-weight: 500;
 }
 .filters .size,
 .filters .priceFilter,
-.filters .genderFilter , .filters-md .size, .filters-md .priceFilter, .filters-md .genderFilter{
+.filters .genderFilter,
+.filters-md .size,
+.filters-md .priceFilter,
+.filters-md .genderFilter {
   font-size: 18px;
   padding: 5px;
   color: gray;

@@ -14,7 +14,7 @@ export class InputComponent {
 
   @Input()control!:AbstractControl;
   @Input()showErrorsWhen:boolean = true;
-  @Input() type: 'text' | 'password' | 'email' = 'text';
+  @Input() type: 'text' | 'password' | 'email' | 'number' = 'text';
   @Input()label!:string;
 
   get formControl(){

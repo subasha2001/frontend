@@ -39,16 +39,26 @@ export class ContactComponent {
 
     const templateParams = {
       name,
-      number,
       email,
+      number,
       message,
+      to_email:'subashayyanar1@gmail.com',
+      to_name:'GPJ'
     };
     this.returnUrl = this.actRouts.snapshot.queryParams.returnUrl;
     emailjs
       .send(
         environment.emailJsServiceId,
         environment.emailJsTemplateId,
-        templateParams,
+        // templateParams,
+        {
+          name:templateParams.name,
+          number:templateParams.number,
+          email:templateParams.email,
+          message:templateParams.message,
+          to_email:'subashayyanar1@gmail.com',
+          to_name:'GPJ'
+        },
         environment.emailJsPrivateKey,
       )
       .then(
@@ -57,7 +67,7 @@ export class ContactComponent {
           this.toastr.success('Your Response Have been sent!');
         },
         (error) => {
-          this.toastr.error('Failed to send your Response')
+          this.toastr.error('Failed to send your Response');
         }
       );
   }

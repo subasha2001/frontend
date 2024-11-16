@@ -17,11 +17,11 @@ textarea::placeholder {
   color: black;
 }
 .imageUpBut {
-  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
   color: white;
 }
-form{
-  display: flex;flex-direction: column;
+form {
+  display: flex;
+  flex-direction: column;
 }
 .links {
   max-width: 350px;
@@ -60,8 +60,8 @@ form{
   border: 1px solid white;
 }
 .delete ul li a:hover {
-  border: 1px solid #ff0f39c7;
-  background-color: #ff0f39c7;
+  border: 1px solid #fc4262;
+  background-color: #fc4262;
 }
 table {
   background: white;
@@ -78,18 +78,26 @@ table th {
 }
 img {
   object-fit: cover;
-  width: 100%;
+  width: 80%;
 }
 table td:first-child {
   width: 100px;
   height: 100px;
   padding: 10px 0px;
 }
+.content h2 {
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  margin: 10px auto -10px;
+  padding-top: 10px;
+}
 @media screen and (max-width: 768px) and (min-width: 300px) {
-  .mr-9{
+  .mr-9 {
     font-size: 14px;
   }
-  .delete ul li a{
+  .delete ul li a {
     padding: 5px 10px;
   }
 }

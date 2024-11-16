@@ -41,6 +41,7 @@ export class HomePageComponent implements OnInit {
   products: jewelleryType[] = [];
   bannerImages: bannerType[] = [];
   baseurl = BASE_URL;
+  justArrivedProducts: jewelleryType[] = [];
 
   constructor(
     private service: ProductsService,
@@ -71,18 +72,44 @@ export class HomePageComponent implements OnInit {
 
     productsObservable
       .pipe(
-        map(
-          (products) =>
-            products
-              .filter((pdt) => pdt.category?.includes('featured'))
-              .map((pdt) => this.calculateProductPrice(pdt))
+        map((products) =>
+          products
+            .filter((pdt) => pdt.category?.includes('featured'))
+            .map((pdt) => this.calculateProductPrice(pdt))
         ),
         map((featuredProducts) => this.getRandomProducts(featuredProducts, 5))
       )
       .subscribe((Products) => {
         this.products = Products;
+        this.justArrivedProducts = this.filterJustArrivedProducts(Products);
+        console.log(
+          'Filtered Just Arrived Products:',
+          this.justArrivedProducts
+        );
       });
   }
+
+  filterJustArrivedProducts(products: jewelleryType[]): jewelleryType[] {
+    const now = new Date();
+    console.log('Current Date:', now);
+    const justArrivedProducts = products.filter((product) => {
+      if (!product.createdAt) {
+        console.warn('Product missing createdAt:', product); // Warn if createdAt is missing
+        return false;
+      }
+      const createdAT = new Date(product.createdAt);
+
+      const diffInDays =
+        (now.getTime() - createdAT.getTime()) / (1000 * 3600 * 24);
+      console.log(
+        `Difference in Days for Product "${product.name}":`,
+        diffInDays
+      );
+      return diffInDays <= 7;
+    });
+    return justArrivedProducts;
+  }
+
   private calculateProductPrice(pdt: jewelleryType): jewelleryType {
     const weight = pdt.weight!;
     const gst = this.gst;
@@ -155,26 +182,18 @@ export class HomePageComponent implements OnInit {
 
   //porto slider contents//
   porto: any[] = [
-    { img: 'assets/images/porto/bestPrice.png', name: 'Best Price' },
-    { img: 'assets/images/porto/bestQuality.png', name: 'Best Quality' },
+    { img: 'assets/images/portoNew/bestPrice.png', name: 'Best Price' },
+    { img: 'assets/images/portoNew/bestQuality.png', name: 'Best Quality' },
     {
-      img: 'assets/images/porto/securedShipping.png',
+      img: 'assets/images/portoNew/securedShipping.png',
       name: 'Secured Shipping',
     },
-    { img: 'assets/images/porto/100-refund.png', name: '100% Refund' },
-    { img: 'assets/images/porto/15DaysReturn.png', name: '15 Days Return' },
+    { img: 'assets/images/portoNew/15DaysReturn.png', name: '15 Days Return' },
     {
-      img: 'assets/images/porto/lifeTimeExchange.png',
-      name: 'Life TIme Exchange',
-    },
-    { img: 'assets/images/porto/listedCompany.png', name: 'Listed Company' },
-    { img: 'assets/images/porto/50Stores.png', name: '50+ Stores' },
-    { img: 'assets/images/porto/2000Employees.png', name: '2000+ Employees' },
-    {
-      img: 'assets/images/porto/certifiedJewellery.png',
+      img: 'assets/images/portoNew/certifiedJewellery.png',
       name: 'Certified Jewellery',
     },
-    { img: 'assets/images/porto/securedRetail.png', name: 'Secured Retail' },
+    { img: 'assets/images/portoNew/securedRetail.png', name: 'Secured Retail' },
   ];
 
   currentIndex = 0;

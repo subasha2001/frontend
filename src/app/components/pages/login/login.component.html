@@ -5,6 +5,7 @@
     <div class="details">
         <form class="flex flex-col justify-center" [formGroup]="loginForm" (ngSubmit)="submit()">
             <app-input [control]="fc.email" [showErrorsWhen]="isSubmitted" type="email" label="Email"></app-input>
+            <app-input [control]="fc.number" [showErrorsWhen]="isSubmitted" type="number" label="Number"></app-input>
             <app-input [control]="fc.password" [showErrorsWhen]="isSubmitted" type="password"
                 label="Password"></app-input>
             <default-button text="Login"></default-button>

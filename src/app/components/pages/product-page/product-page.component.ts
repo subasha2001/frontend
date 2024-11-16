@@ -78,6 +78,7 @@ export class ProductPageComponent implements OnInit {
         this.service.getProductById(params.id).subscribe((pdt) => {
           this.product = pdt;
           this.calculatePrice(pdt);
+          console.log(this.product);
         });
       }
     });

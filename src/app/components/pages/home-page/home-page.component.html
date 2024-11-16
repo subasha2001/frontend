@@ -36,6 +36,29 @@
         </li>
     </ul>
 </div>
+<div class="flex mx-w mx-auto flex-col">
+    <app-title title="Just Arrived" margin="0 0 1.4rem 2rem" class="text-xl" color="#616161"></app-title>
+    <ul class="flex md:justify-between items-center mx-w justify-center">
+        <li *ngFor="let data of justArrivedProducts">
+            <a routerLink='/product/{{data.id}}' class="shadow">
+                <img class="w-8/12 z-10 default_img absolute top-6 left-10"
+                    src="{{baseurl}}/uploads/{{data.imageDis}}" [alt]="data.name" />
+                <img class="w-8/12 z-10 hover_img absolute top-6 left-10"
+                    src="{{baseurl}}/uploads/{{data.imageHov}}" [alt]="data.name" />
+                <div class="content absolute top-16">
+                    <div class="text-sm font-medium py-2 px-5 h-16 flex items-center">{{data.name}}</div>
+                    <hr>
+                    <div class="font-light py-2 px-5">Weight: {{data.weight}} gms</div>
+                    <hr>
+                    <div class="price">
+                        <span>Price: {{ data.price | currency:"&#8377; "}}</span>
+                    </div>
+                </div>
+                <div routerLink="/product/{{data.id}}" class="atc">Add To Cart</div>
+            </a>
+        </li>
+    </ul>
+</div>
 <hr class="m-5 mx-w mx-auto">
 <div class="mx-w mx-auto display_reviews">
     <app-title title="Customer Reviews" margin="0 0 1.4rem 2rem" class="text-xl" color="#616161"></app-title>
