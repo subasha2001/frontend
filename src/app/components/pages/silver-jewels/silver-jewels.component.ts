@@ -1,26 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { SearchComponent } from '../../partials/search/search.component';
 import { jewelleryType } from '../../../shared/models/productType';
 import { ProductsService } from '../../../services/products.service';
 import { map, Observable } from 'rxjs';
 import { PageNotFoundComponent } from "../../partials/page-not-found/page-not-found.component";
 import { TitleComponent } from '../../partials/title/title.component';
-import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-silver-jewels',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    SearchComponent,
-    PageNotFoundComponent,
-    TitleComponent,
-  ],
+  imports: [CommonModule, RouterLink, PageNotFoundComponent, TitleComponent],
   templateUrl: './silver-jewels.component.html',
   styleUrl: './silver-jewels.component.css',
 })
@@ -39,7 +31,7 @@ export class SilverJewelsComponent implements OnInit {
     private service: ProductsService,
     private actRoute: ActivatedRoute,
     private GR: GoldSilverService
-  ) { }
+  ) {}
 
   private loadRates(): void {
     this.GR.getRatesFromDB().subscribe((Items) => {
@@ -82,7 +74,7 @@ export class SilverJewelsComponent implements OnInit {
 
   private calculateProductPrice(pdt: jewelleryType): jewelleryType {
     const weight = pdt.weight!;
-    const gst = this.gst;
+    const wastage = pdt.wastage!;
     const sr = this.SR;
 
     if (
@@ -90,7 +82,10 @@ export class SilverJewelsComponent implements OnInit {
       pdt.category?.includes('kokkikolusu') ||
       pdt.category?.includes('thandai')
     ) {
-      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+      //weight = 50g, wastage = 22%(0.22), sr = 101, gst = 3%(0.03)
+      const value = (weight + weight * wastage) * sr; //(50 + (50*0.22)) * 101 = (50+11) * 101 = 6161
+      const gst = value * this.gst; //6161 * 0.03 = 184.83
+      pdt.price = value + gst; // 6161 + 184.83 = 6345.83
     } else if (pdt.metalType?.includes('silver')) {
       if (
         pdt.category?.includes('92silver') ||

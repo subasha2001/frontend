@@ -50,16 +50,16 @@ export class CoinsComponent implements OnInit {
               return products.map((pdt) => {
                 if (pdt.metalType?.includes('coin')) {
                   if (pdt.category?.includes('500mgcoin')) {
-                    pdt.price =
-                      (pdt.weight! + 0.15) * this.GR22 +
-                      this.gst * this.GR22 * pdt.weight!;
+                    const value = (pdt.weight! + 0.15) * this.GR22;
+                    const gst = value * this.gst;
+                    pdt.price = value + gst;
                   } else if (
                     !pdt.category?.includes('500mgcoin') &&
                     pdt.category?.includes('coin')
                   ) {
-                    pdt.price =
-                      (this.GR22 + 300) * pdt.weight! +
-                      this.gst * pdt.weight! * this.GR22;
+                    const value = (this.GR22 + 200) * pdt.weight!;
+                    const gst = value * this.gst;
+                    pdt.price = value + gst;
                   }
                 }
                 return pdt;

@@ -4,7 +4,6 @@ import { jewelleryType } from '../../../shared/models/productType';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { SearchComponent } from '../../partials/search/search.component';
 import { ImageSliderComponent } from '../../partials/banner/banner.component';
 import { bannerType } from '../../../shared/models/bannerType';
 import { PortoSliderComponent } from '../../partials/porto-slider/porto-slider.component';
@@ -21,7 +20,6 @@ import { BASE_URL } from '../../../shared/models/constants/urls';
   imports: [
     CommonModule,
     RouterLink,
-    SearchComponent,
     ImageSliderComponent,
     PortoSliderComponent,
     CategoriesComponent,
@@ -42,6 +40,7 @@ export class HomePageComponent implements OnInit {
   bannerImages: bannerType[] = [];
   baseurl = BASE_URL;
   justArrivedProducts: jewelleryType[] = [];
+  coinProducts: jewelleryType[] = [];
 
   constructor(
     private service: ProductsService,
@@ -72,59 +71,81 @@ export class HomePageComponent implements OnInit {
 
     productsObservable
       .pipe(
-        map((products) =>
-          products
-            .filter((pdt) => pdt.category?.includes('featured'))
-            .map((pdt) => this.calculateProductPrice(pdt))
-        ),
-        map((featuredProducts) => this.getRandomProducts(featuredProducts, 5))
+        map((products) => {
+          const processedProducts = products.map((pdt) =>
+            this.calculateProductPrice(pdt)
+          );
+
+          const featuredProducts = processedProducts.filter((pdt) =>
+            pdt.category?.includes('featured')
+          );
+
+          const CoinProducts = processedProducts.filter((pdt) =>
+            pdt.metalType?.includes('coin')
+          );
+
+          const recentProducts = processedProducts
+            .sort((a, b) => {
+              const dateA = new Date(a.createdAt!).getTime();
+              const dateB = new Date(b.createdAt!).getTime();
+              return dateA - dateB;
+            })
+            .slice(-5);
+
+          return { featuredProducts, recentProducts, CoinProducts };
+        })
       )
-      .subscribe((Products) => {
-        this.products = Products;
-        this.justArrivedProducts = this.filterJustArrivedProducts(Products);
-        console.log(
-          'Filtered Just Arrived Products:',
-          this.justArrivedProducts
-        );
+      .subscribe(({ featuredProducts, recentProducts, CoinProducts }) => {
+        this.products = this.getRandomProducts(featuredProducts, 5);
+        this.justArrivedProducts = recentProducts;
+        this.coinProducts = this.getRandomProducts(CoinProducts, 5);
       });
-  }
-
-  filterJustArrivedProducts(products: jewelleryType[]): jewelleryType[] {
-    const now = new Date();
-    console.log('Current Date:', now);
-    const justArrivedProducts = products.filter((product) => {
-      if (!product.createdAt) {
-        console.warn('Product missing createdAt:', product); // Warn if createdAt is missing
-        return false;
-      }
-      const createdAT = new Date(product.createdAt);
-
-      const diffInDays =
-        (now.getTime() - createdAT.getTime()) / (1000 * 3600 * 24);
-      console.log(
-        `Difference in Days for Product "${product.name}":`,
-        diffInDays
-      );
-      return diffInDays <= 7;
-    });
-    return justArrivedProducts;
   }
 
   private calculateProductPrice(pdt: jewelleryType): jewelleryType {
     const weight = pdt.weight!;
-    const gst = this.gst;
-    const gr22 = this.GR22;
+    const wastage = pdt.wastage!;
     const sr = this.SR;
 
     if (pdt.metalType?.includes('gold')) {
-      pdt.price = (pdt.weight! * (pdt.wastage! + gst) + weight) * gr22 + 500;
-    } else if (pdt.category?.includes('kolusu')) {
-      pdt.price = (sr + (pdt.wastage! + gst) * 100) * weight;
+      //22KT(916)
+      const value = (weight + weight * wastage) * this.GR22 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
     } else if (
+      pdt.metalType?.includes('gold') &&
+      pdt.category?.includes('18KT')
+    ) {
+      //18KT (75H)
+      const value = (weight + weight * wastage) * this.GR18 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      //above 500mg gold
+      pdt.metalType?.includes('gold') &&
+      pdt.weight! < 1 &&
+      pdt.weight! > 0.5
+    ) {
+      const value = (weight + 0.2) * this.GR22 + 200;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      //below 500mg gold
+      pdt.metalType?.includes('gold') &&
+      pdt.weight! <= 0.5
+    ) {
+      const value = (weight + 0.15) * this.GR22 + 150;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      pdt.category?.includes('kolusu') ||
       pdt.category?.includes('kokkikolusu') ||
       pdt.category?.includes('thandai')
     ) {
-      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+      //weight = 50g, wastage = 22%(0.22), sr = 101, gst = 3%(0.03)
+      const value = (weight + weight * wastage) * sr; //(50 + (50*0.22)) * 101 = (50+11) * 101 = 6161
+      const gst = value * this.gst; //6161 * 0.03 = 184.83
+      pdt.price = value + gst; // 6161 + 184.83 = 6345.83
     } else if (pdt.metalType?.includes('silver')) {
       if (
         pdt.category?.includes('92silver') ||
@@ -154,17 +175,21 @@ export class HomePageComponent implements OnInit {
       pdt.category?.includes('silver92')
     ) {
       pdt.price = weight * 280;
-    } else if (pdt.metalType?.includes('coin')) {
+    } //coins price calculation
+    else if (pdt.metalType?.includes('coin')) {
       if (pdt.category?.includes('500mgcoin')) {
-        pdt.price = (weight + 0.15) * gr22 + gst * gr22 * weight;
+        const value = (weight + 0.15) * this.GR22;
+        const gst = value * this.gst;
+        pdt.price = value + gst;
       } else if (
         !pdt.category?.includes('500mgcoin') &&
         pdt.category?.includes('coin')
       ) {
-        pdt.price = (gr22 + 300) * weight + gst * weight * gr22;
+        const value = (this.GR22 + 200) * weight;
+        const gst = value * this.gst;
+        pdt.price = value + gst;
       }
     }
-
     return pdt;
   }
 
@@ -188,7 +213,6 @@ export class HomePageComponent implements OnInit {
       img: 'assets/images/portoNew/securedShipping.png',
       name: 'Secured Shipping',
     },
-    { img: 'assets/images/portoNew/15DaysReturn.png', name: '15 Days Return' },
     {
       img: 'assets/images/portoNew/certifiedJewellery.png',
       name: 'Certified Jewellery',
@@ -200,11 +224,11 @@ export class HomePageComponent implements OnInit {
   intervalId: any;
 
   get displayedCards() {
-    return this.porto.slice(this.currentIndex, this.currentIndex + 6);
+    return this.porto.slice(this.currentIndex, this.currentIndex + 5);
   }
 
   next() {
-    if (this.currentIndex < this.porto.length - 6) {
+    if (this.currentIndex < this.porto.length - 5) {
       this.currentIndex++;
     } else {
       this.currentIndex = 0;
@@ -215,7 +239,7 @@ export class HomePageComponent implements OnInit {
     if (this.currentIndex > 0) {
       this.currentIndex--;
     } else {
-      this.currentIndex = this.porto.length - 6;
+      this.currentIndex = this.porto.length - 5;
     }
   }
 

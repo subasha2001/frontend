@@ -17,8 +17,7 @@ export class UpdateProductComponent {
   updateMsg!:string | undefined;
   constructor(
     actRoute: ActivatedRoute,
-    private productservice: ProductsService,
-    private toastr:ToastrService
+    private productservice: ProductsService
   ) {
     let productId = actRoute.snapshot.paramMap.get('id');
     productId &&
@@ -31,10 +30,7 @@ export class UpdateProductComponent {
     if (this.product) {
       data.id = this.product.id;
       this.productservice.updateProductById(data).subscribe((val) => {
-        this.toastr.success(
-          'Successful!',
-          'Product Update'
-        )
+        alert('Successfully Updated product');
       })
     }
   }

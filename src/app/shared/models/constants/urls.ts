@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://localhost:3001';
 // export const BASE_URL = 'https://backend-gpj.onrender.com';
 
 export const PRODUCTS_URL = BASE_URL + '/api/products';

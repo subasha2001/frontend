@@ -83,7 +83,7 @@ li a:hover .atc {
   transition: all 0.3s linear;
   background-color: white;
   z-index: 11;
-  width: 250px;
+  width: 320px;
 }
 .filters h3, .filters-md h3{
   font-size: 15px;

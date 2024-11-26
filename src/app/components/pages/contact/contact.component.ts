@@ -7,11 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import emailjs from 'emailjs-com';
-import { environment } from '../../../shared/models/env/environment.prod';
 import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { BASE_URL } from '../../../shared/models/constants/urls';
 
 @Component({
   selector: 'app-contact',
@@ -21,53 +20,35 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './contact.component.css',
 })
 export class ContactComponent {
-
   contactForm!: FormGroup;
-  returnUrl!:string;
+  returnUrl!: string;
 
-  constructor(private fb: FormBuilder, private router:Router, private actRouts:ActivatedRoute, private toastr:ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       number: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
       message: ['', Validators.required],
     });
   }
 
   onSubmit(): void {
-    const { name, number, email, message } = this.contactForm.value;
+    const formData = this.contactForm.value;
 
-    const templateParams = {
-      name,
-      email,
-      number,
-      message,
-      to_email:'subashayyanar1@gmail.com',
-      to_name:'GPJ'
-    };
-    this.returnUrl = this.actRouts.snapshot.queryParams.returnUrl;
-    emailjs
-      .send(
-        environment.emailJsServiceId,
-        environment.emailJsTemplateId,
-        // templateParams,
-        {
-          name:templateParams.name,
-          number:templateParams.number,
-          email:templateParams.email,
-          message:templateParams.message,
-          to_email:'subashayyanar1@gmail.com',
-          to_name:'GPJ'
-        },
-        environment.emailJsPrivateKey,
-      )
-      .then(
+    this.http
+      .post(BASE_URL+ '/api/mailer/send-email', formData)
+      .subscribe(
         (response) => {
+          alert('Your response has been sent!');
           this.router.navigateByUrl(this.returnUrl);
-          this.toastr.success('Your Response Have been sent!');
         },
         (error) => {
-          this.toastr.error('Failed to send your Response');
+          alert(error.error);
         }
       );
   }

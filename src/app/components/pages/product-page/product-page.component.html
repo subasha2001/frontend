@@ -5,7 +5,7 @@
                 src="{{baseurl}}/uploads/{{ImgDisHov || product.imageDis}}" [alt]="product.name"></a>
         <div [ngClass]="{'active': closeClass}" class="modal" id="modal">
             <span class="close" (click)="close(false)">&times;</span>
-            <img class="modal-img" src="http://localhost:3000/uploads/{{ImgDisHov || product.imageDis}}" alt="">
+            <img class="modal-img" src="{{baseurl}}/uploads/{{ImgDisHov || product.imageDis}}" alt="Product Image">
         </div>
         <div class="flex border-t-2">
             <a class="w-1/4 p-2" (click)="showImg(product.imageDis)"><img class=""

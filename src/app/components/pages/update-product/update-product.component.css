@@ -11,3 +11,8 @@ textarea {
 form label{
   font-weight:500;
 }
+@media screen and (max-width: 768px) and (min-width: 300px) {
+  .content{
+    max-width: 365px;
+  }
+}

@@ -4,7 +4,6 @@ import {
   FormBuilder,
   FormGroup,
   FormsModule,
-  NgModel,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -23,7 +22,6 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-admin-page',
   standalone: true,
   imports: [
-    InputComponent,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -33,17 +31,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './admin-page.component.css',
 })
 export class AdminPageComponent implements OnInit {
-  products: jewelleryType[] = [];
-  isAdded: boolean = false;
   returnUrl = '';
-  bannerImg: bannerType[] = [];
   baseurl = BASE_URL;
   deliveryCharges: any[] = [];
-  Product!: FormGroup;
-  goldSilver!: FormGroup;
   deliveryChargeForm!: FormGroup;
 
   constructor(
+    private productservice: ProductsService,
     private actRoute: ActivatedRoute,
     private service: ProductsService,
     private router: Router,
@@ -52,17 +46,11 @@ export class AdminPageComponent implements OnInit {
     private GS: GoldSilverService,
     private http: HttpClient
   ) {
-    let productsObservable: Observable<jewelleryType[]>;
-    productsObservable = this.service.getAllProducts();
-
-    productsObservable.subscribe((Products) => {
+    this.service.getAllProducts().subscribe((Products) => {
       this.products = Products;
     });
 
-    let bannerObservable: Observable<bannerType[]>;
-    bannerObservable = this.service.getBannerItems();
-
-    bannerObservable.subscribe((Items) => {
+    this.service.getBannerItems().subscribe((Items) => {
       this.bannerImg = Items;
     });
 
@@ -90,8 +78,11 @@ export class AdminPageComponent implements OnInit {
     });
 
     this.deliveryChargeForm = this.fb.group({
-      pincode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]], // Validate 6-digit pincode
+      pincode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
       charge: ['', [Validators.required, Validators.min(0)]],
+    });
+    this.Banner = this.fb.group({
+      image: ['', [Validators.required]],
     });
   }
 
@@ -100,52 +91,58 @@ export class AdminPageComponent implements OnInit {
     this.fetchDeliveryCharges();
   }
 
-  //delete products and banner//
-  toDelete: string = 'gold';
-  toDeleteItem(val: string) {
-    this.toDelete = val;
-  }
-
-  deleteProduct(id: string) {
-    this.service.deleteProductById(id).subscribe(() => {
-      this.router.navigateByUrl(this.returnUrl);
-    });
-  }
-  deleteBanner(id: string) {
-    this.service.deleteBannerById(id).subscribe(() => {
-      this.router.navigateByUrl(this.returnUrl);
-    });
-  }
-  //delete products and banner//
-
-  //image upload//
-  selectedFile: File | null = null;
-  displayImageUrl: string | null = null;
-
-  onFileSelected(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      this.selectedFile = fileInput.files[0];
-    }
-    this.displayImageUrl = this.selectedFile!.name;
-  }
-
-  onUpload() {
-    if (this.selectedFile) {
-      this.service.uploadImage(this.selectedFile).subscribe((response) => {
-        this.displayImageUrl = response.imageUrl;
-        this.toastr.success('Image Uploaded Successfully');
-      });
-    }
-  }
-  //image upload//
-
   //to toggle each div//
   selectedDiv: number | null = 0;
   toggleDiv(index: number) {
     this.selectedDiv = this.selectedDiv === index ? null : index;
   }
   //to toggle each div//
+
+  //banner//
+  bannerImg: bannerType[] = [];
+  Banner!: FormGroup;
+  bannerImgUrl!: string;
+
+  deleteBanner(id: string) {
+    this.service.deleteBannerById(id).subscribe(() => {
+      this.router.navigateByUrl(this.returnUrl);
+    });
+  }
+
+  onBannerUpload(event: Event, val: string): void {
+    const fileInput = event.target as HTMLInputElement;
+
+    if (fileInput.files && fileInput.files[0]) {
+      const selectedFile = fileInput.files[0];
+      this.bannerImgUrl = selectedFile.name;
+
+      this.service
+        .uploadImage(selectedFile)
+        .subscribe((response: { imageUrl: string }) => {
+          this.Banner.patchValue({ [val]: response.imageUrl });
+          this.toastr.success('Banner Image Uploaded');
+        });
+    }
+  }
+
+  addBanner(): void {
+    if (this.Banner.valid) {
+      const formData = this.Banner.value;
+
+      const BannerData = {
+        ...formData,
+        image: this.bannerImgUrl,
+      };
+
+      this.service.addBanner(BannerData).subscribe(() => {
+        this.router.navigateByUrl(this.returnUrl);
+      });
+    }
+  }
+  //banner//
+
+  //goldSilverGst//
+  goldSilver!: FormGroup;
 
   onSubmit(): void {
     if (this.goldSilver.invalid) console.log('invalid form');
@@ -161,8 +158,57 @@ export class AdminPageComponent implements OnInit {
       this.GS.updateData(data);
     });
   }
+  //goldSilverGst//
 
-  //add products and banner//
+  //product//
+  Product!: FormGroup;
+  products: jewelleryType[] = [];
+  displayImageUrl: string | null = null;
+  hoverImageUrl: string = '';
+
+  toDelete: string = 'gold';
+  toDeleteItem(val: string) {
+    this.toDelete = val;
+  }
+
+  deleteProduct(id: string) {
+    this.service.deleteProductById(id).subscribe(() => {
+      this.router.navigateByUrl(this.returnUrl);
+    });
+  }
+
+  onDisplayUpload(event: Event, val: string): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const selectedFile = fileInput.files[0];
+
+      this.displayImageUrl = selectedFile.name;
+
+      this.service
+        .uploadImage(selectedFile)
+        .subscribe((response: { imageUrl: string }) => {
+          this.Product.patchValue({ [val]: response.imageUrl });
+          this.toastr.success('Display Image Uploaded');
+        });
+    }
+  }
+
+  onHoverUpload(event: Event, val: string): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const selectedFile = fileInput.files[0];
+
+      this.hoverImageUrl = selectedFile.name;
+
+      this.service
+        .uploadImage(selectedFile)
+        .subscribe((response: { imageUrl: string }) => {
+          this.Product.patchValue({ [val]: response.imageUrl });
+          this.toastr.success('Hover Image Uploaded');
+        });
+    }
+  }
+
   addProduct(): void {
     if (this.Product.valid) {
       const formData = this.Product.value;
@@ -170,23 +216,22 @@ export class AdminPageComponent implements OnInit {
       const productData = {
         ...formData,
         category: formData.category.split(',').map((cat: string) => cat.trim()),
+        imageDis: this.displayImageUrl,
+        imageHov: this.hoverImageUrl,
       };
 
-      this.service.addProduct(productData).subscribe((_) => {
+      this.service.addProduct(productData).subscribe(() => {
         this.router.navigateByUrl(this.returnUrl);
       });
     }
   }
-  addBanner(data: bannerType) {
-    if (data) {
-      this.service.addBanner(data).subscribe((_) => {
-        this.router.navigateByUrl(this.returnUrl);
-      });
-    }
-  }
-  //add products and banner//
+  //product//
 
-  //updating deliverycharge//
+  //deliveryCharge//
+  pincode: string = '';
+  charge: number = 0;
+  message: string = '';
+
   fetchDeliveryCharges() {
     this.http
       .get(BASE_URL + '/api/goldSilver/delivery-charges')
@@ -216,12 +261,7 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
-  pincode: string = '';
-  charge: number = 0;
-  message: string = '';
-
   onUpdatingCharges() {
-    // Send PUT request to backend to update the delivery charge
     this.http
       .put(`${BASE_URL}/api/goldSilver/delivery-charge/${this.pincode}`, {
         charge: this.charge,
@@ -235,5 +275,32 @@ export class AdminPageComponent implements OnInit {
         }
       );
   }
-  //updating deliverycharge//
+  //deliveryCharge//
+
+  //to Update Product//
+  productId!:string;
+  product!:jewelleryType;
+  fetchProductDetails() {
+    if (!this.productId.trim()) {
+      alert('Please enter a valid Product ID.');
+      return;
+    }
+
+    this.productservice.getProductById(this.productId).subscribe({
+      next: (product) => {
+        this.product = product;
+        if (this.product) {
+          this.router.navigate(['/update', this.productId], {
+            state: { product: this.product },
+          });
+        } else {
+          alert('Product not found.');
+        }
+      },
+      error: () => {
+        alert('Failed to fetch product details. Please try again.');
+      },
+    });
+  }
+  //to Update Product//
 }

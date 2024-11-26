@@ -47,9 +47,9 @@ li span {
 }
 .schemes a {
   padding: 10px 20px;
-  background-color: #f7f772;
+  background-color: #9f1c24;
   cursor: pointer;
-  color: black;
+  color: #fff;
 }
 .schemes a:hover {
   color: #fff;
@@ -79,13 +79,16 @@ li span {
 .cont-3 .sub .sub-head {
   width: 168px;
   margin: 10px auto;
-  background-color: #f7f772;
+  background-color: #9f1c24;
   padding: 15px;
-  border: 2px solid black;
+  border-radius: 12px;
+  border: 1px solid black;
+  box-shadow: 0px 0px 50px -15px black;
   font-size: 15px;
   text-align: center;
   display: flex;
   align-items: center;
+  color: #fff;
 }
 .cont-2 .line,
 .cont-3 .line {
@@ -110,8 +113,22 @@ li span {
   top: 106%;
   height: 263px;
 }
+.cont-3 .l-4 {
+  left: 50%;
+  transform: rotate(180deg);
+  top: 96%;
+  height: 113px;
+}
 .cont-4 .headinG {
   padding: 23px;
+}
+a.headinG {
+  padding: 5px;
+  display: block;
+  margin: 100px auto 0 !important;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
 }
 @media screen and (max-width: 768px) and (min-width: 300px) {
   .cont-2 h2,
@@ -133,10 +150,11 @@ li span {
   .cont-3 .headinG {
     margin: 20px auto;
   }
-  .schemes a{
+  .schemes a {
     margin-right: 10px;
+    margin-bottom: 5px;
   }
-  .schemes{
-    margin: 0 1%;
+  .schemes {
+    margin: 0 1% 20px;
   }
 }

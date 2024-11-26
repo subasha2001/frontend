@@ -1,1 +1,12 @@
-button{background-color: #ff0f39c7;}
+button {
+  background-color: #ff0f39c7;
+}
+.active.box {
+  display: block;
+  position: absolute;
+  top: 65px;
+  left: 80px;
+}
+input.active{
+  box-shadow: 10px 10px 50px -14px #fc4262;
+}

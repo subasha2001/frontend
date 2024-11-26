@@ -25,7 +25,7 @@ form {
 }
 .links {
   max-width: 350px;
-  margin-left: 12%;
+  margin: 0 auto;
   background-color: black;
   color: white;
 }
@@ -99,5 +99,8 @@ table td:first-child {
   }
   .delete ul li a {
     padding: 5px 10px;
+  }
+  .delete ul li {
+    margin-right: 10px;
   }
 }

@@ -11,7 +11,6 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.9);
 }
 .modal.active {
@@ -88,7 +87,7 @@ textarea::placeholder {
 }
 .product-details {
   background-color: #e5e7eb;
-  padding: 40px 0 60px;
+  padding: 40px 4% 60px;
 }
 .product-details .flex {
   text-transform: uppercase;

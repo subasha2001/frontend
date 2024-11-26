@@ -52,10 +52,38 @@ export class GoldJewelsComponent implements OnInit {
             map((products) => {
               return products.map((pdt) => {
                 if (pdt.metalType?.includes('gold')) {
-                  pdt.price =
-                    (pdt.weight! * (pdt.wastage! + this.gst) + pdt.weight!) *
-                      this.GR22 +
+                  //22KT(916)
+                  const value =
+                    (pdt.weight! + pdt.weight! * pdt.wastage!) * this.GR22 +
                     500;
+                  const gst = value * this.gst;
+                  pdt.price = value + gst;
+                } else if (
+                  pdt.metalType?.includes('gold') &&
+                  pdt.category?.includes('18KT')
+                ) {
+                  //18KT (75H)
+                  const value =
+                    (pdt.weight! + pdt.weight! * pdt.wastage!) * this.GR18 + 500;
+                  const gst = value * this.gst;
+                  pdt.price = value + gst;
+                } else if (
+                  //above 500mg gold
+                  pdt.metalType?.includes('gold') &&
+                  pdt.weight! < 1 &&
+                  pdt.weight! > 0.5
+                ) {
+                  const value = (pdt.weight! + 0.2) * this.GR22 + 200;
+                  const gst = value * this.gst;
+                  pdt.price = value + gst;
+                } else if (
+                  //below 500mg gold
+                  pdt.metalType?.includes('gold') &&
+                  pdt.weight! <= 0.5
+                ) {
+                  const value = (pdt.weight! + 0.15) * this.GR22 + 150;
+                  const gst = value * this.gst;
+                  pdt.price = value + gst;
                 }
                 return pdt;
               });

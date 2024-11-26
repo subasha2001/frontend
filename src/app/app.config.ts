@@ -19,12 +19,11 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     provideToastr({
-      timeOut: 3000,
+      timeOut: 1000,
       positionClass: 'toast-top-center',
       newestOnTop: false,
     }),
-    // {provide:LocationStrategy, useClass:HashLocationStrategy},
-    NoopAnimationsModule,
+    {provide:LocationStrategy, useClass:HashLocationStrategy},
     BrowserAnimationsModule
   ],
 };

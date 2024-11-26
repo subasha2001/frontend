@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { jewelleryType } from '../../../shared/models/productType';
 import { CommonModule, NgClass } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
-import { map, Observable } from 'rxjs';
-import { rates } from '../../../shared/models/rates';
 import { GoldSilverService } from '../../../services/gold-silver.service';
 import {
   FormBuilder,
@@ -76,29 +74,58 @@ export class ProductPageComponent implements OnInit {
     this.actRoute.params.subscribe((params) => {
       if (params.id) {
         this.service.getProductById(params.id).subscribe((pdt) => {
-          this.product = pdt;
           this.calculatePrice(pdt);
+          this.product = pdt;
           console.log(this.product);
         });
       }
     });
   }
 
-  private calculatePrice(pdt: jewelleryType): void {
+  private calculatePrice(pdt: jewelleryType): jewelleryType {
     const weight = pdt.weight!;
-    const gst = this.gst;
-    const gr22 = this.GR22;
+    const wastage = pdt.wastage!;
     const sr = this.SR;
 
     if (pdt.metalType?.includes('gold')) {
-      pdt.price = (pdt.weight! * (pdt.wastage! + gst) + weight) * gr22 + 500;
-    } else if (pdt.category?.includes('kolusu')) {
-      pdt.price = (sr + (pdt.wastage! + gst) * 100) * weight;
+      //22KT(916)
+      const value = (weight + weight * wastage) * this.GR22 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
     } else if (
+      pdt.metalType?.includes('gold') &&
+      pdt.category?.includes('18KT')
+    ) {
+      //18KT (75H)
+      const value = (weight + weight * wastage) * this.GR18 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      //above 500mg gold
+      pdt.metalType?.includes('gold') &&
+      pdt.weight! < 1 &&
+      pdt.weight! > 0.5
+    ) {
+      const value = (weight + 0.2) * this.GR22 + 200;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      //below 500mg gold
+      pdt.metalType?.includes('gold') &&
+      pdt.weight! <= 0.5
+    ) {
+      const value = (weight + 0.15) * this.GR22 + 150;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      pdt.category?.includes('kolusu') ||
       pdt.category?.includes('kokkikolusu') ||
       pdt.category?.includes('thandai')
     ) {
-      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+      //weight = 50g, wastage = 22%(0.22), sr = 101, gst = 3%(0.03)
+      const value = (weight + weight * wastage) * sr; //(50 + (50*0.22)) * 101 = (50+11) * 101 = 6161
+      const gst = value * this.gst; //6161 * 0.03 = 184.83
+      pdt.price = value + gst; // 6161 + 184.83 = 6345.83
     } else if (pdt.metalType?.includes('silver')) {
       if (
         pdt.category?.includes('92silver') ||
@@ -128,21 +155,32 @@ export class ProductPageComponent implements OnInit {
       pdt.category?.includes('silver92')
     ) {
       pdt.price = weight * 280;
-    } else if (pdt.metalType?.includes('coin')) {
+    } //coins price calculation
+    else if (pdt.metalType?.includes('coin')) {
       if (pdt.category?.includes('500mgcoin')) {
-        pdt.price = (weight + 0.15) * gr22 + gst * gr22 * weight;
+        const value = (weight + 0.15) * this.GR22;
+        const gst = value * this.gst;
+        pdt.price = value + gst;
       } else if (
         !pdt.category?.includes('500mgcoin') &&
         pdt.category?.includes('coin')
       ) {
-        pdt.price = (gr22 + 300) * weight + gst * weight * gr22;
+        const value = (this.GR22 + 200) * weight;
+        const gst = value * this.gst;
+        pdt.price = value + gst;
       }
     }
+    return pdt;
   }
 
   addToCart() {
-    this.cartService.addToCart(this.product);
-    this.router.navigateByUrl('/cart');
+    if (this.product.stock > 0 && this.product.price) {
+      this.cartService.addToCart(this.product);
+      this.router.navigateByUrl('/cart');
+    } else {
+      window.location.reload();
+      alert('Sorry, this product is out of stock.');
+    }
   }
 
   closeClass: boolean = false;

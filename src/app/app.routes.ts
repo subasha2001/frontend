@@ -19,6 +19,7 @@ import { AdminLoginComponent } from './components/pages/admin-login/admin-login.
 import { adminauthGuard } from './auth/guards/adminauth.guard';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 import { UpdateProductComponent } from './components/pages/update-product/update-product.component';
+import { SuccessPageComponent } from './components/pages/success-page/success-page.component';
 
 export const routes: Routes = [
     {path:'', component:HomePageComponent},
@@ -41,5 +42,6 @@ export const routes: Routes = [
     {path:'schemes', component:SchemesComponent},
     {path:'terms-conditions', component:TermsConditionsComponent},
     {path:'admin-login', component:AdminLoginComponent},
-    // {path:'payment', component:PaymentPageComponent}
+    // {path:'payment', component:PaymentPageComponent},
+    {path:'success-page', component:SuccessPageComponent}
 ];

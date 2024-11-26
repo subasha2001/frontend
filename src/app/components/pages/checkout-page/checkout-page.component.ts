@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../../shared/models/order';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CartService } from '../../../services/cart.service';
 import { UserService } from '../../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,7 +13,7 @@ import { TitleComponent } from '../../partials/title/title.component';
 import { OrderService } from '../../../services/order.service';
 import { Router } from '@angular/router';
 import { InputComponent } from '../../partials/input/input.component';
-import { OrderItemsListComponent } from "../../partials/order-items-list/order-items-list.component";
+import { OrderItemsListComponent } from '../../partials/order-items-list/order-items-list.component';
 import { environment } from '../../../shared/models/env/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { BASE_URL } from '../../../shared/models/constants/urls';
@@ -47,12 +52,14 @@ export class CheckoutPageComponent implements OnInit {
   ngOnInit(): void {
     let { name, address, pincode } = this.userservice.currentUser;
     this.checkoutForn = this.formBuilder.group({
-      name: [name, Validators.required],
+      name: [name, [Validators.required, Validators.minLength(3)]],
       address: [address, Validators.required],
-      pincode: [pincode, Validators.required],
+      pincode: [
+        pincode,
+        [Validators.required, Validators.pattern('^[1-9][0-9]{5}$')],
+      ],
     });
 
-    // On Pincode input change, update the delivery charge
     this.checkoutForn.controls['pincode'].valueChanges.subscribe((pincode) => {
       if (pincode) {
         this.fetchDeliveryCharge(pincode);
@@ -72,14 +79,12 @@ export class CheckoutPageComponent implements OnInit {
         (response) => {
           this.deliveryCharge = response.charge;
           this.updateTotalPrice();
+          this.toastrservice.success('Delivery Charge updated');
         },
-        (error) => {
-          this.toastrservice.error('Failed to fetch delivery charges', 'Error');
-        }
+        (error) => {}
       );
   }
   updateTotalPrice() {
-    // Add delivery charge to the existing total price
     this.order.totalPrice = parseFloat(
       (this.cartservice.getCart().totalPrice + this.deliveryCharge).toFixed(2)
     );
@@ -100,10 +105,10 @@ export class CheckoutPageComponent implements OnInit {
       next: (response) => {
         const razorpayOrderId = response.razorpayOrderId;
         this.payNow(razorpayOrderId);
-        this.toastrservice.success('Payment Successful');
+        alert('Proceeding to Payment');
       },
       error: (errRes) => {
-        this.toastrservice.error(errRes.error, 'Cart');
+        alert(errRes.error.error);
       },
     });
   }
@@ -123,7 +128,6 @@ export class CheckoutPageComponent implements OnInit {
       order_id: orderId,
       handler: (response: any) => {
         this.verifyPayment(response);
-        console.log(response);
       },
       prefill: {
         name: this.order.name,
@@ -139,6 +143,9 @@ export class CheckoutPageComponent implements OnInit {
   }
 
   verifyPayment(response: any) {
+    
+    alert('Payment Successful, Proceeding to verification');
+    alert('Please Wait a moment');
     const paymentData = {
       razorpay_order_id: response.razorpay_order_id,
       razorpay_payment_id: response.razorpay_payment_id,
@@ -147,12 +154,15 @@ export class CheckoutPageComponent implements OnInit {
 
     this.orderservice.verifyPayment(paymentData).subscribe(
       (res) => {
-        console.log('Payment Verified:', res);
+        alert('Payment verified, order confirmed');
+        console.log(res);
         this.cartservice.clearCart();
-        this.router.navigateByUrl('/');
+        this.orderservice.setOrder(this.order);
+        this.router.navigateByUrl('/success-page');
       },
       (error) => {
-        console.error('Payment Verification Failed:', error);
+        alert('Payment Verification Failed:');
+        console.log(error);
       }
     );
   }

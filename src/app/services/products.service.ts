@@ -35,18 +35,18 @@ export class ProductsService {
         tap({
           next: (name) => {
             localStorage.setItem('products', JSON.stringify(name));
-            this.toastr.success('Product Added');
+            alert('Product Added');
           },
           error: (err) => {
-            this.toastr.error(err, 'Error adding product');
+            alert('Error adding product');
           },
         })
       );
   }
-  uploadImage(image: File): Observable<any> {
+  uploadImage(image: File): Observable<{ imageUrl: string }> {
     const formData = new FormData();
     formData.append('image', image);
-    return this.http.post(IMG_UPLOAD, formData);
+    return this.http.post<{ imageUrl: string }>(IMG_UPLOAD, formData);
   }
 
   addBanner(data: bannerType): Observable<bannerType> {
@@ -63,7 +63,6 @@ export class ProductsService {
     );
   }
   getBannerItems(): Observable<bannerType[]> {
-    // return this.http.get<bannerType[]>('https://backend-gpj.onrender.com/api/banner');
     return this.http.get<bannerType[]>(`${BASE_URL}/api/banner`);
   }
 

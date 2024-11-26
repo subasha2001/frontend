@@ -33,20 +33,28 @@ button:hover{opacity: 1;}
     font-size: 20px;
 }
 .quieries .fa-phone{
-    padding: 10px 10px 10px 12px;
-    background-color: green;
+    padding: 15px 15px 15px 15px;
+    font-size: 30px;
+    background-color: #16a2f1;
     color: white;
-    border-radius: 20px;
-    width: 35px;
-    margin: 10px 10px 10px -50px;
+    border-radius: 5px;
+    margin: 10px;
+}
+.quieries .fa-whatsapp{
+    padding: 15px 15px 15px 15px;
+    font-size: 30px;
+    background-color: #2caf45;
+    color: white;
+    border-radius: 5px;
+    margin: 10px;
 }
 .quieries .fa-envelope-o{
-    padding: 10px;
-    background-color: rgb(128, 15, 0);
+    padding: 15px 15px 15px 15px;
+    font-size: 30px;
+    background-color: #800f00;
     color: white;
-    border-radius: 20px;
-    width: 35px;
-    margin: -5px 10px;
+    border-radius: 5px;
+    margin: 10px;
 }
 @media screen and (max-width: 768px) and (min-width: 300px) {
     .content{

@@ -1,4 +1,4 @@
-.slider img{display: none;}
+.slider img{display: none;height: auto;}
 .slider img.image-active{
     display: block;
     width: 100%;

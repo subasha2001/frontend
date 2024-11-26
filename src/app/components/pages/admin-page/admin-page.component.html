@@ -8,62 +8,63 @@
         <button (click)="toggleDiv(4)">Add Gold Rate</button>
         <button (click)="toggleDiv(5)">Add Delivery Charges</button>
         <button (click)="toggleDiv(6)">Update Delivery Charges</button>
+        <button (click)="toggleDiv(7)">Update Product By Id</button>
     </div>
     <div *ngIf="selectedDiv === 0" class="content">
-        <form #banner="ngForm" (ngSubmit)="addBanner(banner.value)">
-            <input type="text" placeholder="Banner image url with extension" name="image" ngModel />
+        <h2>Add New Banner image</h2>
+        <form #banner="ngForm" (ngSubmit)="addBanner()">
+            <input type="file" (change)="onBannerUpload($event, 'image')" name="image" />
             <button class="bg-rose-500 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
                 ADD BANNER
             </button>
         </form>
-        <div class="flex flex-col items-center">
-            <input type="file" (change)="onFileSelected($event)" name="image" />
-            <button (click)="onUpload()"
-                class="imageUpBut bg-rose-500 px-5 py-3 rounded w-full bo-ra5 cursor-pointer hover:shadow-xl">
-                Upload Image!
-            </button>
-        </div>
     </div>
-    <div *ngIf="selectedDiv === 1" class="md:w-2/5 content flex items-center">
+    <div *ngIf="selectedDiv === 1" class="md:w-2/5 content flex items-center flex-col">
+        <h2>Add New Product</h2>
         <form [formGroup]="Product" (ngSubmit)="addProduct()" class="w-full">
             <label>Enter Product Name :</label>
-            <input type="text" placeholder="Enter Product Name" formControlName="name" ngModel />
-            <label>Enter display image url :</label>
-            <input type="text" placeholder="Enter Display image with extension" value={{displayImageUrl}}
-                formControlName="imageDis" ngModel />
-            <label>Enter hover image url :</label>
-            <input type="text" placeholder="Enter Hover image with extension" formControlName="imageHov" ngModel />
+            <input type="text" placeholder="Enter Product Name" formControlName="name" />
+        
+            <label>Upload Display Image:</label>
+            <input type="file" (change)="onDisplayUpload($event, 'imageDis')" />
+        
+            <label>Upload Hover Image:</label>
+            <input type="file" (change)="onHoverUpload($event, 'imageHov')" />
+        
             <label>Enter Product Description :</label>
-            <textarea type="text" placeholder="Product Description" formControlName="description" ngModel></textarea>
+            <textarea formControlName="description" placeholder="Product Description"></textarea>
+        
             <label>Enter Product Metal Type :</label>
-            <input type="text" placeholder="Enter Metal Type" formControlName="metalType" ngModel />
+            <input type="text" placeholder="Enter Metal Type" formControlName="metalType" />
+        
             <label>Enter Product Category :</label>
-            <input type="text" placeholder="Category1, Category2, .." formControlName="category" ngModel />
+            <input type="text" placeholder="Category1, Category2, .." formControlName="category" />
+        
             <label>Enter Product Price :</label>
-            <input type="number" placeholder="Enter Product Price" formControlName="price" ngModel />
+            <input type="number" placeholder="Enter Product Price" formControlName="price" />
+        
             <label>Enter Product Weight :</label>
-            <input type="number" placeholder="Enter Product Weight in grams" formControlName="weight" ngModel />
-            <label>Enter Product Macking charges in Rs :</label>
-            <input type="number" placeholder="Making Cost in Rs" formControlName="mc" ngModel />
+            <input type="number" placeholder="Enter Product Weight in grams" formControlName="weight" />
+        
+            <label>Enter Product Making Charges in Rs :</label>
+            <input type="number" placeholder="Making Cost in Rs" formControlName="mc" />
+        
             <label>Enter Product Size :</label>
-            <input type="number" placeholder="Size of Product" formControlName="size" ngModel />
+            <input type="number" placeholder="Size of Product" formControlName="size" />
+        
             <label>Enter Product available stock :</label>
-            <input type="number" placeholder="Stock Available" formControlName="stock" ngModel />
+            <input type="number" placeholder="Stock Available" formControlName="stock" />
+        
             <label>Enter Product Wastage in percentage :</label>
-            <input type="number" placeholder="Wastage in %" formControlName="wastage" ngModel />
-            <button class="bg-rose-500 px-5 py-3 text-white rounded w-full bo-ra5 cupo">
+            <input type="number" placeholder="Wastage in %" formControlName="wastage" />
+        
+            <button type="submit" class="bg-rose-500 px-5 py-3 text-white rounded w-full">
                 Add Product
             </button>
         </form>
-        <div class="flex flex-col items-center">
-            <input type="file" (change)="onFileSelected($event)" name="image" />
-            <button (click)="onUpload()"
-                class="imageUpBut bg-rose-500 px-5 py-3 rounded w-full bo-ra5 cursor-pointer hover:shadow-xl">
-                Upload Image!
-            </button>
-        </div>
     </div>
     <div *ngIf="selectedDiv === 2" class="content delete">
+        <h2>Can delete or edit our shop products</h2>
         <ul class="text-xl text-white">
             <li class="mr-9">
                 <a (click)="toDeleteItem('gold')">Gold</a>
@@ -113,7 +114,8 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="selectedDiv === 3" class="mx-w mx-auto flex flex-col items-center content">
+    <div *ngIf="selectedDiv === 3" class="content">
+        <h2>Delete old Banner Image</h2>
         <div class="flex my-4 items-center w-11/12 justify-around" *ngFor="let data of bannerImg">
             <div class="image">
                 <img src="{{baseurl}}/uploads/{{ data.image }}" alt="" />
@@ -125,6 +127,7 @@
         </div>
     </div>
     <div class="content" *ngIf="selectedDiv === 4">
+        <h2>Add Today's gold rate and silver rate</h2>
         <form [formGroup]="goldSilver" (ngSubmit)="onSubmit()">
             <input type="number" placeholder="Enter Gold 22K rate in Rs" formControlName="gold22" id="gold22" required>
             <input type="number" placeholder="Enter Gold 24K rate in Rs" formControlName="gold24" id="gold24" required>
@@ -177,6 +180,7 @@
         </table> -->
     </div>
     <div class="content" *ngIf="selectedDiv === 6">
+        <h2>Update Previous Delivery Charges</h2>
         <form (ngSubmit)="onUpdatingCharges()">
             <label for="pincode">Enter the Pincode already present :</label>
             <input id="pincode" type="text" [(ngModel)]="pincode" name="pincode" required>
@@ -190,5 +194,15 @@
         <div *ngIf="message" class="message">
             {{ message }}
         </div>
+    </div>
+    <div class="content" *ngIf="selectedDiv === 7">
+        <h2>Update Product By Id</h2>
+        <form (ngSubmit)="fetchProductDetails()">
+    
+            <label for="charge">Enter Product Id:</label>
+            <input id="productId" type="text" [(ngModel)]="productId" name="productId" placeholder="Enter Product Id" required>
+    
+            <button type="submit" class="bg-rose-500 px-5 py-3 text-white rounded w-full bo-ra5 cupo">Navigate to Product</button>
+        </form>
     </div>
 </div>

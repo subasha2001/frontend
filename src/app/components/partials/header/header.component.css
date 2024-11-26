@@ -70,7 +70,7 @@ a:hover {
   margin-bottom: -2px;
 }
 .header2 a:hover {
-  background-color: #fae9cb;
+  background-color: #FFD700;
   color: black;
 }
 .logo {
@@ -78,6 +78,9 @@ a:hover {
   height: 80px;
   opacity: 1;
   transform: translateY(0px);
+}
+.logo a:hover{
+  background-color: transparent;
 }
 .menu {
   cursor: pointer;

@@ -1,0 +1,21 @@
+<div class="space-top"></div>
+<div class="mx-w mx-auto">
+    <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center">
+            <div class="tick-img"><img src="assets/images/pay-success.png" alt="payment successful"></div>
+            <app-title class="text-center" title="Payment Successful" fontSize="2.6rem" margin="0 0 0 0"></app-title>
+            <app-title class="text-center" title="Thank you for your Purchase" fontSize="1.6rem" color="gray"
+                margin="0 0 0 0"></app-title>
+            <div *ngIf="order.name" class="content">
+                <h3>Order Summary</h3>
+                <p><strong>Name</strong>: {{ order.name }}</p>
+                <p><strong>Total Price</strong>: ₹{{ order.totalPrice}}</p>
+                <p><strong>Delivery Address</strong>: {{ order.address }}</p>
+            </div>
+            <div *ngIf="!order.name" class="content">
+                <p>Continue Shopping</p>
+            </div>
+            <a routerLink="/">Return to HomePage</a>
+        </div>
+    </div>
+</div>

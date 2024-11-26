@@ -4,8 +4,6 @@ import { jewelleryType } from '../../../shared/models/productType';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { SearchComponent } from '../../partials/search/search.component';
-import { ImageSliderComponent } from '../../partials/banner/banner.component';
 import { PageNotFoundComponent } from '../../partials/page-not-found/page-not-found.component';
 import { TitleComponent } from '../../partials/title/title.component';
 import { GoldSilverService } from '../../../services/gold-silver.service';
@@ -14,14 +12,7 @@ import { BASE_URL } from '../../../shared/models/constants/urls';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    SearchComponent,
-    ImageSliderComponent,
-    TitleComponent,
-    PageNotFoundComponent,
-  ],
+  imports: [CommonModule, RouterLink, TitleComponent, PageNotFoundComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -95,19 +86,48 @@ export class HomeComponent implements OnInit {
 
   private calculateProductPrice(pdt: jewelleryType): jewelleryType {
     const weight = pdt.weight!;
-    const gst = this.gst;
-    const gr22 = this.GR22;
+    const wastage = pdt.wastage!;
     const sr = this.SR;
 
     if (pdt.metalType?.includes('gold')) {
-      pdt.price = (pdt.weight! * (pdt.wastage! + gst) + weight) * gr22 + 500;
-    } else if (pdt.category?.includes('kolusu')) {
-      pdt.price = (sr + (pdt.wastage! + gst) * 100) * weight;
+      //22KT(916)
+      const value = (weight + (weight * wastage)) * this.GR22 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
     } else if (
+      pdt.metalType?.includes('gold') &&
+      pdt.category?.includes('18KT')
+    ) {
+      //18KT (75H)
+      const value = (weight + weight * wastage) * this.GR18 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      //above 500mg gold
+      pdt.metalType?.includes('gold') &&
+      pdt.weight! < 1 &&
+      pdt.weight! > 0.5
+    ) {
+      const value = (weight + 0.2) * this.GR22 + 200;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      //below 500mg gold
+      pdt.metalType?.includes('gold') &&
+      pdt.weight! <= 0.5
+    ) {
+      const value = (weight + 0.15) * this.GR22 + 150;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } else if (
+      pdt.category?.includes('kolusu') ||
       pdt.category?.includes('kokkikolusu') ||
       pdt.category?.includes('thandai')
     ) {
-      pdt.price = (sr + pdt.wastage! * 100) * weight * gst;
+      //weight = 50g, wastage = 22%(0.22), sr = 101, gst = 3%(0.03)
+      const value = (weight + weight * wastage) * sr; //(50 + (50*0.22)) * 101 = (50+11) * 101 = 6161
+      const gst = value * this.gst; //6161 * 0.03 = 184.83
+      pdt.price = value + gst; // 6161 + 184.83 = 6345.83
     } else if (pdt.metalType?.includes('silver')) {
       if (
         pdt.category?.includes('92silver') ||
@@ -137,17 +157,23 @@ export class HomeComponent implements OnInit {
       pdt.category?.includes('silver92')
     ) {
       pdt.price = weight * 280;
-    } else if (pdt.metalType?.includes('coin')) {
-      if (pdt.category?.includes('500mgcoin')) {
-        pdt.price = (weight + 0.15) * gr22 + gst * gr22 * weight;
+    } //coins price calculation
+    else if (pdt.metalType?.includes('coin')) {
+      if (
+        pdt.category?.includes('500mgcoin')
+      ) {
+        const value = (weight + 0.15) * this.GR22;
+        const gst = value * this.gst;
+        pdt.price = value + gst;
       } else if (
         !pdt.category?.includes('500mgcoin') &&
         pdt.category?.includes('coin')
       ) {
-        pdt.price = (gr22 + 300) * weight + gst * weight * gr22;
+        const value = (this.GR22 + 200) * weight;
+        const gst = value * this.gst;
+        pdt.price = value + gst;
       }
     }
-
     return pdt;
   }
 

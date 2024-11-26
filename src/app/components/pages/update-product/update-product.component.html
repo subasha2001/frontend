@@ -2,6 +2,8 @@
 <div class="md:w-2/5 content flex items-center mx-w mx-auto">
     <p>{{updateMsg}}</p>
     <form #updateproduct="ngForm" (ngSubmit)="updateProduct(updateproduct.value)" class="w-full flex flex-col">
+        <label>Enter Id :</label>
+        <input type="text" placeholder="Enter Product Id" name="productId" ngModel="{{product.id}}" />
         <label>Enter Product Name :</label>
         <input type="text" placeholder="Enter Product Name" name="name" ngModel="{{product.name}}" />
         <label>Enter Display image url :</label>
@@ -12,7 +14,7 @@
         <textarea type="text" placeholder="Product Description" name="description" ngModel="{{product.description}}"></textarea>
         <label>Enter Product Metal Type :</label>
         <input type="text" placeholder="Enter Metal Type" name="metalType" ngModel="{{product.metalType}}" />
-        <label>Enter Product Category :</label>
+        <!-- <label>Enter Product Category :</label> -->
         <!-- <input type="text" placeholder="Category1, Category2, .." name="category" ngModel="{{product.category}}" /> -->
         <label>Enter Product Price :</label>
         <input type="number" placeholder="Enter Product Price" name="price" ngModel="{{product.price}}" />

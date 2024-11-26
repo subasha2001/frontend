@@ -1,0 +1,25 @@
+.tick-img{
+    max-width: 150px;
+}
+.content{
+    max-width: 500px;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 15px;
+    margin: 15px auto;
+}
+strong{
+    width: 128px;
+    display: inline-block;
+}
+h3{font-size: 20px;}
+a{
+    padding: 5px;
+    background-color: pink;
+    border: 1px solid;
+    transition: all 0.3s linear;
+}
+a:hover{
+    background-color: #fc4262;
+    color: #fff;
+}
