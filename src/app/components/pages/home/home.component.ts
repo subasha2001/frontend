@@ -89,11 +89,13 @@ export class HomeComponent implements OnInit {
     const wastage = pdt.wastage!;
     const sr = this.SR;
 
-    if (pdt.metalType?.includes('gold')) {
-      //22KT(916)
-      const value = (weight + (weight * wastage)) * this.GR22 + 500;
-      const gst = value * this.gst;
-      pdt.price = value + gst;
+    if (
+      //below 500mg gold
+      pdt.weight! <= 0.5
+    ) {
+      const value = ((weight + 0.15) * this.GR22) + 150; //0.491g //7080rs = 4688.28
+      const gst = value * this.gst;                      //3%  = 140.6484
+      pdt.price = value + gst;                           //   4688.28 + 140.6484
     } else if (
       pdt.metalType?.includes('gold') &&
       pdt.category?.includes('18KT')
@@ -112,22 +114,13 @@ export class HomeComponent implements OnInit {
       const gst = value * this.gst;
       pdt.price = value + gst;
     } else if (
-      //below 500mg gold
-      pdt.metalType?.includes('gold') &&
-      pdt.weight! <= 0.5
-    ) {
-      const value = (weight + 0.15) * this.GR22 + 150;
-      const gst = value * this.gst;
-      pdt.price = value + gst;
-    } else if (
       pdt.category?.includes('kolusu') ||
       pdt.category?.includes('kokkikolusu') ||
       pdt.category?.includes('thandai')
     ) {
-      //weight = 50g, wastage = 22%(0.22), sr = 101, gst = 3%(0.03)
-      const value = (weight + weight * wastage) * sr; //(50 + (50*0.22)) * 101 = (50+11) * 101 = 6161
-      const gst = value * this.gst; //6161 * 0.03 = 184.83
-      pdt.price = value + gst; // 6161 + 184.83 = 6345.83
+      const value = (weight + weight * wastage) * sr; //50g , 22%, 101 = 6161
+      const gst = value * this.gst;                   //6161 * 0.03 = 184.83
+      pdt.price = value + gst;                        // 6161 + 184.83 = 6345.83
     } else if (pdt.metalType?.includes('silver')) {
       if (
         pdt.category?.includes('92silver') ||
@@ -157,7 +150,8 @@ export class HomeComponent implements OnInit {
       pdt.category?.includes('silver92')
     ) {
       pdt.price = weight * 280;
-    } //coins price calculation
+    } 
+    //coins price calculation
     else if (pdt.metalType?.includes('coin')) {
       if (
         pdt.category?.includes('500mgcoin')
@@ -173,7 +167,12 @@ export class HomeComponent implements OnInit {
         const gst = value * this.gst;
         pdt.price = value + gst;
       }
-    }
+    }else if (pdt.metalType?.includes('gold')) {
+      //22KT(916)
+      const value = (weight + (weight * wastage)) * this.GR22 + 500;
+      const gst = value * this.gst;
+      pdt.price = value + gst;
+    } 
     return pdt;
   }
 

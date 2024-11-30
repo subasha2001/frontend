@@ -82,10 +82,9 @@ export class SilverJewelsComponent implements OnInit {
       pdt.category?.includes('kokkikolusu') ||
       pdt.category?.includes('thandai')
     ) {
-      //weight = 50g, wastage = 22%(0.22), sr = 101, gst = 3%(0.03)
-      const value = (weight + weight * wastage) * sr; //(50 + (50*0.22)) * 101 = (50+11) * 101 = 6161
-      const gst = value * this.gst; //6161 * 0.03 = 184.83
-      pdt.price = value + gst; // 6161 + 184.83 = 6345.83
+      const value = (weight + weight * wastage) * sr; //50g , 22%, 101 = 6161
+      const gst = value * this.gst;                   //6161 * 0.03 = 184.83
+      pdt.price = value + gst;                        // 6161 + 184.83 = 6345.83
     } else if (pdt.metalType?.includes('silver')) {
       if (
         pdt.category?.includes('92silver') ||

@@ -108,7 +108,7 @@ export class CheckoutPageComponent implements OnInit {
         alert('Proceeding to Payment');
       },
       error: (errRes) => {
-        alert(errRes.error.error);
+        console.log(errRes);
       },
     });
   }

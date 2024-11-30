@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { BASE_URL } from '../../../shared/models/constants/urls';
 import { TitleComponent } from '../../partials/title/title.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-page',
@@ -44,7 +45,8 @@ export class ProductPageComponent implements OnInit {
     private cartService: CartService,
     private router: Router,
     private GR: GoldSilverService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.reviewProduct = this.fb.group({
       productName: [''],

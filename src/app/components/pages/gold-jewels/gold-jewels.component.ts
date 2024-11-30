@@ -51,20 +51,19 @@ export class GoldJewelsComponent implements OnInit {
           .pipe(
             map((products) => {
               return products.map((pdt) => {
-                if (pdt.metalType?.includes('gold')) {
-                  //22KT(916)
-                  const value =
-                    (pdt.weight! + pdt.weight! * pdt.wastage!) * this.GR22 +
-                    500;
-                  const gst = value * this.gst;
-                  pdt.price = value + gst;
+                if (
+                  //below 500mg gold
+                  pdt.weight! <= 0.5
+                ) {
+                  const value = ((pdt.weight! + 0.15) * this.GR22) + 150; //0.491g //7080rs = 4688.28
+                  const gst = value * this.gst;                           //3%  = 140.6484
+                  pdt.price = value + gst;                                //   4688.28 + 140.6484
                 } else if (
                   pdt.metalType?.includes('gold') &&
                   pdt.category?.includes('18KT')
                 ) {
                   //18KT (75H)
-                  const value =
-                    (pdt.weight! + pdt.weight! * pdt.wastage!) * this.GR18 + 500;
+                  const value = (pdt.weight! + pdt.weight! * pdt.wastage!) * this.GR18 + 500;
                   const gst = value * this.gst;
                   pdt.price = value + gst;
                 } else if (
@@ -76,12 +75,10 @@ export class GoldJewelsComponent implements OnInit {
                   const value = (pdt.weight! + 0.2) * this.GR22 + 200;
                   const gst = value * this.gst;
                   pdt.price = value + gst;
-                } else if (
-                  //below 500mg gold
-                  pdt.metalType?.includes('gold') &&
-                  pdt.weight! <= 0.5
-                ) {
-                  const value = (pdt.weight! + 0.15) * this.GR22 + 150;
+                }
+                else if (pdt.metalType?.includes('gold')) {
+                  //22KT(916)
+                  const value = (pdt.weight! + (pdt.weight! * pdt.wastage!)) * this.GR22 + 500;
                   const gst = value * this.gst;
                   pdt.price = value + gst;
                 }
