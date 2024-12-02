@@ -1,7 +1,6 @@
 const local = 'http://localhost:3001'
 const aws = 'http://13.61.105.213/api'
-export const BASE_URL = local || aws;
-// export const BASE_URL = 'https://backend-gpj.onrender.com';
+export const BASE_URL = aws;
 // export const BASE_URL = 'http://13.61.105.213/api';
 
 export const PRODUCTS_URL = BASE_URL + '/api/products';
