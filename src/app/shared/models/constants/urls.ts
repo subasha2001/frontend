@@ -1,5 +1,5 @@
 const local = 'http://localhost:3001'
-const aws = 'http://13.61.105.213/api'
+const aws = 'http://13.61.105.213'
 export const BASE_URL = aws;
 // export const BASE_URL = 'http://13.61.105.213/api';
 
