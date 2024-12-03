@@ -28,9 +28,15 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -66,61 +72,35 @@
               "buildTarget": "frontend:build:development"
             }
           },
-          "prerender": {
-            "builder": "@angular/platform-server:prerender",
-            "options": {
-              "routes": [
-                "/",
-                "/admingpj",
-                "/search/term1",
-                "/search/term2",
-                "/product/1",
-                "/product/2",
-                "/contact",
-                "/login",
-                "/register",
-                "/cart",
-                "/checkout",
-                "/schemes",
-                "/terms-conditions",
-                "/admin-login",
-                "/success-page"
-              ]
-            },
-            "defaultConfiguration": "development"
-          },
-          "extract-i18n": {
-            "builder": "@angular-devkit/build-angular:extract-i18n"
-          },
-          "test": {
-            "builder": "@angular-devkit/build-angular:karma",
-            "options": {
-              "polyfills": [
-                "zone.js",
-                "zone.js/testing"
-              ],
-              "tsConfig": "tsconfig.spec.json",
-              "assets": [
-                {
-                  "glob": "**/*",
-                  "input": "public"
-                }
-              ],
-              "styles": [
-                "src/styles.css"
-              ],
-              "scripts": []
-            }
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
           }
         }
       }
-    },
-    "cli": {
-      "analytics": "03582652-a7b9-4a17-a777-892e5f19a711",
-      "root": "frontend"
     }
   },
   "cli": {
-    "analytics": "aaf8494b-75f2-4412-a9e7-a1056f7612ff"
+    "analytics": "03582652-a7b9-4a17-a777-892e5f19a711"
   }
 }
