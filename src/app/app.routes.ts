@@ -41,5 +41,6 @@ export const routes: Routes = [
     {path:'schemes', component:SchemesComponent},
     {path:'terms-conditions', component:TermsConditionsComponent},
     {path:'admin-login', component:AdminLoginComponent},
-    {path:'success-page', component:SuccessPageComponent}
+    {path:'success-page', component:SuccessPageComponent},
+    { path: '**', redirectTo: '' }
 ];

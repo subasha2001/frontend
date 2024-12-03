@@ -17,28 +17,33 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
+  // Serve static files from the browser folder
+  server.use(
+    express.static(browserDistFolder, {
+      maxAge: '1y', // Cache for 1 year
+      index: false, // Disable serving index.html directly
+    })
+  );
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get('**', express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: 'index.html',
-  }));
-
-  // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
-    const { protocol, originalUrl, baseUrl, headers } = req;
+    const { originalUrl, baseUrl } = req;
 
     commonEngine
       .render({
         bootstrap,
         documentFilePath: indexHtml,
-        url: `${protocol}://${headers.host}${originalUrl}`,
-        publicPath: browserDistFolder,
+        url: originalUrl, // Pass the full requested URL
+        publicPath: browserDistFolder, // Folder containing client assets
         providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
       })
-      .then((html) => res.send(html))
-      .catch((err) => next(err));
+      .then((html) => res.status(200).send(html))
+      .catch((err) => {
+        console.error('Error during SSR rendering:', err);
+        next(err); // Pass the error to Express
+      });
   });
 
   return server;
