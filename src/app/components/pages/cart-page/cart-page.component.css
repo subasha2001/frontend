@@ -84,7 +84,6 @@ li .remove-button:hover{
 .checkout a:hover{opacity: 1;cursor: pointer;}
 
 
-@media screen and (max-width:550px) {
-    ul{width: 390px;}
-    .checkout{width: 390px;}
+@media screen and (max-width: 768px) and (min-width: 300px) {
+    ul, .checkout{width: 90%;}
 }

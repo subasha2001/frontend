@@ -1,5 +1,5 @@
-// export const BASE_URL = 'http://13.61.105.213:3002';
-export const BASE_URL = 'http://localhost:3002';
+export const BASE_URL = 'http://13.61.105.213:3002';
+// export const BASE_URL = 'http://localhost:3002';
 
 export const PRODUCTS_URL = BASE_URL + '/api/products';
 export const PRODUCTS_METALTYPES_URL = PRODUCTS_URL + '/metalType';

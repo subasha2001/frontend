@@ -1,18 +1,24 @@
-.content{
+.content {
     width: 35rem;
     margin-right: 3rem;
 }
-.content,form{
-    display: flex;flex-direction: column;
+
+.content,
+form {
+    display: flex;
+    flex-direction: column;
 }
-.buttons-container{
+
+.buttons-container {
     flex-basis: 100%;
 }
-.buttons{
+
+.buttons {
     margin: 2rem;
     width: 35rem;
 }
-button{
+
+button {
     color: white;
     background-color: #e72929;
     height: 3rem;
@@ -22,17 +28,23 @@ button{
     border-radius: 0.5rem;
     box-shadow: 2px 2px 2px 2px grey;
 }
-button:hover{opacity: 1;}
-.quieries{
+
+button:hover {
+    opacity: 1;
+}
+
+.quieries {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.quieries h3{
+
+.quieries h3 {
     font-size: 20px;
 }
-.quieries .fa-phone{
+
+.quieries .fa-phone {
     padding: 15px 15px 15px 15px;
     font-size: 30px;
     background-color: #16a2f1;
@@ -40,7 +52,8 @@ button:hover{opacity: 1;}
     border-radius: 5px;
     margin: 10px;
 }
-.quieries .fa-whatsapp{
+
+.quieries .fa-whatsapp {
     padding: 15px 15px 15px 15px;
     font-size: 30px;
     background-color: #2caf45;
@@ -48,7 +61,8 @@ button:hover{opacity: 1;}
     border-radius: 5px;
     margin: 10px;
 }
-.quieries .fa-envelope-o{
+
+.quieries .fa-envelope-o {
     padding: 15px 15px 15px 15px;
     font-size: 30px;
     background-color: #800f00;
@@ -56,12 +70,22 @@ button:hover{opacity: 1;}
     border-radius: 5px;
     margin: 10px;
 }
+
 @media screen and (max-width: 768px) and (min-width: 300px) {
-    .content{
+    .content {
         margin: 0 1%;
         max-width: 440px;
     }
-    .quieries{
+
+    .quieries {
         margin-top: 20px;
+        width: 85%;
+    }
+
+    .quieries h3{font-size: 17px;}
+
+    .content form {
+        width: 79%;
+        margin: 0 auto;
     }
 }

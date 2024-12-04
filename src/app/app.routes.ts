@@ -22,7 +22,7 @@ import { SuccessPageComponent } from './components/pages/success-page/success-pa
 
 export const routes: Routes = [
     {path:'', component:HomePageComponent},
-    {path:'admingpj', component:AdminPageComponent, canActivate:[adminauthGuard]},
+    {path:'admingpjavinashi-916', component:AdminPageComponent},
     {path:'search/:searchTerm', component:HomeComponent},
     {path:'product/:id', component:ProductPageComponent},
     {path:'metalType/:metalTypeName', component:HomeComponent},
@@ -32,7 +32,7 @@ export const routes: Routes = [
     {path:'category/silver/:categoryName', component:SilverJewelsComponent},
     {path:'category/diamond/:categoryName', component:DiamondJewelsComponent},
     {path:'delete/:id', component:HomePageComponent},
-    {path:'update/:id', component:UpdateProductComponent, canActivate:[adminauthGuard]},
+    {path:'update/:id', component:UpdateProductComponent},
     {path:'contact', component:ContactComponent},
     {path:'login', component:LoginComponent},
     {path:'register', component:RegisterPageComponent},
