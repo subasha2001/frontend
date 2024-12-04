@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { InputComponent } from '../../partials/input/input.component';
 import {
   FormBuilder,
   FormGroup,
@@ -10,7 +9,6 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { jewelleryType } from '../../../shared/models/productType';
 import { ProductsService } from '../../../services/products.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { bannerType } from '../../../shared/models/bannerType';
 import { ToastrService } from 'ngx-toastr';
@@ -135,7 +133,7 @@ export class AdminPageComponent implements OnInit {
       };
 
       this.service.addBanner(BannerData).subscribe(() => {
-        this.router.navigateByUrl(this.returnUrl);
+        this.router.navigate(['/admingpj']);
       });
     }
   }

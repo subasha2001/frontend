@@ -157,4 +157,7 @@ a.headinG {
   .schemes {
     margin: 0 1% 20px;
   }
+  a.headinG{
+    margin-top: 0 !important;
+  }
 }

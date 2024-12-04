@@ -78,11 +78,11 @@
         <img class="w-8/12 z-10 hover_img absolute top-6 left-10" src="{{baseurl}}/uploads/{{ data.imageHov }}"
           [alt]="data.name" />
         <div class="content absolute top-16">
-          <div class="text-sm px-5 font-medium py-2 h-16 flex items-center">
+          <div class="text-sm px-5 font-medium py-2 h-16 items-center hidden md:flex">
             {{ data.name }}
           </div>
           <hr />
-          <div class="font-light px-5 py-2">Weight: {{ data.weight }} gms</div>
+          <div class="font-light px-5 py-2">{{ data.weight }} gms</div>
           <hr />
           <div class="price">
             <span>Price: {{ data.price | currency : "&#8377; " }}</span>

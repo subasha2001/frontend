@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { jewelleryType } from '../shared/models/productType';
 import { HttpClient } from '@angular/common/http';
 import {

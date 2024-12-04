@@ -99,9 +99,19 @@ textarea::placeholder {
   font-weight: bold;
   width: 25%;
 }
-@media only screen and (max-width: 550px) {
+@media screen and (max-width: 768px) and (min-width: 300px) {
+  .product-details{
+    max-width: 90%;
+  }
   .modal-content {
     width: 100%;
+  }
+  form{
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  .product-details .heading{
+    width: 40%;
   }
 }
 

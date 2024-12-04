@@ -2,51 +2,64 @@ a:hover {
   background-color: #ff0f39c7;
   color: yellow;
 }
+
 .contact:hover {
   background-color: transparent;
 }
+
 .gold-items div {
   display: none;
   width: 150px;
 }
+
 .gold-items:hover .items {
   display: flex;
 }
+
 .items a {
   padding: 5px 10px;
 }
+
 .items a:hover {
   background-color: #ff0f39c7;
   color: yellow;
 }
+
 .gold-silver div.absolute {
   display: none;
   width: 670px;
 }
+
 .gold-silver:hover a div {
   width: 136px;
 }
+
 .gold-silver:hover div.absolute {
   display: block;
   /* left: -365px; */
   padding: 20px;
 }
+
 .gold-silver div a {
   padding: 5px 10px 15px;
 }
+
 .gold-silver div a:hover {
   background-color: transparent;
   color: black;
 }
+
 .gold-silver div img:hover {
   transform: translateY(-20px);
   transition: all 0.12s linear;
 }
-.inner{
+
+.inner {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
+
 .header {
   position: fixed;
   z-index: 100;
@@ -58,9 +71,11 @@ a:hover {
   right: 0;
   border-radius: 45px;
 }
+
 .header1 {
   height: 80px;
 }
+
 .header2 {
   background-color: #ff0f39c7;
   border-bottom-right-radius: 45px;
@@ -69,22 +84,27 @@ a:hover {
   margin: 0 auto;
   margin-bottom: -2px;
 }
+
 .header2 a:hover {
   background-color: #FFD700;
   color: black;
 }
+
 .logo {
   width: 100px;
   height: 80px;
   opacity: 1;
   transform: translateY(0px);
 }
-.logo a:hover{
+
+.logo a:hover {
   background-color: transparent;
 }
+
 .menu {
   cursor: pointer;
 }
+
 .navBar {
   background-color: #ff0f39c7;
   color: white;
@@ -94,6 +114,7 @@ a:hover {
   transform: translateX(-150px);
   transition: all 0.3s linear;
 }
+
 .navBar button {
   width: 23px;
   background-color: black;
@@ -102,26 +123,32 @@ a:hover {
   top: -12px;
   left: 111px;
 }
+
 .active {
   transform: translateX(0);
 }
+
 .navBar a {
   padding: 15px;
 }
+
 .navBar a:hover {
   background-color: black;
 }
+
 .admin .user:hover .logout {
   display: block;
-  top: 30px;
-  left: 0px;
+  top: 20px;
+  left: 75px;
   background-color: white;
   color: black;
   padding: 5px 0;
 }
+
 .rates i {
   padding: 5px;
 }
+
 .rates:hover div {
   display: block;
   left: -110px;
@@ -134,20 +161,25 @@ a:hover {
   line-height: 25px;
   z-index: 2;
 }
+
 .rates p {
   padding: 5px;
   font-size: 15px;
 }
+
 .rates p:hover {
   text-decoration: underline;
 }
+
 .cart {
   color: white;
 }
+
 .cart:hover {
   background-color: transparent;
   color: white;
 }
+
 .cart i {
   color: #ff0f39c7;
 }
@@ -157,19 +189,28 @@ a:hover {
     width: 400px;
     left: -60px !important;
   }
+
   .gold-silver .silver {
     left: -129px !important;
   }
+
   .gold-silver a div {
     width: 100px !important;
   }
-  .logo{
+
+  .logo {
     width: 80px;
   }
-  .user a{
+
+  .admin{
+    flex-direction: column;
+  }
+
+  .user a {
     font-size: 12px;
   }
-  .rates .g22kt{
+
+  .rates .g22kt {
     display: none;
   }
 }

@@ -18,6 +18,12 @@ li a:hover {
 }
 li a img {
   object-fit: cover;
+  width: 209px;
+  margin: -24px 0 0 -40px;
+  height: 179px;
+  z-index: -4;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 .content {
   position: relative;
@@ -154,9 +160,9 @@ button {
   }
   li a,
   .price {
-    width: 12rem;
+    width: 10.9rem;
   }
-  li a img {
-    width: 60%;
+  ul li{
+    margin-right: 0.25rem;
   }
 }

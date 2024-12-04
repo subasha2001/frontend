@@ -94,7 +94,7 @@ li a:hover .atc {
 @media screen and (max-width: 768px) and (min-width: 300px) {
   li a,
   .price {
-    width: 12rem;
+    width: 11rem;
   }
   li a img {
     width: 60%;
